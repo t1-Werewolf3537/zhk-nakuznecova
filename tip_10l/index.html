@@ -116,5 +116,31 @@
 <script src="data.js"></script>
 <script src="index.js"></script>
 
+
+
+<!-- Яндекс Метрика — Легкая версия для 3D туров (В самом низу, после запуска панорамы) -->
+<script type="text/javascript" async defer>
+    (function(m,e,t,r,i,k,a){
+        m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();
+        for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+        k=e.createElement(t),a=e.getElementsByTagName(t),k.async=1,k.src=r,a.parentNode.insertBefore(k,a)
+    })(window, document,'script','https://yandex.ru', 'ym');
+
+    ym(113944409, 'init', {
+        ssr: true,
+        url: location.href,
+        referrer: document.referrer,
+        clickmap: false,            // Отключено: убирает слежку за кликами
+        trackLinks: false,          // Отключено: убирает слежку за ссылками
+        accurateTrackBounce: false, // Отключено: убирает лишние таймеры отказов
+        webvisor: false             // Отключено: убирает запись экрана (главная причина лагов!)
+    });
+</script>
+<noscript><div><img src="https://yandex.ru" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Яндекс Метрика -->
+
+
+
 </body>
 </html>
