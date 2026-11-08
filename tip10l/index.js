@@ -276,15 +276,6 @@ var view = new Marzipano.RectilinearView(data.initialViewParameters, limiter);
           if (targetScene) {
             switchScene(targetScene);
             
-            // Если мы на мобилке, скрываем карту после клика
-            if (document.body.classList.contains('mobile')) {
-              var mapWrapper = document.getElementById('mini-map-wrapper');
-              var mapOpenBtn = document.getElementById('mini-map-toggle-btn');
-              if (mapWrapper && mapOpenBtn) {
-                mapWrapper.classList.remove('active-state');
-                mapOpenBtn.classList.remove('hidden-state');
-              }
-            }
           }
         });
         

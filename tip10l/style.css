@@ -1159,14 +1159,14 @@ body.fullscreen-enabled .custom-wolf-link {
 #mini-map-dot {
   position: absolute !important;
   
-  /* БЫЛО: 4.5cqw | СТАЛО: 3cqw (уменьшили саму точку) */
-  width: 3cqw !important;
-  height: 3cqw !important;
+  /* БЫЛО: 4.5cqw | СТАЛО: 4cqw (уменьшили саму точку) */
+  width: 4cqw !important;
+  height: 4cqw !important;
   
   background-color: #ff3333 !important;
   
-  /* БЫЛО: 0.6cqw | СТАЛО: 0.4cqw (сделали белую обводку тоньше) */
-  border: 0.4cqw solid #ffffff !important; 
+  /* БЫЛО: 0.6cqw | СТАЛО: 0.5cqw (сделали белую обводку тоньше) */
+  border: 0.5cqw solid #ffffff !important; 
   border-radius: 50% !important;
   box-shadow: 0 0 8px rgba(255, 51, 51, 0.8) !important;
   z-index: 100 !important;
@@ -1182,8 +1182,8 @@ body.fullscreen-enabled .custom-wolf-link {
   left: 50% !important;
   
   /* БЫЛО: ширина 16cqw, высота 20cqw | СТАЛО: уменьшили луч */
-  width: 11cqw !important;   /* Новая ширина луча */
-  height: 14cqw !important;  /* Новая длина луча */
+  width: 13cqw !important;   /* Новая ширина луча */
+  height: 17cqw !important;  /* Новая длина луча */
   
   transform-origin: top center !important;
   transform: translate(-50%, 0) !important; 
@@ -1218,8 +1218,8 @@ body.fullscreen-enabled .custom-wolf-link {
 .map-nav-point {
   position: absolute !important;
   /* Размер точек делаем чуть меньше или равным активной точке (например, 2.8cqw) */
-  width: 2.8cqw !important;
-  height: 2.8cqw !important;
+  width: 3.1cqw !important;
+  height: 3.1cqw !important;
   background-color: rgba(0, 123, 255, 0.7) !important; /* Полупрозрачный синий */
   border: 0.4cqw solid #ffffff !important;
   border-radius: 50% !important;
