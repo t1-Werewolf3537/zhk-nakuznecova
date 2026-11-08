@@ -243,7 +243,7 @@ var view = new Marzipano.RectilinearView(data.initialViewParameters, limiter);
 
 
   function updateSceneName(scene) {
-    sceneNameElement.innerHTML = "Marzipano";
+    sceneNameElement.innerHTML = "Тип-10Л | 2-ЕВРО 47м²";
   }
 
   function updateSceneList(scene) {
