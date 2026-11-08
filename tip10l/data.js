@@ -4,8 +4,8 @@ var APP_DATA = {
       "id": "1",
       "name": "bath",
       "mapCoords": {
-        "left": "40%",
-        "top": "75%"
+        "left": "0%",
+        "top": "0%"
       },
       "levels": [
         {
@@ -47,7 +47,7 @@ var APP_DATA = {
       "name": "bedroom",
       "mapCoords": {
         "left": "80%",
-        "top": "70%"
+        "top": "69%"
       },
       "levels": [
         {
@@ -88,8 +88,8 @@ var APP_DATA = {
       "id": "3",
       "name": "cabinet",
       "mapCoords": {
-        "left": "23%",
-        "top": "40%"
+        "left": "20%",
+        "top": "33%"
       },
       "levels": [
         {
@@ -136,8 +136,8 @@ var APP_DATA = {
       "id": "4",
       "name": "hallway",
       "mapCoords": {
-        "left": "22%",
-        "top": "70%"
+        "left": "20%",
+        "top": "72%"
       },
       "levels": [
         {
@@ -184,8 +184,8 @@ var APP_DATA = {
       "id": "5",
       "name": "kitchen",
       "mapCoords": {
-        "left": "50%",
-        "top": "33%"
+        "left": "43%",
+        "top": "30%"
       },
       "levels": [
         {
@@ -232,8 +232,8 @@ var APP_DATA = {
       "id": "6",
       "name": "living",
       "mapCoords": {
-        "left": "76%",
-        "top": "38%"
+        "left": "68%",
+        "top": "29%"
       },
       "levels": [
         {

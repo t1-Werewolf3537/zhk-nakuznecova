@@ -436,7 +436,7 @@ var view = new Marzipano.RectilinearView(data.initialViewParameters, limiter);
 
 
 
-  // НАШ ОБНОВЛЕННЫЙ БЛОК: Только вращение луча радара (без рывков координат!)
+  // НАШ ОБНОВЛЕННЫЙ БЛОК: Только вращение луча радара
   viewer.addEventListener('viewChange', function() {
     var currentScene = viewer.scene();
     var mapDot = document.getElementById('mini-map-dot');
@@ -445,13 +445,15 @@ var view = new Marzipano.RectilinearView(data.initialViewParameters, limiter);
       var liveView = currentScene.view();
       if (!liveView) return;
       
-      // Считаем угол и крутим белый луч на месте, не двигая координаты туда-сюда
       var yaw = liveView.yaw();
       var degrees = yaw * (180 / Math.PI);
-      // ИСПРАВЛЕНИЕ: Добавили + 180 прямо внутрь строки поворота
+      
+      /* ИСПРАВЛЕНО: translate(-50%, -50%) обязателен, чтобы 
+         точка оставалась центрированной в своих координатах процентов */
       mapDot.style.transform = 'translate(-50%, -50%) rotate(' + (degrees + 180) + 'deg)';
     }
   });
+
 
   // НАШ ФИНАЛЬНЫЙ БЛОК: Логика развёртывания и свёртывания мини-карты
   var mapOpenBtn = document.getElementById('mini-map-toggle-btn');

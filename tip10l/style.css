@@ -1097,26 +1097,25 @@ body.fullscreen-enabled .custom-wolf-link {
   opacity: 0 !important;
   visibility: hidden !important;
   transition: opacity 0.2s ease-in-out, visibility 0.2s !important;
-
-  /* 
-    ВКЛЮЧАЕМ ОТСЛЕЖИВАНИЕ РАЗМЕРА КОНТЕЙНЕРА:
-    Это позволяет вложенной точке и лучу точно знать ширину карты 
-    через специальную единицу измерения cqw (1 cqw = 1% от ширины карты)
-  */
-  container-type: inline-size !important;
+  /* УБРАЛИ ОТСЮДА container-type */
 }
 
-/* Применение адаптивного масштаба с защитой от вылета за экран */
+/* НОВЫЙ БЛОК: Обертка, которая равна картинке 1 в 1 */
+.map-inner {
+  position: relative !important;
+  display: inline-block !important;
+  vertical-align: top !important;
+  /* ПЕРЕНЕСЛИ СЮДА: теперь 1cqw = 1% от ширины КАРТИНКИ */
+  container-type: inline-size !important; 
+  width: 100% !important;
+}
+
+/* Применение адаптивного масштаба (оставляем как у вас, но для .map-inner) */
 @media (min-width: 769px) {
-  #mini-map-wrapper {
-    width: clamp(250px, var(--map-width-desktop), 85vw) !important;
-  }
+  .map-inner { width: clamp(250px, var(--map-width-desktop), 85vw) !important; }
 }
-
 @media (max-width: 768px) {
-  #mini-map-wrapper {
-    width: clamp(140px, var(--map-width-mobile), 85vw) !important;
-  }
+  .map-inner { width: clamp(140px, var(--map-width-mobile), 85vw) !important; }
 }
 
 #mini-map-wrapper.active-state {
@@ -1132,8 +1131,7 @@ body.fullscreen-enabled .custom-wolf-link {
   right: -10px !important;
   width: 22px !important;
   height: 22px !important;
-  background-color: rgb(0, 123, 255) !important;       /* Чистый синий для старых браузеров */
-  background-color: rgba(0, 123, 255, 0.8) !important; /* Полупрозрачный синий как у меню */
+  background-color: rgba(0, 123, 255, 0.8) !important;
   border: 1px solid rgba(255, 255, 255, 0.2) !important;
   border-radius: 50% !important;
   color: #ffffff !important;
@@ -1157,54 +1155,43 @@ body.fullscreen-enabled .custom-wolf-link {
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5)) !important; 
 }
 
-/* 5. Красный маркер местонахождения (ПРОПОРЦИОНАЛЬНЫЙ ЧЕРЕЗ cqw) */
+/* 5. Красный маркер местонахождения */
 #mini-map-dot {
   position: absolute !important;
   
-  /* Размер точки теперь составляет ровно 4.5% от ТЕКУЩЕЙ ширины карты */
-  width: 4.5cqw !important;
-  height: 4.5cqw !important;
+  /* БЫЛО: 4.5cqw | СТАЛО: 3cqw (уменьшили саму точку) */
+  width: 3cqw !important;
+  height: 3cqw !important;
   
   background-color: #ff3333 !important;
   
-  /* Толщина рамки тоже плавно масштабируется вместе с картой */
-  border: 0.6cqw solid #ffffff !important; 
+  /* БЫЛО: 0.6cqw | СТАЛО: 0.4cqw (сделали белую обводку тоньше) */
+  border: 0.4cqw solid #ffffff !important; 
   border-radius: 50% !important;
   box-shadow: 0 0 8px rgba(255, 51, 51, 0.8) !important;
   z-index: 100 !important;
   transition: opacity 0.2s ease-in-out !important;
-
-  /* 
-    Динамический маргин: сдвигаем точку на половину её же ширины,
-    чтобы центрировать её без использования свойства transform!
-  */
-  margin-left: -2.25cqw !important;
-  margin-top: -2.25cqw !important;
+  transform: translate(-50%, -50%);
 }
 
-/* Белый луч-радар (ПРОПОРЦИОНАЛЬНЫЙ ЧЕРЕЗ cqw) */
+/* Белый луч-радар */
 #mini-map-dot::before {
   content: '' !important;
   position: absolute !important;
-  
-  /* Идеально позиционируем начало луча по центру нашей cqw-точки */
   top: 50% !important; 
   left: 50% !important;
   
-  /* Размеры луча теперь жестко привязаны к ширине карты */
-  width: 16cqw !important;   /* Длина и ширина луча будут автоматически */
-  height: 20cqw !important;  /* уменьшаться/расти вслед за картой */
+  /* БЫЛО: ширина 16cqw, высота 20cqw | СТАЛО: уменьшили луч */
+  width: 11cqw !important;   /* Новая ширина луча */
+  height: 14cqw !important;  /* Новая длина луча */
   
-  /* Точка вращения — верхний центр луча (transform остается свободным для JS) */
   transform-origin: top center !important;
   transform: translate(-50%, 0) !important; 
-  
-  /* === ИСПРАВЛЕННАЯ СТРОКА: Плотное начало луча без прозрачности === */
   background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 20%, rgba(255, 255, 255, 0) 100%) !important;
-  
   clip-path: polygon(50% 0%, 0% 100%, 100% 100%) !important;
   z-index: -1 !important;
 }
+
 
 /* Мягкое растворение маркера в момент смены комнат */
 #mini-map-dot.switching {
