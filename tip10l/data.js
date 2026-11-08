@@ -4,8 +4,8 @@ var APP_DATA = {
       "id": "1",
       "name": "bath",
       "mapCoords": {
-        "left": "0%",
-        "top": "0%"
+        "left": "41%",
+        "top": "75%"
       },
       "levels": [
         {
