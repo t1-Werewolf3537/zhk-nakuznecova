@@ -81,6 +81,7 @@
       { cubeMapPreviewUrl: urlPrefix + "/" + data.id + "/preview.jpg" });
     var geometry = new Marzipano.CubeGeometry(data.levels);
 
+
 // Передаем ТРИ параметра: размер, отдаление (145), приближение (30)
 var limiter = Marzipano.RectilinearView.limit.traditional(
   data.faceSize * 2, 
@@ -240,6 +241,67 @@ var view = new Marzipano.RectilinearView(data.initialViewParameters, limiter);
       }
     }, 300); // Увеличили общую паузу до 300мс для идеально мягкого эффекта кино
   }
+
+
+
+
+
+
+
+
+  // =========================================================================
+  // СЮДА ВСТАВЛЯЕМ КОД ГЕНЕРАЦИИ АЛЬТЕРНАТИВНЫХ ТОЧЕК НА КАРТЕ
+  // =========================================================================
+  var pointsContainer = document.getElementById('mini-map-points');
+  if (pointsContainer && data.scenes) {
+    data.scenes.forEach(function(sceneData) {
+      // Проверяем, прописаны ли координаты для этой сцены в data.js
+      if (sceneData.mapCoords && sceneData.mapCoords.left && sceneData.mapCoords.top) {
+        
+        // Создаем элемент точки
+        var pointEl = document.createElement('div');
+        pointEl.classList.add('map-nav-point');
+        pointEl.setAttribute('data-scene-id', sceneData.id);
+        
+        // Выставляем координаты из data.js
+        pointEl.style.left = sceneData.mapCoords.left;
+        pointEl.style.top = sceneData.mapCoords.top;
+        
+        // Добавляем клик для переключения сцены
+        pointEl.addEventListener('click', function(event) {
+          event.stopPropagation(); // Защита от дерганья панорамы
+          
+          // Ищем нужную сцену по ID и переключаемся через вашу штатную функцию
+          var targetScene = findSceneById(sceneData.id);
+          if (targetScene) {
+            switchScene(targetScene);
+            
+            // Если мы на мобилке, скрываем карту после клика
+            if (document.body.classList.contains('mobile')) {
+              var mapWrapper = document.getElementById('mini-map-wrapper');
+              var mapOpenBtn = document.getElementById('mini-map-toggle-btn');
+              if (mapWrapper && mapOpenBtn) {
+                mapWrapper.classList.remove('active-state');
+                mapOpenBtn.classList.remove('hidden-state');
+              }
+            }
+          }
+        });
+        
+        // Складываем точку в контейнер на карте
+        pointsContainer.appendChild(pointEl);
+      }
+    });
+  }
+  // =========================================================================
+
+
+
+
+
+
+
+
 
 
   function updateSceneName(scene) {

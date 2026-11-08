@@ -1199,3 +1199,41 @@ body.fullscreen-enabled .custom-wolf-link {
   visibility: hidden !important;
 }
 
+
+
+
+
+			/* Контейнер для точек переключения */
+#mini-map-points {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 90; /* Чуть ниже активной точки с лучом */
+  pointer-events: none; /* Пропускает клики сквозь контейнер */
+}
+
+/* Сама интерактивная точка на карте */
+.map-nav-point {
+  position: absolute !important;
+  /* Размер точек делаем чуть меньше или равным активной точке (например, 2.8cqw) */
+  width: 2.8cqw !important;
+  height: 2.8cqw !important;
+  background-color: rgba(0, 123, 255, 0.7) !important; /* Полупрозрачный синий */
+  border: 0.4cqw solid #ffffff !important;
+  border-radius: 50% !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
+  cursor: pointer !important;
+  pointer-events: auto !important; /* Делаем точки кликабельными */
+  
+  /* Центрируем точку относительно её координат */
+  transform: translate(-50%, -50%) !important;
+  transition: transform 0.2s ease-in-out, background-color 0.2s !important;
+}
+
+/* Эффект наведения на точку */
+.no-touch .map-nav-point:hover {
+  transform: translate(-50%, -50%) scale(1.25) !important; /* Увеличиваем при наведении */
+  background-color: rgb(0, 123, 255) !important; /* Делаем цвет насыщенным синим */
+}
