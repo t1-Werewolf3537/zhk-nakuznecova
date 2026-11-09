@@ -1160,8 +1160,8 @@ body.fullscreen-enabled .custom-kuznecova-top-round {
   position: absolute !important;
   bottom: 20px !important;
   right: 20px !important;
-  width: 70px !important;  /* <--- Для ПК. Задайте нужную ширину */
-  height: 70px !important;  /* <--- Для ПК. Задайте такую же высоту */
+  width: 70px !important;  /* Вычитаем ширину иконки, делим на 2, вписываем значение в top, right */
+  height: 70px !important;  
   z-index: 1001 !important; /* Поверх панорамы */
   cursor: pointer !important;
   overflow: hidden !important;
@@ -1226,7 +1226,7 @@ body.fullscreen-enabled .custom-kuznecova-top-round {
   .mobile .custom-wolf-watermark-bottom {
     bottom: 15px !important;
     right: 15px !important;
-    width: 60px !important;
+    width: 60px !important;  /* Вычитаем ширину иконки, делим на 2, вписываем значение в top, right */
     height: 60px !important;
   }
   .mobile .custom-wolf-watermark-bottom .wolf-watermark-bg {
