@@ -1113,7 +1113,7 @@ body.view-control-buttons .viewControlButton {
 /* --- НАСТРОЙКИ МАСШТАБА И ПРОЗРАЧНОСТИ (МЕНЯЙТЕ ЗНАЧЕНИЯ ТУТ) ------------- */
 :root {
   --dynamic-image-scale-pc: 1.0;     /* Масштаб картинки для ПК (1.0 = 100%) */
-  --dynamic-image-scale-mobile: 0.5; /* Масштаб картинки для смартфонов */
+  --dynamic-image-scale-mobile: 1.3; /* Масштаб картинки для смартфонов */
   
   --dynamic-image-opacity: 0.5;     /* Прозрачность PNG-текста: от 0.0 до 1.0 */
 }
