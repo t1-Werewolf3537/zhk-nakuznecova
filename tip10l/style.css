@@ -1226,14 +1226,14 @@ body.fullscreen-enabled .custom-kuznecova-top-round {
   .mobile .custom-wolf-watermark-bottom {
     bottom: 15px !important;
     right: 15px !important;
-    width: 70px !important;
-    height: 70px !important;
+    width: 60px !important;
+    height: 60px !important;
   }
   .mobile .custom-wolf-watermark-bottom .wolf-watermark-bg {
     top: 4px !important;
     right: 4px !important;
-    width: 62px !important;
-    height: 62px !important;
+    width: 50px !important;
+    height: 50px !important;
   }
   .mobile .custom-wolf-watermark-bottom .wolf-watermark-icon {
     top: 10px !important;
