@@ -875,150 +875,6 @@ body.view-control-buttons .viewControlButton {
 
 
 
-/* ==========================================================================
-   ПОЛНЫЙ КОД ДЛЯ ТРЁХСЛОЙНОЙ КНОПКИ WOLF STUDIO (РАЗМЕР, ВРАЩЕНИЕ И ПОДСКАЗКА)
-   ========================================================================== */
-
-/* 1. НАГЛУХО ПРЯЧЕМ СТАРЫЙ АВТОРОТЭЙТ */
-#autorotateToggle {
-  display: none !important;
-}
-
-/* 2. КОНТЕЙНЕР КНОПКИ: идеальные штатные размеры и цвет вашей панели */
-.custom-wolf-link {
-  display: block !important;
-  position: absolute !important;
-  top: 0 !important;
-  right: 0 !important;
-  width: 40px !important;
-  height: 40px !important;
-  padding: 5px !important;
-  z-index: 100 !important;
-  cursor: pointer !important;
-  overflow: hidden !important; /* Чтобы элементы не вылезали за рамки 40х40 */
-  
-  background-color: rgb(20, 25, 35) !important;
-  background-color: rgba(20, 25, 35, 0.6) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-}
-
-/* Смещение кнопки влево, если на экране активен полноэкранный режим */
-body.fullscreen-enabled .custom-wolf-link {
-  right: 40px !important;
-}
-
-/* 3. СЛОЙ 1: ФОНОВЫЙ КРУГ (УВЕЛИЧЕННЫЙ И ОТЦЕНТРИРОВАННЫЙ) */
-.custom-wolf-link .wolf-bg-circle {
-  position: absolute !important;
-  top: 2px !important;   /* Отступ 2px для точного центра */
-  right: 2px !important;  /* Отступ 2px для точного центра */
-  width: 36px !important;  /* Увеличенный размер круга */
-  height: 36px !important; /* Увеличенный размер круга */
-  object-fit: contain !important;
-  z-index: 1 !important;   /* Находится на самом нижнем слое внутри кнопки */
-  
-  /* Бесконечное равномерное вращение за 4 секунды */
-  animation: wolfSpinner 4s linear infinite !important;
-}
-
-/* Анимация плавного вращения круга по кругу */
-@keyframes wolfSpinner {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-/* 4. СЛОЙ 2: СТАТИЧНАЯ ИКОНКА САЙТА (ПОВЕРХ ВРАЩАЮЩЕГОСЯ КРУГА) */
-.custom-wolf-link .wolf-icon-img {
-  position: absolute !important;
-  top: 5px !important;
-  right: 5px !important;
-  width: 30px !important;
-  height: 30px !important;
-  object-fit: contain !important;
-  z-index: 2 !important;   /* Встает строго поверх круга */
-  transition: transform 0.2s ease-in-out !important;
-}
-
-/* Эффект наведения: плавно увеличиваем иконку сайта на 15%, как ваши стрелочки */
-.no-touch .custom-wolf-link:hover .wolf-icon-img {
-  transform: scale(1.15) !important;
-}
-
-/* 5. СЛОЙ 3: ВСПЛЫВАЮЩАЯ ПОДСКАЗКА (МГНОВЕННОЕ ПОЯВЛЕНИЕ) */
-.custom-wolf-link .wolf-tooltip {
-  position: absolute !important;
-  top: 45px !important; /* Появляется ровно под кнопкой */
-  right: 5px !important;
-  
-  /* Фирменный темный стиль плашки */
-  background-color: rgba(20, 25, 35, 0.9) !important; 
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  color: #ffffff !important;
-  padding: 5px 10px !important;
-  border-radius: 4px !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
-  
-  font-family: sans-serif !important;
-  font-size: 13px !important;
-  white-space: nowrap !important;
-  pointer-events: none !important; /* Не мешает кликать по кнопке */
-  
-  /* Изначально полностью скрыта */
-  opacity: 0 !important;
-  visibility: hidden !important;
-  
-  /* Без transition и без transform — для абсолютно резкого и мгновенного появления */
-}
-
-/* Включение видимости подсказки строго при наведении мыши */
-.no-touch .custom-wolf-link:hover .wolf-tooltip {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-/* ==========================================================================
-   6. АДАПТИВНАЯ МОБИЛЬНАЯ ВЕРСИЯ (КНОПКА УВЕЛИЧИВАЕТСЯ ДО 50px)
-   ========================================================================== */
-@media (max-width: 768px) or (.mobile) {
-  /* Увеличиваем сам контейнер кнопки */
-  .mobile .custom-wolf-link {
-    width: 50px !important;
-    height: 50px !important;
-  }
-  
-  /* Смещение увеличенной кнопки в полноэкранном режиме на мобильных */
-  body.fullscreen-enabled.mobile .custom-wolf-link {
-    right: 50px !important;
-  }
-  
-  /* Пропорционально увеличиваем фоновый круг на мобильных (до 44px) */
-  .mobile .custom-wolf-link .wolf-bg-circle {
-    top: 3px !important;
-    right: 3px !important;
-    width: 44px !important;
-    height: 44px !important;
-  }
-  
-  /* Позиционируем иконку сайта на мобильных */
-  .mobile .custom-wolf-link .wolf-icon-img {
-    top: 10px !important;
-    right: 10px !important;
-  }
-  
-  /* Сдвигаем подсказку чуть ниже, так как кнопка стала выше */
-  .mobile .custom-wolf-link .wolf-tooltip {
-    top: 55px !important;
-  }
-}
-
-
-
-
 
 
 
@@ -1251,76 +1107,136 @@ body.fullscreen-enabled .custom-wolf-link {
 
 
 /* ==========================================================================
-   КРУГЛАЯ КНОПКА-ЛОГОТИП ЖК (СТРОГО ПОД КНОПКОЙ WOLF STUDIO)
+   1. ЛОГОТИП ЗАСТРОЙЩИКА В ВЕРХНЕМ МЕНЮ (НА КВАДРАТНОМ БЕЛОМ ФОНЕ)
    ========================================================================== */
 
-.custom-kuznecova-round {
+.custom-kuznecova-top-round {
   display: block !important;
   position: absolute !important;
-  /* 40px (высота кнопки Wolf Studio) + 10px (зазор) = 50px от верхнего края */
-  top: 50px !important;
-  right: 0 !important;   /* Выравниваем строго по правому краю панели */
-  width: 40px !important;  /* Размер в точности как у вашей кнопки */
+  top: 0 !important;
+  right: 0 !important; /* Ровно на месте старой кнопки */
+  width: 40px !important;
   height: 40px !important;
   padding: 5px !important;
   z-index: 100 !important;
   cursor: pointer !important;
   
-  /* Идеальная круглая форма */
-  border-radius: 50% !important;
+  /* ИЗМЕНЕНО: Квадратная форма со стильными скруглениями вашей дизайн-системы */
+  border-radius: 4px !important; 
   
-  /* Ваш фирменный полупрозрачный стиль панели */
-  background-color: rgb(255, 255, 255) !important;       /* Сплошной белый (подстраховка) */
-  background-color: rgba(255, 255, 255, 0.8) !important; /* Белый полупрозрачный (60%) */
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  /* Полупрозрачный белый фон */
+  background-color: rgba(255, 255, 255, 0.8) !important; 
+  
+  /* ИЗМЕНЕНО: Фирменная тонкая нижняя линия для соответствия стилю панели */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+  
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-  
   transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out !important;
 }
 
-/* Автоматическое смещение влево, если активен полноэкранный режим */
-body.fullscreen-enabled .custom-kuznecova-round {
-  right: 40px !important; /* Сдвигается вместе с кнопкой Wolf Studio */
+/* Смещение в полноэкранном режиме */
+body.fullscreen-enabled .custom-kuznecova-top-round {
+  right: 40px !important;
 }
 
-/* Иконка логотипа внутри круглого контейнера */
-.custom-kuznecova-round .kuznecova-round-img {
+.custom-kuznecova-top-round .kuznecova-round-img {
   display: block !important;
   width: 100% !important;
   height: 100% !important;
-  object-fit: contain !important; /* Логотип аккуратно впишется в круг, не искажаясь */
-  opacity: 0.8 !important;        /* Слегка приглушен в обычном состоянии */
-  transition: opacity 0.2s ease-in-out !important;
+  object-fit: contain !important;
 }
 
-/* Эффект наведения мыши (для ПК) */
-.no-touch .custom-kuznecova-round:hover {
-  background-color: rgba(20, 25, 35, 0.8) !important;
-  transform: scale(1.1) !important; /* Аккуратное увеличение всей кнопки целиком */
-}
-
-.no-touch .custom-kuznecova-round:hover .kuznecova-round-img {
-  opacity: 1 !important; /* Логотип становится ярким */
+.no-touch .custom-kuznecova-top-round:hover {
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  transform: scale(1.1) !important;
 }
 
 /* ==========================================================================
-   АДАПТИВНОСТЬ ПОД МОБИЛЬНЫЕ УСТРОЙСТВА
+   2. ВОДЯНОЙ ЗНАК WOLF STUDIO В ПРАВОМ НИЖНЕМ УГЛУ (ПРОЗРАЧНЫЙ ФОН + ВРАЩЕНИЕ)
+   ========================================================================== */
+
+.custom-wolf-watermark-bottom {
+  display: block !important;
+  position: absolute !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  width: 40px !important;
+  height: 40px !important;
+  z-index: 1001 !important; /* Поверх панорамы */
+  cursor: pointer !important;
+  overflow: hidden !important;
+  
+  /* Полностью прозрачный контейнер */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* СЛОЙ 1: Вращающийся фоновый круг */
+.custom-wolf-watermark-bottom .wolf-watermark-bg {
+  position: absolute !important;
+  top: 2px !important;
+  right: 2px !important;
+  width: 36px !important;
+  height: 36px !important;
+  object-fit: contain !important;
+  z-index: 1 !important;
+  
+  /* Ваша фирменная анимация вращения */
+  animation: wolfWatermarkSpinner 4s linear infinite !important;
+}
+
+@keyframes wolfWatermarkSpinner {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* СЛОЙ 2: Статичная центральная иконка */
+.custom-wolf-watermark-bottom .wolf-watermark-icon {
+  position: absolute !important;
+  top: 5px !important;
+  right: 5px !important;
+  width: 30px !important;
+  height: 30px !important;
+  object-fit: contain !important;
+  z-index: 2 !important;
+  transition: transform 0.2s ease-in-out !important;
+}
+
+/* Ховер-эффект для водяного знака */
+.no-touch .custom-wolf-watermark-bottom:hover .wolf-watermark-icon {
+  transform: scale(1.15) !important;
+}
+
+
+/* ==========================================================================
+   3. АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ (КНОПКИ УВЕЛИЧИВАЮТСЯ ДО 50px)
    ========================================================================== */
 @media (max-width: 768px) or (.mobile) {
-  .mobile .custom-kuznecova-round {
-    /* 50px (мобильная высота кнопки Wolf Studio) + 10px (зазор) = 60px от верхнего края */
-    top: 60px !important;
-    width: 50px !important;  /* Увеличиваем круг до размера мобильных кнопок */
+  /* Застройщик сверху */
+  .mobile .custom-kuznecova-top-round {
+    width: 50px !important;
     height: 50px !important;
-    padding: 8px !important; /* Немного увеличиваем внутренний отступ */
   }
-  
-  /* Мобильное смещение влево в полноэкранном режиме */
-  body.fullscreen-enabled.mobile .custom-kuznecova-round {
+  body.fullscreen-enabled.mobile .custom-kuznecova-top-round {
     right: 50px !important;
   }
   
-  .mobile .custom-kuznecova-round .kuznecova-round-img {
-    opacity: 0.95 !important; /* На смартфонах сразу делаем картинку четкой */
+  /* Студия снизу */
+  .mobile .custom-wolf-watermark-bottom {
+    bottom: 15px !important;
+    right: 15px !important;
+    width: 50px !important;
+    height: 50px !important;
+  }
+  .mobile .custom-wolf-watermark-bottom .wolf-watermark-bg {
+    top: 3px !important;
+    right: 3px !important;
+    width: 44px !important;
+    height: 44px !important;
+  }
+  .mobile .custom-wolf-watermark-bottom .wolf-watermark-icon {
+    top: 10px !important;
+    right: 10px !important;
   }
 }
