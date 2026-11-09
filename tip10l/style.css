@@ -1107,34 +1107,37 @@ body.view-control-buttons .viewControlButton {
 
 
 /* ==========================================================================
-   1. ЛОГОТИП ЗАСТРОЙЩИКА В ВЕРХНЕМ МЕНЮ (НА КВАДРАТНОМ БЕЛОМ ФОНЕ)
+   БЛОК: ВЕРХНЯЯ ПРАВАЯ ПАНЕЛЬ (ЛОГОТИП ЗАСТРОЙЩИКА И НОВЫЙ КОНТЕЙНЕР)
    ========================================================================== */
 
+/* --- НАСТРОЙКИ МАСШТАБА И ПРОЗРАЧНОСТИ (МЕНЯЙТЕ ЗНАЧЕНИЯ ТУТ) ------------- */
+:root {
+  --dynamic-image-scale-pc: 1.0;     /* Масштаб картинки для ПК (1.0 = 100%) */
+  --dynamic-image-scale-mobile: 0.5; /* Масштаб картинки для смартфонов */
+  
+  --dynamic-image-opacity: 0.5;     /* Прозрачность PNG-текста: от 0.0 до 1.0 */
+}
+
+/* --------------------------------------------------------------------------
+   1. ОРИГИНАЛЬНАЯ КНОПКА ЛОГОТИПА ЗАСТРОЙЩИКА
+   -------------------------------------------------------------------------- */
 .custom-kuznecova-top-round {
   display: block !important;
   position: absolute !important;
   top: 0 !important;
-  right: 0 !important; /* Ровно на месте старой кнопки */
+  right: 0 !important;
   width: 40px !important;
   height: 40px !important;
   padding: 5px !important;
   z-index: 100 !important;
   cursor: pointer !important;
-  
-  /* ИЗМЕНЕНО: Квадратная форма со стильными скруглениями вашей дизайн-системы */
   border-radius: 4px !important; 
-  
-  /* Полупрозрачный белый фон */
   background-color: rgba(255, 255, 255, 0.8) !important; 
-  
-  /* ИЗМЕНЕНО: Фирменная тонкая нижняя линия для соответствия стилю панели */
   border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
-  
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
   transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out !important;
 }
 
-/* Смещение в полноэкранном режиме */
 body.fullscreen-enabled .custom-kuznecova-top-round {
   right: 40px !important;
 }
@@ -1151,8 +1154,85 @@ body.fullscreen-enabled .custom-kuznecova-top-round {
   transform: scale(1.1) !important;
 }
 
+/* --------------------------------------------------------------------------
+   2. НОВЫЙ АДАПТИВНЫЙ КОНТЕЙНЕР (ПОЛНОСТЬЮ ЧИСТЫЙ, БЕЗ ЭФФЕКТОВ)
+   -------------------------------------------------------------------------- */
+.custom-dynamic-image-container {
+  display: block !important;
+  position: absolute !important;
+  
+  /* Размещение строго под кнопкой */
+  top: 48px !important; 
+  right: 0 !important;
+  
+  width: auto !important;
+  height: auto !important;
+  max-width: 30vw !important; 
+  
+  z-index: 99 !important; 
+  pointer-events: auto !important;
+  
+  /* Абсолютно прозрачная невидимая обертка */
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  
+  transform-origin: right top !important;
+  scale: var(--dynamic-image-scale-pc) !important;
+}
+
+body.fullscreen-enabled .custom-dynamic-image-container {
+  right: 40px !important;
+}
+
+/* САМА .PNG КАРТИНКА С ТЕКСТОМ */
+.custom-dynamic-image-container .dynamic-responsive-img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+  
+  /* Убраны все тени и скругления. Только чистая прозрачность для текста */
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border: none !important;
+  
+  opacity: var(--dynamic-image-opacity) !important; 
+}
+
+/* --------------------------------------------------------------------------
+   3. АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ И МОБИЛЬНЫХ УСТРОЙСТВ
+   -------------------------------------------------------------------------- */
+@media (max-width: 768px) or (.mobile) {
+  
+  .mobile .custom-kuznecova-top-round {
+    width: 50px !important;
+    height: 50px !important;
+  }
+  body.fullscreen-enabled.mobile .custom-kuznecova-top-round {
+    right: 50px !important;
+  }
+  
+  .mobile .custom-dynamic-image-container {
+    top: 58px !important; 
+    max-width: 50vw !important;
+    scale: var(--dynamic-image-scale-mobile) !important;
+  }
+  body.fullscreen-enabled.mobile .custom-dynamic-image-container {
+    right: 50px !important;
+  }
+}
+/* ========================================================================== */
+
+
+
+
+
+
+
+
 /* ==========================================================================
-   2. ВОДЯНОЙ ЗНАК WOLF STUDIO В ПРАВОМ НИЖНЕМ УГЛУ (ПРОЗРАЧНЫЙ ФОН + ВРАЩЕНИЕ)
+   1. ВОДЯНОЙ ЗНАК WOLF STUDIO В ПРАВОМ НИЖНЕМ УГЛУ (ПРОЗРАЧНЫЙ ФОН + ВРАЩЕНИЕ)
    ========================================================================== */
 
 .custom-wolf-watermark-bottom {
@@ -1210,7 +1290,7 @@ body.fullscreen-enabled .custom-kuznecova-top-round {
 
 
 /* ==========================================================================
-   3. АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ (КНОПКИ УВЕЛИЧИВАЮТСЯ ДО 50px)
+   2. АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ (КНОПКИ УВЕЛИЧИВАЮТСЯ ДО 50px)
    ========================================================================== */
 @media (max-width: 768px) or (.mobile) {
   /* Застройщик сверху */
