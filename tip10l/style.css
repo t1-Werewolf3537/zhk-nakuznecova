@@ -1230,14 +1230,14 @@ body.fullscreen-enabled .custom-kuznecova-top-round {
     height: 60px !important;
   }
   .mobile .custom-wolf-watermark-bottom .wolf-watermark-bg {
-    top: 4px !important;
-    right: 4px !important;
+    top: 5px !important;
+    right: 5px !important;
     width: 50px !important;
     height: 50px !important;
   }
   .mobile .custom-wolf-watermark-bottom .wolf-watermark-icon {
-    top: 10px !important;
-    right: 10px !important;
+    top: 8px !important;
+    right: 8px !important;
     width: 44px !important;  /* Добавляем явный размер для мобильной иконки */
     height: 44px !important; /* чтобы она тоже пропорционально росла */
    }
