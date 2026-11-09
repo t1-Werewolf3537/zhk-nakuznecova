@@ -1160,8 +1160,8 @@ body.fullscreen-enabled .custom-kuznecova-top-round {
   position: absolute !important;
   bottom: 20px !important;
   right: 20px !important;
-  width: 40px !important;
-  height: 40px !important;
+  width: 70px !important;  /* <--- Для ПК. Задайте нужную ширину */
+  height: 70px !important;  /* <--- Для ПК. Задайте такую же высоту */
   z-index: 1001 !important; /* Поверх панорамы */
   cursor: pointer !important;
   overflow: hidden !important;
@@ -1175,10 +1175,10 @@ body.fullscreen-enabled .custom-kuznecova-top-round {
 /* СЛОЙ 1: Вращающийся фоновый круг */
 .custom-wolf-watermark-bottom .wolf-watermark-bg {
   position: absolute !important;
-  top: 2px !important;
-  right: 2px !important;
-  width: 36px !important;
-  height: 36px !important;
+  top: 3px !important;  /* Для ПК. Было 2px (центрирование) */
+  right: 3px !important;   /* Для ПК. Было 2px */
+  width: 65px !important;  /* Для ПК. Было 36px (размер круга) */
+  height: 65px !important;  /* Для ПК. Было 36px */
   object-fit: contain !important;
   z-index: 1 !important;
   
@@ -1194,10 +1194,10 @@ body.fullscreen-enabled .custom-kuznecova-top-round {
 /* СЛОЙ 2: Статичная центральная иконка */
 .custom-wolf-watermark-bottom .wolf-watermark-icon {
   position: absolute !important;
-  top: 5px !important;
-  right: 5px !important;
-  width: 30px !important;
-  height: 30px !important;
+  top: 8px !important;
+  right: 8px !important;
+  width: 54px !important;  /* Для ПК. Было 30px */
+  height: 54px !important;  /* Для ПК. Было 30px */
   object-fit: contain !important;
   z-index: 2 !important;
   transition: transform 0.2s ease-in-out !important;
@@ -1226,17 +1226,19 @@ body.fullscreen-enabled .custom-kuznecova-top-round {
   .mobile .custom-wolf-watermark-bottom {
     bottom: 15px !important;
     right: 15px !important;
-    width: 50px !important;
-    height: 50px !important;
+    width: 70px !important;
+    height: 70px !important;
   }
   .mobile .custom-wolf-watermark-bottom .wolf-watermark-bg {
-    top: 3px !important;
-    right: 3px !important;
-    width: 44px !important;
-    height: 44px !important;
+    top: 4px !important;
+    right: 4px !important;
+    width: 62px !important;
+    height: 62px !important;
   }
   .mobile .custom-wolf-watermark-bottom .wolf-watermark-icon {
     top: 10px !important;
     right: 10px !important;
-  }
+    width: 44px !important;  /* Добавляем явный размер для мобильной иконки */
+    height: 44px !important; /* чтобы она тоже пропорционально росла */
+   }
 }
