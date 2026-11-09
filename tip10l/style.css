@@ -1239,3 +1239,79 @@ body.fullscreen-enabled .custom-wolf-link {
   transform: translate(-50%, -50%) scale(1.25) !important; /* Увеличиваем при наведении */
   background-color: rgb(0, 123, 255) !important; /* Делаем цвет насыщенным синим */
 }
+
+
+
+
+
+
+
+
+
+
+
+/* ==========================================================================
+   ЛОГОТИП ЗАСТРОЙЩИКА ПОД ПРАВЫМ ВЕРХНИМ МЕНЮ
+   ========================================================================== */
+
+.custom-kuznecova-link {
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  /* Встает левее кнопки Wolf Studio (которая занимает первые 40px) */
+  right: 40px !important; 
+  width: 40px !important;
+  height: 40px !important;
+  padding: 5px !important;
+  z-index: 100 !important;
+  cursor: pointer !important;
+  overflow: hidden !important;
+  
+  /* ПОЛНОСТЬЮ ПРОЗРАЧНЫЙ ФОН БЕЗ ТЕНЕЙ И ГРАНИЦ */
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Смещение кнопки еще дальше влево, если на экране активен полноэкранный режим */
+body.fullscreen-enabled .custom-kuznecova-link {
+  right: 80px !important; /* Освобождаем место для фуллскрина (40px) и Wolf Studio (40px) */
+}
+
+/* Статичная иконка логотипа ЖК */
+.custom-kuznecova-link .kuznecova-icon-img {
+  position: absolute !important;
+  top: 5px !important;
+  right: 5px !important;
+  width: 30px !important;
+  height: 30px !important;
+  object-fit: contain !important;
+  transition: transform 0.2s ease-in-out !important;
+}
+
+/* Эффект наведения: плавное увеличение иконки на 15%, как у ваших стрелочек */
+.no-touch .custom-kuznecova-link:hover .kuznecova-icon-img {
+  transform: scale(1.15) !important;
+}
+
+/* ==========================================================================
+   АДАПТИВНАЯ МОБИЛЬНАЯ ВЕРСИЯ
+   ========================================================================== */
+@media (max-width: 768px) or (.mobile) {
+  .mobile .custom-kuznecova-link {
+    width: 50px !important;
+    height: 50px !important;
+    right: 50px !important; /* На мобильных Wolf Studio занимает 50px, значит ЖК встает на 50px */
+  }
+  
+  /* Смещение в полноэкранном режиме на мобильных */
+  body.fullscreen-enabled.mobile .custom-kuznecova-link {
+    right: 100px !important; /* Место для фуллскрина (50px) + Wolf Studio (50px) */
+  }
+  
+  /* Корректируем позиционирование картинки внутри увеличенной мобильной кнопки */
+  .mobile .custom-kuznecova-link .kuznecova-icon-img {
+    top: 10px !important;
+    right: 10px !important;
+  }
+}
