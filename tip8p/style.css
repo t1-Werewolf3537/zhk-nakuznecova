@@ -908,7 +908,7 @@ body.view-control-buttons .viewControlButton {
   --map-width-desktop: 25vw;  /* <--- Изменяйте этот процент для компьютеров */
 
   /* ПРОЦЕНТ ОТ ЭКРАНА ДЛЯ ТЕЛЕФОНОВ */
-  --map-width-mobile: 85vw;   /* <--- Изменяйте этот процент для смартфонов */
+  --map-width-mobile: 100vw;   /* <--- Изменяйте этот процент для смартфонов */
 }
 
 /* ==========================================================================
@@ -1248,7 +1248,7 @@ body.fullscreen-enabled .custom-dynamic-image-container {
   right: 20px !important;
   width: 70px !important;  /* Вычитаем ширину иконки, делим на 2, вписываем значение в top, right */
   height: 70px !important;  
-  z-index: 1001 !important; /* Поверх панорамы */
+  z-index: 1 !important; /* Поверх панорамы */
   cursor: pointer !important;
   overflow: hidden !important;
   
