@@ -483,7 +483,7 @@ var view = new Marzipano.RectilinearView(data.initialViewParameters, limiter);
   }
 
   // Display the initial scene.
-  switchScene(scenes[0]);
+  switchScene(scenes[3]);
 
   hideSceneList();
 
