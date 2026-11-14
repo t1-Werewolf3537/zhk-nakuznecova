@@ -272,6 +272,102 @@ var APP_DATA = {
           "pitch": 0.3122837693856564,
           "rotation": 0,
           "target": "2"
+        },
+        {
+          "yaw": 1.835537894273541,
+          "pitch": 0.497008605867018,
+          "rotation": 0,
+          "target": "8"
+        }
+      ],
+      "infoHotspots": []
+    },
+    {
+      "id": "7",
+      "name": "BathRoom",
+      "mapCoords": {
+        "left": "65.79%",
+        "top": "60.21%"
+      },
+      "levels": [
+        {
+          "tileSize": 256,
+          "size": 256,
+          "fallbackOnly": true
+        },
+        {
+          "tileSize": 512,
+          "size": 512
+        },
+        {
+          "tileSize": 512,
+          "size": 1024
+        },
+        {
+          "tileSize": 512,
+          "size": 2048
+        }
+      ],
+      "faceSize": 2048,
+      "initialViewParameters": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 1.2
+      },
+      "linkHotspots": [
+        {
+          "yaw": -0.617528444203506,
+          "pitch": 0.25906958620854326,
+          "rotation": 0,
+          "target": "8"
+        }
+      ],
+      "infoHotspots": []
+    },
+    {
+      "id": "8",
+      "name": "Hall_5",
+      "mapCoords": {
+        "left": "64.83%",
+        "top": "41.03%"
+      },
+      "levels": [
+        {
+          "tileSize": 256,
+          "size": 256,
+          "fallbackOnly": true
+        },
+        {
+          "tileSize": 512,
+          "size": 512
+        },
+        {
+          "tileSize": 512,
+          "size": 1024
+        },
+        {
+          "tileSize": 512,
+          "size": 2048
+        }
+      ],
+      "faceSize": 2048,
+      "initialViewParameters": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 1.2
+      },
+      "linkHotspots": [
+        {
+          "yaw": -1.2662511962665448,
+          "pitch": 0.48435114369052457,
+          "rotation": 0,
+          "target": "6"
+        },
+        {
+          "yaw": -2.896978670033034,
+          "pitch": 0.3044415286085922,
+          "rotation": 0,
+          "target": "7"
         }
       ],
       "infoHotspots": []
