@@ -368,8 +368,97 @@ var APP_DATA = {
           "pitch": 0.3044415286085922,
           "rotation": 0,
           "target": "7"
+        },
+        {
+          "yaw": 2.028368442496868,
+          "pitch": 0.6605688262601142,
+          "rotation": 0,
+          "target": "9"
         }
       ],
+      "infoHotspots": []
+    },
+    {
+      "id": "9",
+      "name": "Kitchen_1",
+      "mapCoords": {
+        "left": "75.77%",
+        "top": "46.33%"
+      },
+      "levels": [
+        {
+          "tileSize": 256,
+          "size": 256,
+          "fallbackOnly": true
+        },
+        {
+          "tileSize": 512,
+          "size": 512
+        },
+        {
+          "tileSize": 512,
+          "size": 1024
+        },
+        {
+          "tileSize": 512,
+          "size": 2048
+        }
+      ],
+      "faceSize": 2048,
+      "initialViewParameters": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 1.2
+      },
+      "linkHotspots": [
+        {
+          "yaw": 2.298817330549623,
+          "pitch": 0.49642292359478013,
+          "rotation": 0,
+          "target": "10"
+        },
+        {
+          "yaw": -1.481449756238181,
+          "pitch": 0.6338221407141482,
+          "rotation": 0,
+          "target": "8"
+        }
+      ],
+      "infoHotspots": []
+    },
+    {
+      "id": "10",
+      "name": "Kitchen_2",
+      "mapCoords": {
+        "left": "88.25%",
+        "top": "61.92%"
+      },
+      "levels": [
+        {
+          "tileSize": 256,
+          "size": 256,
+          "fallbackOnly": true
+        },
+        {
+          "tileSize": 512,
+          "size": 512
+        },
+        {
+          "tileSize": 512,
+          "size": 1024
+        },
+        {
+          "tileSize": 512,
+          "size": 2048
+        }
+      ],
+      "faceSize": 2048,
+      "initialViewParameters": {
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 1.2
+      },
+      "linkHotspots": [],
       "infoHotspots": []
     }
   ],
