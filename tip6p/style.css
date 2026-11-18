@@ -1,0 +1,696 @@
+/* ==========================================================================
+   ЧАСТЬ 1: ПЕРЕМЕННЫЕ, БАЗОВЫЕ СТИЛИ, ПАНОРАМА И ВЕРХНЯЯ ПАНЕЛЬ
+   ========================================================================== */
+
+:root {
+  /* Мини-карта: ширина от экрана */
+  --map-width-desktop: 18vw;
+  --map-width-mobile: 75vw;
+
+  /* Картинка с текстом под логотипом ЖК */
+  --dynamic-image-scale-pc: 1.0;
+  --dynamic-image-scale-mobile: 0.4;
+  --dynamic-image-opacity: 0.5;
+
+  /* Текст-подсказка под iOS-тумблером переключения отделки */
+  --switch-text-scale-pc: 1.5;
+  --switch-text-scale-mobile: 0.85;
+}
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -ms-text-size-adjust: none;
+  -moz-text-size-adjust: none;
+  -webkit-text-size-adjust: none;
+  text-size-adjust: none;
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  -ms-content-zooming: none;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  background-color: #000;
+  color: #fff;
+}
+
+a, a:hover, a:active, a:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* --- КОНТЕЙНЕР ПАНОРАМЫ --------------------------------------------------- */
+#pano {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+/* --- ВЕРХНЯЯ ПАНЕЛЬ С НАЗВАНИЕМ СЦЕНЫ ------------------------------------- */
+#titleBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 40px;
+  height: 40px;
+  text-align: center;
+  z-index: 45;
+}
+
+.mobile #titleBar {
+  height: 50px;
+  right: 50px;
+}
+
+body.multiple-scenes #titleBar { left: 40px; }
+body.multiple-scenes.mobile #titleBar { left: 50px; }
+
+#titleBar .sceneName {
+  width: 100%;
+  height: 100%;
+  line-height: 30px;
+  padding: 5px;
+  background-color: rgba(20, 25, 35, 0.6) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  user-select: text;
+}
+
+.mobile #titleBar .sceneName {
+  line-height: 40px;
+}
+
+/* ==========================================================================
+   ЧАСТЬ 2: МЕНЮ СПИСКА КВАРТИР И СТРЕЛКИ ПЕРЕХОДА МЕЖДУ КОМНАТАМИ
+   ========================================================================== */
+
+/* --- КНОПКА ОТКРЫТИЯ СПИСКА (СЛЕВА СВЕРХУ) -------------------------------- */
+#sceneListToggle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  background-color: rgba(0, 123, 255, 0.8);
+  z-index: 2001 !important;
+}
+
+.mobile #sceneListToggle {
+  width: 50px;
+  height: 50px;
+  z-index: 2001 !important;
+}
+
+#sceneListToggle .icon {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+.mobile #sceneListToggle .icon {
+  top: 10px;
+  right: 10px;
+}
+
+#sceneListToggle .icon.on { display: none; }
+#sceneListToggle .icon.off { display: block; }
+#sceneListToggle.enabled .icon.on { display: block; }
+#sceneListToggle.enabled .icon.off { display: none; }
+
+/* --- ВЫЕЗЖАЮЩИЙ СПИСОК КВАРТИР -------------------------------------------- */
+#sceneList {
+  position: absolute;
+  top: 0;
+  left: -350px;
+  padding-top: 40px;
+  width: 350px;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-left: 0;
+  z-index: 2000 !important;
+  -webkit-transition: margin-left 0.5s ease-in-out;
+  transition: margin-left 0.5s ease-in-out;
+}
+
+#sceneList.enabled {
+  margin-left: 350px;
+}
+
+#sceneList .scenes {
+  width: 100%;
+  background-color: rgba(20, 25, 35, 0.9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.8) !important;
+  border-radius: 5px;
+}
+
+.mobile #sceneList {
+  padding-top: 50px !important;
+  width: 100%;
+  height: 100%;
+  left: -100%;
+  z-index: 2000 !important;
+}
+
+.mobile #sceneList.enabled { margin-left: 100%; }
+.mobile #sceneList .scenes { height: 100%; }
+
+#sceneList .scene {
+  display: block;
+  width: 100%;
+  height: auto !important;
+}
+
+#sceneList .scene .text {
+  width: 100%;
+  height: auto !important;
+  padding: 8px 15px;
+  line-height: 1.4;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  word-wrap: break-word;
+}
+
+.mobile #sceneList .scene .text {
+  line-height: 40px;
+}
+
+.no-touch #sceneList .scene:hover {
+  background-color: rgba(250, 250, 250, 0.4) !important;
+}
+
+/* --- СТРЕЛКИ ПЕРЕХОДА МЕЖДУ СЦЕНАМИ (LINK HOTSPOT) ------------------------ */
+.link-hotspot {
+  width: 60px;
+  height: 60px;
+  margin-left: -30px;
+  margin-top: -30px;
+  opacity: 0.9;
+  z-index: 10;
+  -webkit-transition: opacity 0.2s;
+  transition: opacity 0.2s;
+}
+
+.no-touch .link-hotspot:hover {
+  opacity: 1;
+}
+
+.mobile .link-hotspot {
+  width: 50px;
+  height: 50px;
+  margin-left: -25px;
+  margin-top: -25px;
+}
+
+.link-hotspot-icon,
+.link-hotspot img {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out !important;
+}
+
+.no-touch .link-hotspot:hover img,
+.no-touch .link-hotspot-icon:hover {
+  transform: scale(1.15) !important;
+}
+
+/* ==========================================================================
+   ЧАСТЬ 3: МИНИ-КАРТА, ЛУЧ-РАДАР И ТОЧКИ ПЕРЕКЛЮЧЕНИЯ КОМНАТ
+   ========================================================================== */
+
+.map-open-button {
+  position: absolute !important;
+  bottom: 20px !important;
+  left: 20px !important;
+  z-index: 110 !important;
+  background-color: rgba(20, 25, 35, 0.6) !important;
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 4px !important;
+  padding: 8px 16px !important;
+  font-family: sans-serif !important;
+  font-size: 14px !important;
+  cursor: pointer !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s !important;
+  pointer-events: auto !important;
+}
+
+.no-touch .map-open-button:hover {
+  background-color: rgb(103, 115, 131) !important;
+}
+
+.map-open-button.hidden-state {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+#mini-map-wrapper {
+  position: absolute !important;
+  bottom: 20px !important;
+  left: 20px !important;
+  z-index: 100 !important;
+  height: auto !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s !important;
+}
+
+#mini-map-wrapper.active-state {
+  opacity: 1 !important;
+  visibility: visible !important;
+  pointer-events: auto !important;
+}
+
+.map-inner {
+  position: relative !important;
+  display: inline-block !important;
+  vertical-align: top !important;
+  container-type: inline-size !important;
+  width: 100% !important;
+}
+
+@media (min-width: 769px) {
+  .map-inner { width: clamp(250px, var(--map-width-desktop), 85vw) !important; }
+}
+@media (max-width: 768px) {
+  .map-inner { width: clamp(140px, var(--map-width-mobile), 85vw) !important; }
+}
+
+#mini-map-close-btn {
+  position: absolute !important;
+  top: -10px !important;
+  right: -10px !important;
+  width: 22px !important;
+  height: 22px !important;
+  background-color: rgba(0, 123, 255, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  border-radius: 50% !important;
+  color: #ffffff !important;
+  font-size: 16px !important;
+  line-height: 18px !important;
+  text-align: center !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
+  z-index: 120 !important;
+}
+
+#mini-map-close-btn:hover {
+  background-color: #ff3333 !important;
+}
+
+#mini-map-img {
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5)) !important;
+}
+
+#mini-map-dot {
+  position: absolute !important;
+  width: 4cqw !important;
+  height: 4cqw !important;
+  background-color: #ff3333 !important;
+  border: 0.5cqw solid #ffffff !important;
+  border-radius: 50% !important;
+  box-shadow: 0 0 8px rgba(255, 51, 51, 0.8) !important;
+  z-index: 20 !important;
+  pointer-events: auto !important;
+  cursor: default !important;
+  transition: opacity 0.2s ease-in-out !important;
+  transform: translate(-50%, -50%);
+}
+
+#mini-map-dot::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 13cqw !important;
+  height: 17cqw !important;
+  transform-origin: top center !important;
+  transform: translate(-50%, 0) !important;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 20%,
+    rgba(255, 255, 255, 0) 100%
+  ) !important;
+  clip-path: polygon(44% 11%, 56% 11%, 100% 100%, 0% 100%) !important;
+  pointer-events: none !important;
+}
+
+#mini-map-dot.switching {
+  opacity: 0 !important;
+  visibility: hidden !important;
+}
+
+#mini-map-points {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10 !important;
+  pointer-events: none;
+}
+
+.map-nav-point {
+  position: absolute !important;
+  width: 3.7cqw !important;
+  height: 3.7cqw !important;
+  background-color: rgba(0, 123, 255, 0.7) !important;
+  border: 0.4cqw solid #ffffff !important;
+  border-radius: 50% !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+  transform: translate(-50%, -50%) !important;
+  transition: transform 0.2s ease-in-out, background-color 0.2s !important;
+}
+
+.no-touch .map-nav-point:hover {
+  transform: translate(-50%, -50%) scale(1.25) !important;
+  background-color: rgb(0, 123, 255) !important;
+}
+
+/* ==========================================================================
+   ЧАСТЬ 4: ЛОГОТИП ЖК, ТЕКСТОВЫЙ БАННЕР, ВОДЯНОЙ ЗНАК И ТУМБЛЕР ОТДЕЛКИ
+   ========================================================================== */
+
+/* --- КНОПКА ЛОГОТИПА ЖК (ПРАВЫЙ ВЕРХНИЙ УГОЛ) ----------------------------- */
+.custom-zhk-top-round {
+  display: block !important;
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 40px !important;
+  height: 40px !important;
+  padding: 1px !important;
+  z-index: 60 !important;
+  cursor: pointer !important;
+  border-radius: 4px !important;
+  background-color: rgba(255, 255, 255, 0.8) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out !important;
+}
+
+.custom-zhk-top-round .zhk-round-img {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+.no-touch .custom-zhk-top-round:hover {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  transform: scale(1.1) !important;
+}
+
+/* --- АДАПТИВНЫЙ КОНТЕЙНЕР ПОД ЛОГОТИПОМ (PNG-ТЕКСТ) ---------------------- */
+.custom-dynamic-image-container {
+  display: block !important;
+  position: absolute !important;
+  top: 48px !important;
+  right: 0 !important;
+  width: auto !important;
+  height: auto !important;
+  max-width: 30vw !important;
+  z-index: 35 !important;
+  pointer-events: none !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
+  transform-origin: right top !important;
+  scale: var(--dynamic-image-scale-pc) !important;
+}
+
+.custom-dynamic-image-container .dynamic-responsive-img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+  border: none !important;
+  opacity: var(--dynamic-image-opacity) !important;
+}
+
+/* --- ВОДЯНОЙ ЗНАК WOLF STUDIO (ПРАВЫЙ НИЖНИЙ УГОЛ) ----------------------- */
+.custom-wolf-watermark-bottom {
+  display: block !important;
+  position: absolute !important;
+  bottom: 20px !important;
+  right: 20px !important;
+  width: 70px !important;
+  height: 70px !important;
+  z-index: 40 !important;
+  cursor: pointer !important;
+  overflow: hidden !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.custom-wolf-watermark-bottom .wolf-watermark-bg {
+  position: absolute !important;
+  top: 3px !important;
+  right: 3px !important;
+  width: 65px !important;
+  height: 65px !important;
+  object-fit: contain !important;
+  z-index: 1 !important;
+  animation: wolfWatermarkSpinner 4s linear infinite !important;
+}
+
+@keyframes wolfWatermarkSpinner {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.custom-wolf-watermark-bottom .wolf-watermark-icon {
+  position: absolute !important;
+  top: 8px !important;
+  right: 8px !important;
+  width: 54px !important;
+  height: 54px !important;
+  object-fit: contain !important;
+  z-index: 2 !important;
+  transition: transform 0.2s ease-in-out !important;
+}
+
+.no-touch .custom-wolf-watermark-bottom:hover .wolf-watermark-icon {
+  transform: scale(1.15) !important;
+}
+
+/* --- IOS-ТУМБЛЕР ПЕРЕКЛЮЧЕНИЯ ОТДЕЛКИ И ПОДСКАЗКА ПОД НИМ ---------------- */
+.ios-switch-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 5px !important;
+  position: absolute !important;
+  top: 48px !important;
+  left: 6px !important;
+  z-index: 35 !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  pointer-events: none !important;
+  transform-origin: left top !important;
+  scale: var(--dynamic-image-scale-pc) !important;
+}
+
+.ios-switch {
+  position: relative !important;
+  display: inline-block !important;
+  flex-shrink: 0 !important;
+  width: 42px !important;
+  height: 24px !important;
+  cursor: pointer !important;
+  pointer-events: auto !important;
+}
+
+.ios-switch input {
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.ios-switch-slider {
+  position: absolute !important;
+  cursor: pointer !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background-color: rgba(58, 68, 84, 0.65) !important;
+  border: 2px solid rgba(255, 255, 255, 1) !important;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border-radius: 24px !important;
+}
+
+.ios-switch-slider:before {
+  position: absolute !important;
+  content: "" !important;
+  height: 20px !important;
+  width: 20px !important;
+  left: 1px !important;
+  bottom: 1px !important;
+  background-color: rgba(255, 255, 255, 1) !important;
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+.ios-switch input:checked + .ios-switch-slider {
+  background-color: rgba(52, 199, 89, 1) !important;
+}
+
+.ios-switch input:checked + .ios-switch-slider:before {
+  transform: translateX(18px) !important;
+}
+
+.ios-switch-label-box {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 3px !important;
+  margin-left: 13px !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  color: #ffffff !important;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85) !important;
+  pointer-events: none !important;
+  cursor: default !important;
+  transform-origin: 8px top !important;
+  scale: var(--switch-text-scale-pc) !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out !important;
+}
+
+.ios-switch-label-box.is-visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
+.ios-switch-label-box.is-dismissed {
+  opacity: 0 !important;
+  visibility: hidden !important;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out !important;
+}
+
+.hint-arrow-icon {
+  width: 16px !important;
+  height: 16px !important;
+  flex-shrink: 0 !important;
+  color: #ffffff !important;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.85)) !important;
+}
+
+/* --- АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ (.mobile) --------------------------------- */
+.mobile .custom-zhk-top-round {
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.mobile .custom-dynamic-image-container {
+  top: 58px !important;
+  max-width: none !important;
+  width: auto !important;
+  scale: var(--dynamic-image-scale-mobile) !important;
+}
+
+.mobile .custom-wolf-watermark-bottom {
+  bottom: 15px !important;
+  right: 15px !important;
+  width: 60px !important;
+  height: 60px !important;
+}
+
+.mobile .custom-wolf-watermark-bottom .wolf-watermark-bg {
+  top: 5px !important;
+  right: 5px !important;
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.mobile .custom-wolf-watermark-bottom .wolf-watermark-icon {
+  top: 8px !important;
+  right: 8px !important;
+  width: 44px !important;
+  height: 44px !important;
+}
+
+.mobile .ios-switch-wrapper {
+  scale: 1.4 !important;
+  top: 65px !important;
+  left: 6px !important;
+  gap: 5px !important;
+  padding: 0 !important;
+}
+
+.mobile .ios-switch {
+  width: 36px !important;
+  height: 20px !important;
+}
+
+.mobile .ios-switch-slider:before {
+  height: 16px !important;
+  width: 16px !important;
+  left: 1px !important;
+  bottom: 0px !important;
+}
+
+.mobile .ios-switch input:checked + .ios-switch-slider:before {
+  transform: translateX(15px) !important;
+}
+
+.mobile .ios-switch-label-box {
+  scale: var(--switch-text-scale-mobile) !important;
+  font-size: 12px !important;
+  margin-left: 10px !important;
+}
+
+@media (max-width: 768px) {
+  .custom-dynamic-image-container {
+    max-width: none !important;
+  }
+}

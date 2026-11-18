@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui" />
+  <style> @-ms-viewport { width: device-width; } </style>
+  
+  <title>ЖК "Дом на Кузнецова" 3D-тур по квартире Тип-8П | Кирилл Бахарев</title>  
+  <meta name="description" content="3D-тур по квартире в ЖК «Дом на Кузнецова» Тип-6П (50 кв.м). Профессиональная 3D-визуализация интерьера | Кирилл Бахарев" />
+
+  <!-- Open Graph для мессенджеров и соцсетей -->
+  <meta property="og:type" content="website"> 
+  <meta property="og:title" content="3D-тур Дом на Кузнецова Тип-6П | 2-КОМНАТНАЯ 50м²м²"> 
+  <meta property="og:description" content="Виртуальный тур по интерьеру квартиры | Кирилл Бахарев." /> 
+  <meta property="og:url" content="https://wolf-studio.ru"> 
+  <meta property="og:image" content="https://wolf-studio.ru">
+
+  <link rel="stylesheet" href="vendor/reset.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/png" href="../favicon.png">
+</head>
+
+<body class="multiple-scenes">
+
+  <!-- Контейнер панорамы -->
+  <div id="pano"></div>
+
+  <!-- Выезжающее меню выбора других квартир -->
+  <div id="sceneList">
+    <ul class="scenes">
+
+      <a href="https://zhk-nakuznecova.wolf-studio.ru/tip10l" class="scene">
+        <li class="text">Тип 10Л | 47м²</li>
+      </a>
+
+      <a href="https://zhk-nakuznecova.wolf-studio.ru/tip8p/" class="scene">
+        <li class="text">Тип 8П | 69м²</li>
+      </a>
+
+    </ul>
+  </div>
+
+  <!-- Верхняя плашка с названием -->
+  <div id="titleBar">
+    <h1 class="sceneName"></h1>
+  </div>
+
+  <!-- Кнопка открытия меню квартир -->
+  <a href="javascript:void(0)" id="sceneListToggle">
+    <img class="icon off" src="img/expand.png" alt="Открыть меню">
+    <img class="icon on" src="img/collapse.png" alt="Закрыть меню">
+  </a>
+
+  <!-- Логотип застройщика и текстовый баннер -->
+  <a href="https://na-kuznetsova.ru" target="_blank" class="custom-zhk-top-round">
+    <img src="img/logo_zhk.png" alt="ЖК Дом на Кузнецова" class="zhk-round-img">
+  </a>
+  <div class="custom-dynamic-image-container">
+    <img src="img/text_zhk.png" class="dynamic-responsive-img" alt="ЖК Дом на Кузнецова">
+  </div>
+
+  <!-- Водяной знак Wolf Studio -->
+  <a href="https://wolf-studio.ru" target="_blank" class="custom-wolf-watermark-bottom">
+    <img src="img/circle.png" class="wolf-watermark-bg" alt="">
+    <img src="img/site.png" class="wolf-watermark-icon" alt="Wolf Studio">
+  </a>
+
+  <!-- Мини-карта планировки -->
+  <button id="mini-map-toggle-btn" class="map-open-button">Планировка</button>
+
+  <div id="mini-map-wrapper">
+    <div id="mini-map-close-btn">&times;</div>
+    <div class="map-inner">
+      <img src="img/plan.jpg" id="mini-map-img" alt="Планировка Дом на Кузнецова Тип-6П 2-КОМНАТНАЯ 50м²">
+      <div id="mini-map-points"></div>
+      <div id="mini-map-dot"></div>
+    </div>
+  </div>
+
+  <!-- iOS-переключатель варианта отделки -->
+  <div class="ios-switch-wrapper">
+    <label class="ios-switch">
+      <input type="checkbox" id="finish-variant-toggle-btn">
+      <span class="ios-switch-slider"></span>
+    </label>
+    <div id="finish-variant-hint" class="ios-switch-label-box">
+      <svg class="hint-arrow-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="12" y1="19" x2="12" y2="5"></line>
+        <polyline points="5 12 12 5 19 12"></polyline>
+      </svg>
+      <span>Посмотрите проект с ремонтом</span>
+    </div>
+  </div>
+
+  <!-- Скрипты -->
+  <script src="vendor/bowser.min.js"></script>
+  <script src="vendor/marzipano.js"></script>
+  <script src="data.js"></script>
+  <script src="index.js"></script>
+
+  <!-- SEO-блок -->
+  <div style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap;">
+    <h2>3D-тур по квартире в ЖК «Дом на Кузнецова» 2-комнатная 50м²</h2>
+    <p>Интерактивный виртуальный 3D-тур по 2-комнатной квартире площадью 50 м² в ЖК «Дом на Кузнецова» город Новокузнецк. Профессиональная 3D-визуализация интерьера, разработчик | Кирилл Бахарев.</p>
+    <p>Интерактивная панорама позволяет оценить эргономику и расстановку мебели именно этой 2-комнатной квартире площадью 50м² у застройщика ЖК "Дом на Кузнецова". Рассмотрите детали в 3D-туре.</p>
+    <h3>Другие планировки квартир в ЖК «Дом на Кузнецова» Новокузнецк:</h3>
+    <ul>
+      <li><a href="https://na-kuznetsova.ru/">ЖК "Дом на Кузнецова" г. Новокузнецк</a></li>
+    </ul>
+  </div>
+
+</body>
+</html>
