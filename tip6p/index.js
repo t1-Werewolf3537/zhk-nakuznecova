@@ -245,7 +245,7 @@
   }
 
   startScene.scene.switchTo();
-  sceneNameElement.innerHTML = "1-КОМНАТНАЯ | 39м²";
+  sceneNameElement.innerHTML = "Тип-6П | 2-КОМНАТНАЯ 50м²м²";
 
   var initialMapDot = document.getElementById('mini-map-dot');
   if (initialMapDot && startScene.data && startScene.data.mapCoords) {
