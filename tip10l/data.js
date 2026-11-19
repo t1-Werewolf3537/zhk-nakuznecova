@@ -4,8 +4,8 @@ var APP_DATA = {
       "id": "1",
       "name": "bath",
       "mapCoords": {
-        "left": "41%",
-        "top": "75%"
+        "left": "41.08%",
+        "top": "76.08%"
       },
       "levels": [
         {
@@ -28,14 +28,14 @@ var APP_DATA = {
       ],
       "faceSize": 2048,
       "initialViewParameters": {
-        "yaw": 0.0,
-        "pitch": 0.0,
+        "yaw": 0,
+        "pitch": 0,
         "fov": 1.2
       },
       "linkHotspots": [
         {
-          "yaw": -1.5237,
-          "pitch": 0.5195,
+          "yaw": -1.5396811805683672,
+          "pitch": 0.4029342996172005,
           "rotation": 0,
           "target": "4"
         }
@@ -46,8 +46,8 @@ var APP_DATA = {
       "id": "2",
       "name": "bedroom",
       "mapCoords": {
-        "left": "80%",
-        "top": "69%"
+        "left": "79.95%",
+        "top": "68.77%"
       },
       "levels": [
         {
@@ -70,14 +70,14 @@ var APP_DATA = {
       ],
       "faceSize": 2048,
       "initialViewParameters": {
-        "yaw": 0.0,
-        "pitch": 0.0,
+        "yaw": 0,
+        "pitch": 0,
         "fov": 1.2
       },
       "linkHotspots": [
         {
-          "yaw": -0.1758,
-          "pitch": 0.5447,
+          "yaw": -0.32303632606859267,
+          "pitch": 0.49674467984374715,
           "rotation": 0,
           "target": "6"
         }
@@ -88,8 +88,8 @@ var APP_DATA = {
       "id": "3",
       "name": "cabinet",
       "mapCoords": {
-        "left": "20%",
-        "top": "33%"
+        "left": "19.45%",
+        "top": "31.86%"
       },
       "levels": [
         {
@@ -112,20 +112,20 @@ var APP_DATA = {
       ],
       "faceSize": 2048,
       "initialViewParameters": {
-        "yaw": 0.0,
-        "pitch": 0.0,
+        "yaw": 0,
+        "pitch": 0,
         "fov": 1.2
       },
       "linkHotspots": [
         {
-          "yaw": -3.0717,
-          "pitch": 0.4764,
+          "yaw": -3.115703856905583,
+          "pitch": 0.4726866066679065,
           "rotation": 0,
           "target": "4"
         },
         {
-          "yaw": 1.5711,
-          "pitch": 0.5222,
+          "yaw": 1.4946171929020826,
+          "pitch": 0.4990834605297536,
           "rotation": 0,
           "target": "5"
         }
@@ -136,8 +136,8 @@ var APP_DATA = {
       "id": "4",
       "name": "hallway",
       "mapCoords": {
-        "left": "20%",
-        "top": "72%"
+        "left": "20.45%",
+        "top": "73.64%"
       },
       "levels": [
         {
@@ -160,20 +160,20 @@ var APP_DATA = {
       ],
       "faceSize": 2048,
       "initialViewParameters": {
-  	"yaw": 0.4288,
- 	"pitch": 0.1567,
-        "fov": 1.5
+        "yaw": 0,
+        "pitch": 0,
+        "fov": 1.6
       },
       "linkHotspots": [
         {
-          "yaw": 1.6884,
-          "pitch": 0.4715,
+          "yaw": 1.69085613682498,
+          "pitch": 0.4533358180891547,
           "rotation": 0,
           "target": "1"
         },
         {
-  	  "yaw": 0.0288,
-  	  "pitch": 0.5116,
+          "yaw": -0.028487218403624226,
+          "pitch": 0.4822890123526964,
           "rotation": 0,
           "target": "3"
         }
@@ -184,8 +184,8 @@ var APP_DATA = {
       "id": "5",
       "name": "kitchen",
       "mapCoords": {
-        "left": "43%",
-        "top": "30%"
+        "left": "42.58%",
+        "top": "29.07%"
       },
       "levels": [
         {
@@ -208,20 +208,20 @@ var APP_DATA = {
       ],
       "faceSize": 2048,
       "initialViewParameters": {
-        "yaw": 0.0,
-        "pitch": 0.0,
+        "yaw": 0,
+        "pitch": 0,
         "fov": 1.2
       },
       "linkHotspots": [
         {
-  	  "yaw": -1.6226,
- 	  "pitch": 0.6092,
+          "yaw": -1.5708948749814393,
+          "pitch": 0.5783142208743257,
           "rotation": 0,
           "target": "3"
         },
         {
- 	  "yaw": 1.6690,
- 	  "pitch": 0.5081,
+          "yaw": 1.5874777922392802,
+          "pitch": 0.5103621388227424,
           "rotation": 0,
           "target": "6"
         }
@@ -232,8 +232,8 @@ var APP_DATA = {
       "id": "6",
       "name": "living",
       "mapCoords": {
-        "left": "68%",
-        "top": "29%"
+        "left": "67.83%",
+        "top": "29.60%"
       },
       "levels": [
         {
@@ -256,20 +256,20 @@ var APP_DATA = {
       ],
       "faceSize": 2048,
       "initialViewParameters": {
-        "yaw": 0.0,
-        "pitch": 0.0,
+        "yaw": 0,
+        "pitch": 0,
         "fov": 1.2
       },
       "linkHotspots": [
         {
-  	  "yaw": -1.7209,
- 	  "pitch": 0.6307,
+          "yaw": -1.6448374548782851,
+          "pitch": 0.5031304215574153,
           "rotation": 0,
           "target": "5"
         },
         {
-   	  "yaw": 2.7342,
-   	  "pitch": 0.4716,
+          "yaw": 2.6669610688568977,
+          "pitch": 0.4435817853527695,
           "rotation": 0,
           "target": "2"
         }
@@ -279,6 +279,7 @@ var APP_DATA = {
   ],
   "settings": {
     "mouseViewMode": "drag",
-    "autorotateEnabled": false
+    "autorotateEnabled": false,
+    "tileFormat": "jpg"
   }
 };

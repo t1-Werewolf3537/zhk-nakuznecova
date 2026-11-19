@@ -1,19 +1,33 @@
+/* ==========================================================================
+   ЧАСТЬ 1: ПЕРЕМЕННЫЕ, БАЗОВЫЕ СТИЛИ, ПАНОРАМА И ВЕРХНЯЯ ПАНЕЛЬ
+   ========================================================================== */
+
+:root {
+  /* Мини-карта: ширина от экрана */
+  --map-width-desktop: 25vw;
+  --map-width-mobile: 75vw;
+
+  /* Картинка с текстом под логотипом ЖК */
+  --dynamic-image-scale-pc: 1.0;
+  --dynamic-image-scale-mobile: 0.4;
+  --dynamic-image-opacity: 0.5;
+
+  /* Текст-подсказка под iOS-тумблером переключения отделки */
+  --switch-text-scale-pc: 1.5;
+  --switch-text-scale-mobile: 0.85;
+}
+
 * {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
-  -moz-user-select: none;
   -webkit-user-select: none;
+  -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  -ms-text-size-adjust: none;
-  -moz-text-size-adjust: none;
   -webkit-text-size-adjust: none;
   text-size-adjust: none;
   -webkit-user-drag: none;
   -webkit-touch-callout: none;
-  -ms-content-zooming: none;
-  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 html, body {
@@ -33,6 +47,7 @@ a, a:hover, a:active, a:visited {
   color: inherit;
 }
 
+/* --- КОНТЕЙНЕР ПАНОРАМЫ --------------------------------------------------- */
 #pano {
   position: absolute;
   top: 0;
@@ -40,8 +55,10 @@ a, a:hover, a:active, a:visited {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  z-index: 1;
 }
 
+/* --- ВЕРХНЯЯ ПАНЕЛЬ С НАЗВАНИЕМ СЦЕНЫ ------------------------------------- */
 #titleBar {
   position: absolute;
   top: 0;
@@ -49,6 +66,7 @@ a, a:hover, a:active, a:visited {
   right: 40px;
   height: 40px;
   text-align: center;
+  z-index: 45;
 }
 
 .mobile #titleBar {
@@ -56,40 +74,20 @@ a, a:hover, a:active, a:visited {
   right: 50px;
 }
 
-/* If there is a fullscreen button the title bar must make space for it */
-body.fullscreen-enabled #titleBar {
-  right: 80px;
-}
-
-body.fullscreen-enabled.mobile #titleBar {
-  right: 100px;
-}
-
-/* If there are multiple scenes the title bar must make space for the scene list toggle */
-body.multiple-scenes #titleBar {
-  left: 40px;
-}
-
-body.multiple-scenes.mobile #titleBar {
-  left: 50px;
-}
+body.multiple-scenes #titleBar { left: 40px; }
+body.multiple-scenes.mobile #titleBar { left: 50px; }
 
 #titleBar .sceneName {
   width: 100%;
   height: 100%;
   line-height: 30px;
   padding: 5px;
-  background-color: rgb(20, 25, 35); /* Подстраховка: сплошной темный цвет */
-  background-color: rgba(20, 25, 35, 0.6) !important; /* Ваш фирменный полупрозрачный стиль */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+  background-color: rgba(20, 25, 35, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-
-  -moz-user-select: text;
-  -webkit-user-select: text;
-  -ms-user-select: text;
   user-select: text;
 }
 
@@ -97,111 +95,11 @@ body.multiple-scenes.mobile #titleBar {
   line-height: 40px;
 }
 
-#fullscreenToggle {
-  display: none;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 40px;
-  height: 40px;
-  padding: 5px;
-  background-color: rgb(103,115,131);
-  background-color: rgba(103,115,131,0.8);
-}
+/* ==========================================================================
+   ЧАСТЬ 2: МЕНЮ СПИСКА КВАРТИР И СТРЕЛКИ ПЕРЕХОДА МЕЖДУ КОМНАТАМИ
+   ========================================================================== */
 
-.mobile #fullscreenToggle {
-  width: 50px;
-  height: 50px;
-}
-
-body.fullscreen-enabled #fullscreenToggle {
-  display: block;
-}
-
-#fullscreenToggle .icon {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 30px;
-  height: 30px;
-}
-
-.mobile #fullscreenToggle .icon {
-  top: 10px;
-  right: 10px;
-}
-
-#fullscreenToggle .icon.on {
-  display: none;
-}
-
-#fullscreenToggle .icon.off {
-  display: block;
-}
-
-#fullscreenToggle.enabled .icon.on {
-  display: block;
-}
-
-#fullscreenToggle.enabled .icon.off {
-  display: none;
-}
-
-#autorotateToggle {
-  display: block;
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 40px;
-  height: 40px;
-  padding: 5px;
-  background-color: rgb(103,115,131);
-  background-color: rgba(103,115,131,0.8);
-}
-
-.mobile #autorotateToggle {
-  width: 50px;
-  height: 50px;
-}
-
-/* If there is a fullscreen button, autorotate must placed a bit to the left */
-body.fullscreen-enabled #autorotateToggle {
-  right: 40px;
-}
-
-body.fullscreen-enabled.mobile #autorotateToggle {
-  right: 50px;
-}
-
-#autorotateToggle .icon {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 30px;
-  height: 30px;
-}
-
-.mobile #autorotateToggle .icon {
-  top: 10px;
-  right: 10px;
-}
-
-#autorotateToggle .icon.on {
-  display: none;
-}
-
-#autorotateToggle .icon.off {
-  display: block;
-}
-
-#autorotateToggle.enabled .icon.on {
-  display: block;
-}
-
-#autorotateToggle.enabled .icon.off {
-  display: none;
-}
-
+/* --- КНОПКА ОТКРЫТИЯ СПИСКА (СЛЕВА СВЕРХУ) -------------------------------- */
 #sceneListToggle {
   position: absolute;
   top: 0;
@@ -209,21 +107,13 @@ body.fullscreen-enabled.mobile #autorotateToggle {
   width: 40px;
   height: 40px;
   padding: 5px;
-  background-color: rgb(0, 123, 255);       /* Чистый синий */
-  background-color: rgba(0, 123, 255, 0.8); /* Полупрозрачный синий */
+  background-color: rgba(0, 123, 255, 0.8);
+  z-index: 2001;
 }
 
 .mobile #sceneListToggle {
   width: 50px;
   height: 50px;
-}
-
-#sceneListToggle .text {
-  position: absolute;
-  top: 5px;
-  left: 15px;
-  width: 100%;
-  line-height: 30px;
 }
 
 #sceneListToggle .icon {
@@ -239,22 +129,12 @@ body.fullscreen-enabled.mobile #autorotateToggle {
   right: 10px;
 }
 
-#sceneListToggle .icon.on {
-  display: none;
-}
+#sceneListToggle .icon.on { display: none; }
+#sceneListToggle .icon.off { display: block; }
+#sceneListToggle.enabled .icon.on { display: block; }
+#sceneListToggle.enabled .icon.off { display: none; }
 
-#sceneListToggle .icon.off {
-  display: block;
-}
-
-#sceneListToggle.enabled .icon.on {
-  display: block;
-}
-
-#sceneListToggle.enabled .icon.off {
-  display: none;
-}
-
+/* --- ВЫЕЗЖАЮЩИЙ СПИСОК КВАРТИР -------------------------------------------- */
 #sceneList {
   position: absolute;
   top: 0;
@@ -265,59 +145,47 @@ body.fullscreen-enabled.mobile #autorotateToggle {
   overflow-x: hidden;
   overflow-y: auto;
   margin-left: 0;
-  -webkit-transition: margin-left 0.5s ease-in-out;
+  z-index: 2000;
   transition: margin-left 0.5s ease-in-out;
-}
-
-.mobile #sceneList {
-  padding-top: 50px;
-}
-
-#sceneList .scenes {
-  width: 100%;
-  background-color: rgb(58,68,84);
-  background-color: rgba(20, 25, 35, 0.6) !important;
-  border: 1px solid rgba(255, 255, 255, 0.8) !important;
-  border-radius: 5px;
-}
-
-.mobile #sceneList {
-  width: 100%;
-  height: 100%;
-  left: -100%;
-}
-
-.mobile #sceneList.enabled {
-  margin-left: 100%;
-}
-
-.mobile #sceneList .scenes {
-  height: 100%;
 }
 
 #sceneList.enabled {
   margin-left: 350px;
 }
 
+#sceneList .scenes {
+  width: 100%;
+  background-color: rgba(20, 25, 35, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 5px;
+}
+
+.mobile #sceneList {
+  padding-top: 50px;
+  width: 100%;
+  height: 100%;
+  left: -100%;
+}
+
+.mobile #sceneList.enabled { margin-left: 100%; }
+.mobile #sceneList .scenes { height: 100%; }
+
 #sceneList .scene {
   display: block;
   width: 100%;
-  height: auto !important; /* <--- ДОБАВИЛИ !important, чтобы сработало и на телефонах */
-}
-
-.mobile #sceneList .scene {
-  height: 40px;
+  height: auto;
 }
 
 #sceneList .scene .text {
+  display: block;
   width: 100%;
-  height: auto !important;          /* ИСПРАВЛЕНО с 100% — позволяет блоку растягиваться вниз */
-  padding: 8px 15px;                /* ИСПРАВЛЕНО — добавляем аккуратные отступы сверху и снизу */
-  line-height: 1.4;                 /* ИСПРАВЛЕНО с 30px — делает правильный интервал между строками текста */
-  overflow: visible;                /* ИСПРАВЛЕНО с hidden — чтобы перенесенный текст не прятался */
-  text-overflow: clip;              /* ИСПРАВЛЕНО с ellipsis — убирает троеточие в конце строки */
-  white-space: normal;              /* ИСПРАВЛЕНО с nowrap — разрешает тексту переноситься на новые строки */
-  word-wrap: break-word;            /* ДОБАВЛЕНО — защищает от вылезания слишком длинных слов */
+  height: auto;
+  padding: 8px 15px;
+  line-height: 1.4;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .mobile #sceneList .scene .text {
@@ -325,29 +193,17 @@ body.fullscreen-enabled.mobile #autorotateToggle {
 }
 
 .no-touch #sceneList .scene:hover {
-  background-color: rgb(103,115,131);
-  background-color: rgba(20, 25, 35, 0.6) !important;
+  background-color: rgba(250, 250, 250, 0.4);
 }
 
-#sceneList .scene.current {
-  background-color: rgb(103,115,131);
-  background-color: rgba(15, 18, 25, 0.75) !important;
-}
-
-/* Hide scene list when only a single scene exists */
-body.single-scene #sceneList, body.single-scene #sceneListToggle {
-  display: none;
-}
-
-/* Link hotspot */
-
+/* --- СТРЕЛКИ ПЕРЕХОДА МЕЖДУ СЦЕНАМИ (LINK HOTSPOT) ------------------------ */
 .link-hotspot {
   width: 60px;
   height: 60px;
-  margin-left: -30px;  /* Ровно половина от ширины */
-  margin-top: -30px;  /* Ровно половина от ширины */
+  margin-left: -30px;
+  margin-top: -30px;
   opacity: 0.9;
-  -webkit-transition: opacity 0.2s;
+  z-index: 10;
   transition: opacity 0.2s;
 }
 
@@ -358,918 +214,275 @@ body.single-scene #sceneList, body.single-scene #sceneListToggle {
 .mobile .link-hotspot {
   width: 50px;
   height: 50px;
-  margin-left: -25px;  /* Ровно половина от ширины */
-  margin-top: -25px;  /* Ровно половина от ширины */
+  margin-left: -25px;
+  margin-top: -25px;
 }
 
-.link-hotspot-icon {
+.link-hotspot-icon,
+.link-hotspot img {
   width: 100%;
   height: 100%;
   cursor: pointer;
+  scale: 1;
+  transition: scale 0.2s ease-in-out;
 }
 
-.link-hotspot-tooltip {
-  position: absolute;
-  left: 100%;
-  top: 14px; /* ( 60 - (16 + 2*8) ) / 2 */
-
-  margin-left: 3px;
-
-  font-size: 16px;
-
-  width: max-content !important;
-
-  max-width: 260px !important;
-
-  padding: 8px 10px;
-
-  border-radius: 5px;
-
-  background-color: rgb(58,68,84);
-  background-color: rgba(58, 68, 84, 0.4) !important;
-  border: 1px solid rgba(255, 255, 255, 0.8) !important;
-  color: #fff;
-
-  white-space: normal; !important;
-  word-wrap: break-word !important;
-  text-overflow: clip;
-  overflow: visible;
-
-  cursor: pointer;
-
-  opacity: 0;
-
-  -ms-transform: translateX(-8px);
-  -webkit-transform: translateX(-8px);
-  transform: translateX(-8px);
-
-  -webkit-transition: -ms-transform 0.3s,
-                      -webkit-transform 0.3s,
-                      transform 0.3s,
-                      opacity 0.3s;
-  transition: -ms-transform 0.3s,
-              -webkit-transform 0.3s,
-              transform 0.3s,
-              opacity 0.3s;
-}
-
-.mobile .link-hotspot {
-  top: 19px; /* ( 70 - (16 + 2*8) ) / 2 */
-}
-
-.no-touch .link-hotspot:hover .link-hotspot-tooltip {
-  opacity: 1;
-  -ms-transform: translateX(0);
-  -webkit-transform: translateX(0);
-  transform: translateX(0);
-}
-
-/* Prevent tooltip from triggering */
-.link-hotspot-tooltip {
-  pointer-events: none;
-}
-.no-touch .link-hotspot:hover .link-hotspot-tooltip {
-  pointer-events: all;
-}
-
-/* Fallback mode without pointer-events (IE8-10) */
-.tooltip-fallback .link-hotspot-tooltip {
-  display: none;
-}
-.no-touch .tooltip-fallback .link-hotspot:hover .link-hotspot-tooltip {
-  display: block;
-}
-
-/* Info hotspot */
-
-.info-hotspot {
-  line-height: 1.2em;
-  opacity: 0.9;
-  -webkit-transition: opacity 0.2s 0.2s;
-  transition: opacity 0.2s 0.2s;
-}
-
-.no-touch .info-hotspot:hover {
-  opacity: 1;
-  -webkit-transition: opacity 0.2s;
-  transition: opacity 0.2s;
-}
-
-.info-hotspot.visible {
-  opacity: 1;
-}
-
-.info-hotspot .info-hotspot-header {
-  width: 40px;
-  height: 40px;
-  border-radius: 20px;
-  background-color: rgb(103,115,131);
-  cursor: pointer;
-  -webkit-transition: width 0.3s ease-in-out 0.5s,
-                      border-radius 0.3s ease-in-out 0.5s;
-  transition: width 0.3s ease-in-out 0.5s,
-              border-radius 0.3s ease-in-out 0.5s;
-}
-
-.mobile .info-hotspot .info-hotspot-header {
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
-}
-
-.desktop.no-touch .info-hotspot .info-hotspot-header:hover {
-  width: 260px;
-  border-radius: 5px;
-  -webkit-transition: width 0.3s ease-in-out,
-                      border-radius 0.3s ease-in-out;
-  transition: width 0.3s ease-in-out,
-              border-radius 0.3s ease-in-out;
-}
-
-.desktop .info-hotspot.visible .info-hotspot-header,
-.desktop.no-touch .info-hotspot.visible .info-hotspot-header:hover {
-  width: 260px;
-  border-radius: 5px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom-left-radius: 0;
-  -webkit-transition: width 0.3s ease-in-out,
-                      border-radius 0.3s ease-in-out;
-  transition: width 0.3s ease-in-out,
-              border-radius 0.3s ease-in-out;
-}
-
-.info-hotspot .info-hotspot-icon-wrapper {
-  width: 40px;
-  height: 40px;
-}
-
-.mobile .info-hotspot .info-hotspot-icon-wrapper {
-  width: 50px;
-  height: 50px;
-}
-
-.info-hotspot .info-hotspot-icon {
-  width: 90%;
-  height: 90%;
-  margin: 5%;
-}
-
-.info-hotspot .info-hotspot-title-wrapper {
-  position: absolute;
-  left: 40px;
-  top: 0;
-  width: 0;
-  height: 40px;
-  padding: 0;
-  overflow: hidden;
-  -webkit-transition: width 0s 0.4s,
-                      padding 0s 0.4s;
-  transition: width 0s 0.4s,
-              padding 0s 0.4s;
-}
-
-.desktop .info-hotspot.visible .info-hotspot-title-wrapper,
-.desktop.no-touch .info-hotspot .info-hotspot-header:hover .info-hotspot-title-wrapper {
-  width: 220px;
-  padding: 0 5px;
-  -webkit-transition: width 0s 0.4s,
-                      padding 0s 0.4s;
-  transition: width 0s 0.4s,
-              padding 0s 0.4s;
-}
-
-.info-hotspot .info-hotspot-title-wrapper:before {
-  content: '';
-  display: inline-block;
-  vertical-align: middle;
-  height: 100%;
-}
-
-.info-hotspot .info-hotspot-title {
-  display: inline-block;
-  vertical-align: middle;
-
-  -moz-user-select: text;
-  -webkit-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-
-.info-hotspot .info-hotspot-close-wrapper {
-  position: absolute;
-  left: 260px;
-  top: 0;
-  height: 40px;
-  width: 40px;
-  border-top-right-radius: 5px;
-  background-color: rgb(78,88,104);
-  visibility: hidden;
-  -ms-transform: perspective(200px) rotateY(90deg);
-  -webkit-transform: perspective(200px) rotateY(90deg);
-  transform: perspective(200px) rotateY(90deg);
-  -ms-transform-origin: 0 50% 0;
-  -webkit-transform-origin: 0 50% 0;
-  transform-origin: 0 50% 0;
-  -webkit-transition: -ms-transform 0.3s 0.3s,
-                      -webkit-transform 0.3s 0.3s,
-                      transform 0.3s 0.3s,
-                      visibility 0s 0.6s;
-  transition: -ms-transform 0.3s 0.3s,
-              -webkit-transform 0.3s 0.3s,
-              transform 0.3s 0.3s,
-              visibility 0s 0.6s;
-}
-
-.desktop .info-hotspot.visible .info-hotspot-close-wrapper {
-  visibility: visible;
-  -ms-transform: perspective(200px) rotateY(0deg);
-  -webkit-transform: perspective(200px) rotateY(0deg);
-  transform: perspective(200px) rotateY(0deg);
-  -webkit-transition: -ms-transform 0.3s,
-                      -webkit-transform 0.3s,
-                      transform 0.3s,
-                      visibility 0s 0s;
-  transition: -ms-transform 0.3s,
-              -webkit-transform 0.3s,
-              transform 0.3s,
-              visibility 0s 0s;
-}
-
-.info-hotspot .info-hotspot-close-icon {
-  width: 70%;
-  height: 70%;
-  margin: 15%;
-}
-
-.info-hotspot .info-hotspot-text {
-  position: absolute;
-  width: 300px;
-  height: auto;
-  max-height: 200px;
-  top: 40px;
-  left: 0;
-  padding: 10px;
-  background-color: rgb(58,68,84);
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  overflow-y: auto;
-  visibility: hidden;
-  /* rotate(90deg) causes transition flicker on Firefox 58 */
-  -ms-transform: perspective(200px) rotateX(-89.999deg);
-  -webkit-transform: perspective(200px) rotateX(-89.999deg);
-  transform: perspective(200px) rotateX(-89.999deg);
-  -ms-transform-origin: 50% 0 0;
-  -webkit-transform-origin: 50% 0 0;
-  transform-origin: 50% 0 0;
-  -webkit-transition: -ms-transform 0.3s,
-                      -webkit-transform 0.3s,
-                      transform 0.3s,
-                      visibility 0s 0.3s;
-  transition: -ms-transform 0.3s,
-              -webkit-transform 0.3s,
-              transform 0.3s,
-              visibility 0s 0.3s;
-
-  -moz-user-select: text;
-  -webkit-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-
-.desktop .info-hotspot.visible .info-hotspot-text {
-  visibility: visible;
-  -ms-transform: perspective(200px) rotateX(0deg);
-  -webkit-transform: perspective(200px) rotateX(0deg);
-  transform: perspective(200px) rotateX(0deg);
-  -webkit-transition: -ms-transform 0.3s 0.3s,
-                      -webkit-transform 0.3s 0.3s,
-                      transform 0.3s 0.3s,
-                      visibility 0s 0s;
-  transition: -ms-transform 0.3s 0.3s,
-              -webkit-transform 0.3s 0.3s,
-              transform 0.3s 0.3s,
-              visibility 0s 0s;
-}
-
-/* Info hotspot modal */
-
-.desktop .info-hotspot-modal {
-  display: none;
-}
-
-.info-hotspot-modal {
-  top: 0;
-  left: 0;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  z-index: 11000 !important;
-  background-color: rgba(0,0,0,.5);
-  line-height: 1.2em;
-  opacity: 0;
-  visibility: hidden;
-  -webkit-transition: opacity 0.2s ease-in-out 0.5s,
-                      visibility 0s 0.7s;
-  transition: opacity 0.2s ease-in-out 0.5s,
-              visibility 0s 0.7s;
-}
-
-.info-hotspot-modal.visible {
-  opacity: 1;
-  visibility: visible;
-  -webkit-transition: opacity 0.2s ease-in-out,
-                      visibility 0s 0s;
-  transition: opacity 0.2s ease-in-out,
-              visibility 0s 0s;
-}
-
-.info-hotspot-modal .info-hotspot-header {
-  position: absolute;
-  top: 60px;
-  left: 10px;
-  right: 10px;
-  width: auto;
-  height: 50px;
-  background-color: rgb(103,115,131);
-  background-color: rgba(103,115,131,0.8);
-  opacity: 0;
-  -webkit-transition: opacity 0.3s ease-in-out 0.2s;
-  transition: opacity 0.3s ease-in-out 0.2s;
-}
-
-.info-hotspot-modal.visible .info-hotspot-header {
-  opacity: 1;
-  -webkit-transition: opacity 0.3s ease-in-out 0.2s;
-  transition: opacity 0.3s ease-in-out 0.2s;
-}
-
-.info-hotspot-modal .info-hotspot-icon-wrapper {
-  width: 50px;
-  height: 50px;
-}
-
-.info-hotspot-modal .info-hotspot-icon {
-  width: 90%;
-  height: 90%;
-  margin: 5%;
-}
-
-.info-hotspot-modal .info-hotspot-title-wrapper {
-  position: absolute;
-  top: 0;
-  left: 50px;
-  right: 50px;
-  width: auto;
-  height: 50px;
-  padding: 0 10px;
-}
-
-.info-hotspot-modal .info-hotspot-title-wrapper:before {
-  content: '';
-  display: inline-block;
-  vertical-align: middle;
-  height: 100%;
-}
-
-.info-hotspot-modal .info-hotspot-title {
-  display: inline-block;
-  vertical-align: middle;
-
-  -moz-user-select: text;
-  -webkit-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-
-.info-hotspot-modal .info-hotspot-close-wrapper {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 50px;
-  height: 50px;
-  background-color: rgb(78,88,104);
-  background-color: rgba(78,88,104,0.8);
-  cursor: pointer;
-}
-
-.info-hotspot-modal .info-hotspot-close-icon {
-  width: 70%;
-  height: 70%;
-  margin: 15%;
-}
-
-.info-hotspot-modal .info-hotspot-text {
-  position: absolute;
-  top: 110px;
-  bottom: 10px;
-  left: 10px;
-  right: 10px;
-  padding: 10px;
-  background-color: rgb(58,68,84);
-  background-color: rgba(58,68,84,0.8);
-  overflow-y: auto;
-  opacity: 0;
-  -webkit-transition: opacity 0.3s ease-in-out;
-  transition: opacity 0.3s ease-in-out;
-
-  -moz-user-select: text;
-  -webkit-user-select: text;
-  -ms-user-select: text;
-  user-select: text;
-}
-
-.info-hotspot-modal.visible .info-hotspot-text {
-  opacity: 1;
-  -webkit-transition: opacity 0.3s ease-in-out 0.4s;
-  transition: opacity 0.3s ease-in-out 0.4s;
-}
-
-/* View control buttons */
-
-.viewControlButton {
-  display: none;
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  width: 40px;
-  height: 40px;
-  padding: 5px;
-  background-color: rgb(103,115,131);
-  background-color: rgba(103,115,131,0.8);
-}
-
-body.view-control-buttons .viewControlButton {
-  display: block;
-}
-
-/* Hide controls when width is too small */
-@media (max-width: 600px) {
-  body.view-control-buttons .viewControlButton {
-    display: none;
-  }
-}
-
-.viewControlButton .icon {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  width: 30px;
-  height: 30px;
-}
-
-/* Center is at margin-left: -20px */
-.viewControlButton-1 {
-  margin-left: -145px;
-}
-.viewControlButton-2 {
-  margin-left: -95px;
-}
-.viewControlButton-3 {
-  margin-left: -45px;
-}
-.viewControlButton-4 {
-  margin-left: 5px;
-}
-.viewControlButton-5 {
-  margin-left: 55px;
-}
-.viewControlButton-6 {
-  margin-left: 105px;
-}
-
-
-
-			/* АНИМАЦИЯ ДЛЯ ИКОНОК ПЕРЕМЕЩЕНИЯ */
-/* 1. Добавляем плавность для иконки перемещения (стрелочки) */
-.link-hotspot img,
-.link-hotspot-icon {
-  transition: transform 0.2s ease-in-out !important;
-}
-
-/* 2. ЭФФЕКТ НАВЕДЕНИЯ: плавно увеличиваем стрелочку на 15% */
 .no-touch .link-hotspot:hover img,
 .no-touch .link-hotspot-icon:hover {
-  transform: scale(1.15) !important;
+  scale: 1.15;
 }
-
-#titleBar .sceneName {
-  width: 100%;
-  height: 100%;
-  line-height: 30px;
-  padding: 5px;
-  background-color: rgb(20, 25, 35); /* Подстраховка: сплошной темный цвет */
-  background-color: rgba(20, 25, 35, 0.6) !important; /* Ваш фирменный полупрозрачный стиль */
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-			/* ПРЯЧЕМ ВСПЫЛВАЮЩИЙ ТЕКСТ (название комнаты) НАД СТРЕЛОЧКАМИ ПЕРЕХОДА */
-.link-hotspot .link-hotspot-tooltip,
-.link-hotspot:hover .link-hotspot-tooltip,
-.link-hotspot-text {
-  display: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-}
-
-
-
-
-
-
-
 
 
 /* ==========================================================================
-   НАСТРОЙКИ МАСШТАБА МИНИ-КАРТЫ (МЕНЯЙТЕ ЗНАЧЕНИЯ ТУТ)
-   ========================================================================== */
-:root {
-  /* ПРОЦЕНТ ОТ ЭКРАНА ДЛЯ ПК */
-  --map-width-desktop: 25vw;  /* <--- Изменяйте этот процент для компьютеров */
-
-  /* ПРОЦЕНТ ОТ ЭКРАНА ДЛЯ ТЕЛЕФОНОВ */
-  --map-width-mobile: 70vw;   /* <--- Изменяйте этот процент для смартфонов */
-}
-
-/* ==========================================================================
-   КОД МИНИ-КАРТЫ
+   ЧАСТЬ 3: МИНИ-КАРТА, ЛУЧ-РАДАР И ТОЧКИ ПЕРЕКЛЮЧЕНИЯ КОМНАТ
    ========================================================================== */
 
-/* 1. Кнопка «Карта» в левом нижнем углу */
 .map-open-button {
-  position: absolute !important;
-  bottom: 20px !important;
-  left: 20px !important;
-  z-index: 1001 !important;
-  background-color: rgba(20, 25, 35, 0.6) !important;
-  color: #ffffff !important;
-  border: 1px solid rgba(255, 255, 255, 0.1) !important;
-  border-radius: 4px !important;
-  padding: 8px 16px !important;
-  font-family: sans-serif !important;
-  font-size: 14px !important;
-  cursor: pointer !important;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
-  transition: opacity 0.2s ease-in-out, visibility 0.2s !important;
-  pointer-events: auto !important;
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 110;
+  background-color: rgba(20, 25, 35, 0.6);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-family: sans-serif;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  transition: opacity 0.2s ease-in-out, visibility 0.2s;
+  pointer-events: auto;
 }
 
 .no-touch .map-open-button:hover {
-  background-color: rgb(103, 115, 131) !important;
+  background-color: rgb(103, 115, 131);
 }
 
 .map-open-button.hidden-state {
-  opacity: 0 !important;
-  visibility: hidden !important;
-  pointer-events: none !important;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-/* 2. Контейнер мини-карты */
 #mini-map-wrapper {
-  position: absolute !important;
-  bottom: 20px !important;
-  left: 20px !important;
-  z-index: 1000 !important;
-  height: auto !important;
-  pointer-events: none !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  transition: opacity 0.2s ease-in-out, visibility 0.2s !important;
-  /* УБРАЛИ ОТСЮДА container-type */
-}
-
-/* НОВЫЙ БЛОК: Обертка, которая равна картинке 1 в 1 */
-.map-inner {
-  position: relative !important;
-  display: inline-block !important;
-  vertical-align: top !important;
-  /* ПЕРЕНЕСЛИ СЮДА: теперь 1cqw = 1% от ширины КАРТИНКИ */
-  container-type: inline-size !important; 
-  width: 100% !important;
-}
-
-/* Применение адаптивного масштаба (оставляем как у вас, но для .map-inner) */
-@media (min-width: 769px) {
-  .map-inner { width: clamp(250px, var(--map-width-desktop), 85vw) !important; }
-}
-@media (max-width: 768px) {
-  .map-inner { width: clamp(140px, var(--map-width-mobile), 85vw) !important; }
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  z-index: 100;
+  height: auto;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s;
 }
 
 #mini-map-wrapper.active-state {
-  opacity: 1 !important;
-  visibility: visible !important;
-  pointer-events: auto !important;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
-/* 3. Кнопка-крестик закрытия */
+.map-inner {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  container-type: inline-size;
+  width: 100%;
+}
+
+@media (min-width: 769px) {
+  .map-inner { width: clamp(250px, var(--map-width-desktop), 85vw); }
+}
+@media (max-width: 768px) {
+  .map-inner { width: clamp(140px, var(--map-width-mobile), 85vw); }
+}
+
 #mini-map-close-btn {
-  position: absolute !important;
-  top: -10px !important;
-  right: -10px !important;
-  width: 22px !important;
-  height: 22px !important;
-  background-color: rgba(0, 123, 255, 0.8) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
-  border-radius: 50% !important;
-  color: #ffffff !important;
-  font-size: 16px !important;
-  line-height: 18px !important;
-  text-align: center !important;
-  cursor: pointer !important;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.4) !important;
-  z-index: 1002 !important;
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  width: 22px;
+  height: 22px;
+  background-color: rgba(0, 123, 255, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 18px;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  z-index: 120;
 }
 
 #mini-map-close-btn:hover {
-  background-color: #ff3333 !important;
+  background-color: #ff3333;
 }
 
-/* 4. Картинка планировки */
 #mini-map-img {
-  width: 100% !important;
-  height: auto !important;
-  display: block !important;
-  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5)) !important; 
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.5));
 }
 
-/* 5. Красный маркер местонахождения */
 #mini-map-dot {
-  position: absolute !important;
-  
-  /* БЫЛО: 4.5cqw | СТАЛО: 4cqw (уменьшили саму точку) */
-  width: 4cqw !important;
-  height: 4cqw !important;
-  
-  background-color: #ff3333 !important;
-  
-  /* БЫЛО: 0.6cqw | СТАЛО: 0.5cqw (сделали белую обводку тоньше) */
-  border: 0.5cqw solid #ffffff !important; 
-  border-radius: 50% !important;
-  box-shadow: 0 0 8px rgba(255, 51, 51, 0.8) !important;
-  z-index: 100 !important;
-  transition: opacity 0.2s ease-in-out !important;
+  position: absolute;
+  width: 4cqw;
+  height: 4cqw;
+  background-color: #ff3333;
+  border: 0.5cqw solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 51, 51, 0.8);
+  z-index: 20;
+  pointer-events: auto;
+  cursor: default;
+  transition: opacity 0.2s ease-in-out;
   transform: translate(-50%, -50%);
 }
 
-/* Белый луч-радар */
 #mini-map-dot::before {
-  content: '' !important;
-  position: absolute !important;
-  top: 50% !important; 
-  left: 50% !important;
-  
-  /* БЫЛО: ширина 16cqw, высота 20cqw | СТАЛО: уменьшили луч */
-  width: 13cqw !important;   /* Новая ширина луча */
-  height: 17cqw !important;  /* Новая длина луча */
-  
-  transform-origin: top center !important;
-  transform: translate(-50%, 0) !important; 
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 1) 20%, rgba(255, 255, 255, 0) 100%) !important;
-  clip-path: polygon(50% 0%, 0% 100%, 100% 100%) !important;
-  z-index: -1 !important;
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 13cqw;
+  height: 17cqw;
+  transform-origin: top center;
+  transform: translate(-50%, 0);
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 20%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  clip-path: polygon(44% 11%, 56% 11%, 100% 100%, 0% 100%);
+  pointer-events: none;
 }
 
-
-/* Мягкое растворение маркера в момент смены комнат */
 #mini-map-dot.switching {
-  opacity: 0 !important;
-  visibility: hidden !important;
+  opacity: 0;
+  visibility: hidden;
 }
 
-
-
-
-
-			/* Контейнер для точек переключения */
 #mini-map-points {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 90; /* Чуть ниже активной точки с лучом */
-  pointer-events: none; /* Пропускает клики сквозь контейнер */
+  z-index: 10;
+  pointer-events: none;
 }
 
-/* Сама интерактивная точка на карте */
 .map-nav-point {
-  position: absolute !important;
-  /* Размер точек делаем чуть меньше или равным активной точке (например, 2.8cqw) */
-  width: 3.1cqw !important;
-  height: 3.1cqw !important;
-  background-color: rgba(0, 123, 255, 0.7) !important; /* Полупрозрачный синий */
-  border: 0.4cqw solid #ffffff !important;
-  border-radius: 50% !important;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4) !important;
-  cursor: pointer !important;
-  pointer-events: auto !important; /* Делаем точки кликабельными */
-  
-  /* Центрируем точку относительно её координат */
-  transform: translate(-50%, -50%) !important;
-  transition: transform 0.2s ease-in-out, background-color 0.2s !important;
+  position: absolute;
+  width: 3.7cqw;
+  height: 3.7cqw;
+  background-color: rgba(0, 123, 255, 0.7);
+  border: 0.4cqw solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  pointer-events: auto;
+  transform: translate(-50%, -50%);
+  transition: transform 0.2s ease-in-out, background-color 0.2s;
 }
 
-/* Эффект наведения на точку */
 .no-touch .map-nav-point:hover {
-  transform: translate(-50%, -50%) scale(1.25) !important; /* Увеличиваем при наведении */
-  background-color: rgb(0, 123, 255) !important; /* Делаем цвет насыщенным синим */
+  transform: translate(-50%, -50%) scale(1.25);
+  background-color: rgb(0, 123, 255);
 }
-
-
-
-
-
-
-
-
-
-
 
 /* ==========================================================================
-   БЛОК: ВЕРХНЯЯ ПРАВАЯ ПАНЕЛЬ (ЛОГОТИП ЗАСТРОЙЩИКА И НОВЫЙ КОНТЕЙНЕР)
+   ЧАСТЬ 4: ЛОГОТИП ЖК, ТЕКСТОВЫЙ БАННЕР, ВОДЯНОЙ ЗНАК И ТУМБЛЕР ОТДЕЛКИ
    ========================================================================== */
 
-/* --- НАСТРОЙКИ МАСШТАБА И ПРОЗРАЧНОСТИ (МЕНЯЙТЕ ЗНАЧЕНИЯ ТУТ) ------------- */
-:root {
-  --dynamic-image-scale-pc: 1.0;     /* Масштаб картинки для ПК (1.0 = 100%) */
-  --dynamic-image-scale-mobile: 0.4; /* Масштаб картинки для смартфонов (Теперь 1.3 сработает отлично!) */
-  
-  --dynamic-image-opacity: 0.5;     /* Прозрачность PNG-текста: от 0.0 до 1.0 */
+/* --- КНОПКА ЛОГОТИПА ЖК (ПРАВЫЙ ВЕРХНИЙ УГОЛ) ----------------------------- */
+.custom-zhk-top-round {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  padding: 1px;
+  z-index: 60;
+  cursor: pointer;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
 
-/* --------------------------------------------------------------------------
-   1. ОРИГИНАЛЬНАЯ КНОПКА ЛОГОТИПА ЗАСТРОЙЩИКА
-   -------------------------------------------------------------------------- */
-.custom-kuznecova-top-round {
-  display: block !important;
-  position: absolute !important;
-  top: 0 !important;
-  right: 0 !important;
-  width: 40px !important;
-  height: 40px !important;
-  padding: 5px !important;
-  z-index: 100 !important;
-  cursor: pointer !important;
-  border-radius: 4px !important; 
-  background-color: rgba(255, 255, 255, 0.8) !important; 
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2) !important;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out !important;
+.custom-zhk-top-round .zhk-round-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
-body.fullscreen-enabled .custom-kuznecova-top-round {
-  right: 40px !important;
+.no-touch .custom-zhk-top-round:hover {
+  background-color: rgba(255, 255, 255, 0.95);
+  transform: scale(1.1);
 }
 
-.custom-kuznecova-top-round .kuznecova-round-img {
-  display: block !important;
-  width: 100% !important;
-  height: 100% !important;
-  object-fit: contain !important;
-}
-
-.no-touch .custom-kuznecova-top-round:hover {
-  background-color: rgba(255, 255, 255, 0.8) !important;
-  transform: scale(1.1) !important;
-}
-
-/* --------------------------------------------------------------------------
-   2. НОВЫЙ АДАПТИВНЫЙ КОНТЕЙНЕР (ПОЛНОСТЬЮ ЧИСТЫЙ, БЕЗ ЭФФЕКТОВ)
-   -------------------------------------------------------------------------- */
+/* --- АДАПТИВНЫЙ КОНТЕЙНЕР ПОД ЛОГОТИПОМ (PNG-ТЕКСТ) ---------------------- */
 .custom-dynamic-image-container {
-  display: block !important;
-  position: absolute !important;
-  
-  /* Размещение строго под кнопкой */
-  top: 48px !important; 
-  right: 0 !important;
-  
-  width: auto !important;
-  height: auto !important;
-  max-width: 30vw !important; 
-  
-  z-index: 99 !important; 
-  pointer-events: auto !important;
-  
-  /* Абсолютно прозрачная невидимая обертка */
-  background: transparent !important;
-  box-shadow: none !important;
-  border: none !important;
-  
-  transform-origin: right top !important;
-  scale: var(--dynamic-image-scale-pc) !important;
+  display: block;
+  position: absolute;
+  top: 48px;
+  right: 0;
+  width: auto;
+  height: auto;
+  max-width: 30vw;
+  z-index: 35;
+  pointer-events: none;
+  background: transparent;
+  box-shadow: none;
+  border: none;
+  transform-origin: right top;
+  scale: var(--dynamic-image-scale-pc);
 }
 
-body.fullscreen-enabled .custom-dynamic-image-container {
-  right: 40px !important;
-}
-
-/* САМА .PNG КАРТИНКА С ТЕКСТОМ */
 .custom-dynamic-image-container .dynamic-responsive-img {
-  display: block !important;
-  width: 100% !important;
-  height: auto !important;
-  object-fit: contain !important;
-  
-  /* Убраны все тени и скругления. Только чистая прозрачность для текста */
-  box-shadow: none !important;
-  border-radius: 0 !important;
-  border: none !important;
-  
-  opacity: var(--dynamic-image-opacity) !important; 
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  opacity: var(--dynamic-image-opacity);
 }
 
-/* --------------------------------------------------------------------------
-   3. АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ И МОБИЛЬНЫХ УСТРОЙСТВ
-   -------------------------------------------------------------------------- */
-@media (max-width: 768px) or (.mobile) {
-  
-  .mobile .custom-kuznecova-top-round {
-    width: 50px !important;
-    height: 50px !important;
-  }
-  body.fullscreen-enabled.mobile .custom-kuznecova-top-round {
-    right: 50px !important;
-  }
-  
-  .mobile .custom-dynamic-image-container {
-    /* Поскольку кнопка стала 50px, опускаем контейнер чуть ниже */
-    top: 58px !important; 
-    
-    /* ИСПРАВЛЕНО: Снимаем жесткий лимит ширины, чтобы картинка могла свободно увеличиваться от scale */
-    max-width: none !important; 
-    width: auto !important;
-    
-    /* Применение масштабной переменной для мобильных устройств */
-    scale: var(--dynamic-image-scale-mobile) !important;
-  }
-  body.fullscreen-enabled.mobile .custom-dynamic-image-container {
-    right: 50px !important;
-  }
-}
-/* ========================================================================== */
-
-
-
-
-
-
-
-
-/* ==========================================================================
-   1. ВОДЯНОЙ ЗНАК WOLF STUDIO В ПРАВОМ НИЖНЕМ УГЛУ (ПРОЗРАЧНЫЙ ФОН + ВРАЩЕНИЕ)
-   ========================================================================== */
-
+/* --- ВОДЯНОЙ ЗНАК WOLF STUDIO (ПРАВЫЙ НИЖНИЙ УГОЛ) ----------------------- */
 .custom-wolf-watermark-bottom {
-  display: block !important;
-  position: absolute !important;
-  bottom: 20px !important;
-  right: 20px !important;
-  width: 70px !important;  /* Вычитаем ширину иконки, делим на 2, вписываем значение в top, right */
-  height: 70px !important;  
-  z-index: 1001 !important; /* Поверх панорамы */
-  cursor: pointer !important;
-  overflow: hidden !important;
-  
-  /* Полностью прозрачный контейнер */
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
+  display: block;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  width: 70px;
+  height: 70px;
+  z-index: 40;
+  cursor: pointer;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
-/* СЛОЙ 1: Вращающийся фоновый круг */
 .custom-wolf-watermark-bottom .wolf-watermark-bg {
-  position: absolute !important;
-  top: 3px !important;  /* Для ПК. Было 2px (центрирование) */
-  right: 3px !important;   /* Для ПК. Было 2px */
-  width: 65px !important;  /* Для ПК. Было 36px (размер круга) */
-  height: 65px !important;  /* Для ПК. Было 36px */
-  object-fit: contain !important;
-  z-index: 1 !important;
-  
-  /* Ваша фирменная анимация вращения */
-  animation: wolfWatermarkSpinner 4s linear infinite !important;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 65px;
+  height: 65px;
+  object-fit: contain;
+  z-index: 1;
+  animation: wolfWatermarkSpinner 4s linear infinite;
 }
 
 @keyframes wolfWatermarkSpinner {
@@ -1277,54 +490,207 @@ body.fullscreen-enabled .custom-dynamic-image-container {
   to { transform: rotate(360deg); }
 }
 
-/* СЛОЙ 2: Статичная центральная иконка */
 .custom-wolf-watermark-bottom .wolf-watermark-icon {
-  position: absolute !important;
-  top: 8px !important;
-  right: 8px !important;
-  width: 54px !important;  /* Для ПК. Было 30px */
-  height: 54px !important;  /* Для ПК. Было 30px */
-  object-fit: contain !important;
-  z-index: 2 !important;
-  transition: transform 0.2s ease-in-out !important;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 54px;
+  height: 54px;
+  object-fit: contain;
+  z-index: 2;
+  transition: transform 0.2s ease-in-out;
 }
 
-/* Ховер-эффект для водяного знака */
 .no-touch .custom-wolf-watermark-bottom:hover .wolf-watermark-icon {
-  transform: scale(1.15) !important;
+  transform: scale(1.15);
 }
 
+/* --- IOS-ТУМБЛЕР ПЕРЕКЛЮЧЕНИЯ ОТДЕЛКИ И ПОДСКАЗКА ПОД НИМ ---------------- */
+.ios-switch-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 5px;
+  position: absolute;
+  top: 48px;
+  left: 6px;
+  z-index: 35;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  pointer-events: none;
+  transform-origin: left top;
+  scale: var(--dynamic-image-scale-pc);
+}
 
-/* ==========================================================================
-   2. АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ (КНОПКИ УВЕЛИЧИВАЮТСЯ ДО 50px)
-   ========================================================================== */
-@media (max-width: 768px) or (.mobile) {
-  /* Застройщик сверху */
-  .mobile .custom-kuznecova-top-round {
-    width: 50px !important;
-    height: 50px !important;
+.ios-switch {
+  position: relative;
+  display: inline-block;
+  flex-shrink: 0;
+  width: 42px;
+  height: 24px;
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.ios-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.ios-switch-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(58, 68, 84, 0.65);
+  border: 2px solid rgba(255, 255, 255, 1);
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 24px;
+}
+
+.ios-switch-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(255, 255, 255, 1);
+  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.ios-switch input:checked + .ios-switch-slider {
+  background-color: rgba(52, 199, 89, 1);
+}
+
+.ios-switch input:checked + .ios-switch-slider:before {
+  transform: translate(18px, -50%);
+}
+
+.ios-switch-label-box {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  margin-left: 13px;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  color: #ffffff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.2;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+  pointer-events: none;
+  cursor: default;
+  transform-origin: 8px top;
+  scale: var(--switch-text-scale-pc);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+}
+
+.ios-switch-label-box.is-visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.ios-switch-label-box.is-dismissed {
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+}
+
+.hint-arrow-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: #ffffff;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.85));
+}
+
+/* --- АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ (.mobile) --------------------------------- */
+.mobile .custom-zhk-top-round {
+  width: 50px;
+  height: 50px;
+}
+
+.mobile .custom-dynamic-image-container {
+  top: 58px;
+  max-width: none;
+  width: auto;
+  scale: var(--dynamic-image-scale-mobile);
+}
+
+.mobile .custom-wolf-watermark-bottom {
+  bottom: 15px;
+  right: 15px;
+  width: 60px;
+  height: 60px;
+}
+
+.mobile .custom-wolf-watermark-bottom .wolf-watermark-bg {
+  top: 5px;
+  right: 5px;
+  width: 50px;
+  height: 50px;
+}
+
+.mobile .custom-wolf-watermark-bottom .wolf-watermark-icon {
+  top: 8px;
+  right: 8px;
+  width: 44px;
+  height: 44px;
+}
+
+.mobile .ios-switch-wrapper {
+  scale: 1.4;
+  top: 65px;
+  left: 6px;
+  gap: 5px;
+  padding: 0;
+}
+
+.mobile .ios-switch {
+  width: 36px;
+  height: 20px;
+}
+
+.mobile .ios-switch-slider:before {
+  height: 14px;
+  width: 14px;
+  left: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.mobile .ios-switch input:checked + .ios-switch-slider:before {
+  transform: translate(16px, -50%);
+}
+
+.mobile .ios-switch-label-box {
+  scale: var(--switch-text-scale-mobile);
+  font-size: 12px;
+  margin-left: 10px;
+}
+
+@media (max-width: 768px) {
+  .custom-dynamic-image-container {
+    max-width: none;
   }
-  body.fullscreen-enabled.mobile .custom-kuznecova-top-round {
-    right: 50px !important;
-  }
-  
-  /* Студия снизу */
-  .mobile .custom-wolf-watermark-bottom {
-    bottom: 15px !important;
-    right: 15px !important;
-    width: 60px !important;  /* Вычитаем ширину иконки, делим на 2, вписываем значение в top, right */
-    height: 60px !important;
-  }
-  .mobile .custom-wolf-watermark-bottom .wolf-watermark-bg {
-    top: 5px !important;
-    right: 5px !important;
-    width: 50px !important;
-    height: 50px !important;
-  }
-  .mobile .custom-wolf-watermark-bottom .wolf-watermark-icon {
-    top: 8px !important;
-    right: 8px !important;
-    width: 44px !important;  /* Добавляем явный размер для мобильной иконки */
-    height: 44px !important; /* чтобы она тоже пропорционально росла */
-   }
+}
+
+.ios-switch-wrapper.is-hidden {
+  display: none !important;
 }
