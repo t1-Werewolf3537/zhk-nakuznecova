@@ -2,10 +2,10 @@ var APP_DATA = {
   "scenes": [
     {
       "id": "1",
-      "name": "BathRoom",
+      "name": "Bath_1",
       "mapCoords": {
-        "left": "65.49%",
-        "top": "59.54%"
+        "left": "53.95%",
+        "top": "57.90%"
       },
       "levels": [
         {
@@ -34,20 +34,20 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": -0.6363699199545714,
-          "pitch": 0.5011813915270409,
+          "yaw": -1.2218342395278832,
+          "pitch": 0.37757161568943687,
           "rotation": 0,
-          "target": "7"
+          "target": "6"
         }
       ],
       "infoHotspots": []
     },
     {
       "id": "2",
-      "name": "Bath_1",
+      "name": "Bath_2",
       "mapCoords": {
-        "left": "53.81%",
-        "top": "58.24%"
+        "left": "64.45%",
+        "top": "59.01%"
       },
       "levels": [
         {
@@ -76,10 +76,10 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": -1.1929139515562,
-          "pitch": 0.5139276050704495,
+          "yaw": -0.6471270033629501,
+          "pitch": 0.3329539702835298,
           "rotation": 0,
-          "target": "6"
+          "target": "7"
         }
       ],
       "infoHotspots": []
@@ -88,8 +88,8 @@ var APP_DATA = {
       "id": "3",
       "name": "BedRoom_1",
       "mapCoords": {
-        "left": "31.89%",
-        "top": "27.89%"
+        "left": "32.08%",
+        "top": "28.34%"
       },
       "levels": [
         {
@@ -118,14 +118,14 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": 1.6016825840337505,
-          "pitch": 0.33268635141784486,
+          "yaw": 1.647931849940206,
+          "pitch": 0.31274236997236216,
           "rotation": 0,
           "target": "8"
         },
         {
-          "yaw": -1.5409626238206435,
-          "pitch": 0.34680509104063617,
+          "yaw": -1.6000214475228702,
+          "pitch": 0.36640646763648377,
           "rotation": 0,
           "target": "4"
         }
@@ -136,8 +136,8 @@ var APP_DATA = {
       "id": "4",
       "name": "BedRoom_2",
       "mapCoords": {
-        "left": "13.09%",
-        "top": "23.74%"
+        "left": "13.20%",
+        "top": "23.86%"
       },
       "levels": [
         {
@@ -166,8 +166,8 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": 1.6898723070781516,
-          "pitch": 0.36148474723674795,
+          "yaw": 1.7022469172009762,
+          "pitch": 0.3632992037996985,
           "rotation": 0,
           "target": "3"
         }
@@ -178,8 +178,8 @@ var APP_DATA = {
       "id": "5",
       "name": "HallWay_1",
       "mapCoords": {
-        "left": "49.01%",
-        "top": "87.17%"
+        "left": "48.83%",
+        "top": "87.06%"
       },
       "levels": [
         {
@@ -204,12 +204,12 @@ var APP_DATA = {
       "initialViewParameters": {
         "yaw": 0,
         "pitch": 0,
-        "fov": 1.5
+        "fov": 1.2
       },
       "linkHotspots": [
         {
-          "yaw": -0.07523444724372119,
-          "pitch": 0.5477824990431195,
+          "yaw": -0.08688640964769512,
+          "pitch": 0.45677609954308096,
           "rotation": 0,
           "target": "6"
         }
@@ -220,8 +220,8 @@ var APP_DATA = {
       "id": "6",
       "name": "HallWay_2",
       "mapCoords": {
-        "left": "47.73%",
-        "top": "66.29%"
+        "left": "47.83%",
+        "top": "65.45%"
       },
       "levels": [
         {
@@ -250,20 +250,20 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": 3.0568624831235276,
-          "pitch": 0.552859804940038,
+          "yaw": 3.0354886308142817,
+          "pitch": 0.5738855781492127,
           "rotation": 0,
           "target": "5"
         },
         {
-          "yaw": 0.503788975396894,
-          "pitch": 0.44132430513763765,
+          "yaw": 0.5083636115839241,
+          "pitch": 0.3372645728400556,
           "rotation": 0,
-          "target": "2"
+          "target": "1"
         },
         {
-          "yaw": -0.0091005447793151,
-          "pitch": 0.4029981983465216,
+          "yaw": -0.043351900754972306,
+          "pitch": 0.37333382982437513,
           "rotation": 0,
           "target": "8"
         }
@@ -274,8 +274,8 @@ var APP_DATA = {
       "id": "7",
       "name": "Hall_5",
       "mapCoords": {
-        "left": "64.77%",
-        "top": "40.73%"
+        "left": "64.83%",
+        "top": "40.17%"
       },
       "levels": [
         {
@@ -304,28 +304,28 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": -1.2121986985607691,
-          "pitch": 0.48531289357489804,
+          "yaw": -2.9004604286580076,
+          "pitch": 0.2532662190051198,
           "rotation": 0,
-          "target": "8"
+          "target": "2"
         },
         {
-          "yaw": 0.7843342671116567,
-          "pitch": 0.6233627921089777,
-          "rotation": 0,
-          "target": "9"
-        },
-        {
-          "yaw": 2.008287333968898,
-          "pitch": 0.6198331072032808,
+          "yaw": 1.9491274949472945,
+          "pitch": 0.5436004079809926,
           "rotation": 0,
           "target": "10"
         },
         {
-          "yaw": -2.890082503280766,
-          "pitch": 0.344517684558614,
+          "yaw": 0.8245701052506256,
+          "pitch": 0.5342043025782566,
           "rotation": 0,
-          "target": "1"
+          "target": "9"
+        },
+        {
+          "yaw": -1.2791625528541601,
+          "pitch": 0.4708419923966378,
+          "rotation": 0,
+          "target": "8"
         }
       ],
       "infoHotspots": []
@@ -334,8 +334,8 @@ var APP_DATA = {
       "id": "8",
       "name": "Kabinet",
       "mapCoords": {
-        "left": "48.85%",
-        "top": "30.48%"
+        "left": "48.58%",
+        "top": "31.20%"
       },
       "levels": [
         {
@@ -364,20 +364,20 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": -3.020008033566075,
-          "pitch": 0.4867254208922418,
+          "yaw": -3.0463378586727146,
+          "pitch": 0.41647996286298294,
           "rotation": 0,
           "target": "6"
         },
         {
-          "yaw": -1.4199920244085114,
-          "pitch": 0.4079862960727709,
+          "yaw": -1.4492635905569244,
+          "pitch": 0.3571751587150729,
           "rotation": 0,
           "target": "3"
         },
         {
-          "yaw": 1.8389611045080887,
-          "pitch": 0.5076018478559128,
+          "yaw": 1.839773039306185,
+          "pitch": 0.5002739985368017,
           "rotation": 0,
           "target": "7"
         }
@@ -388,8 +388,8 @@ var APP_DATA = {
       "id": "9",
       "name": "KidsRoom",
       "mapCoords": {
-        "left": "77.73%",
-        "top": "21.79%"
+        "left": "76.58%",
+        "top": "22.84%"
       },
       "levels": [
         {
@@ -418,8 +418,8 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": -2.106626924249202,
-          "pitch": 0.386031402961887,
+          "yaw": -2.120027000537906,
+          "pitch": 0.46588414088471275,
           "rotation": 0,
           "target": "7"
         }
@@ -430,8 +430,8 @@ var APP_DATA = {
       "id": "10",
       "name": "Kitchen_1",
       "mapCoords": {
-        "left": "75.73%",
-        "top": "46.96%"
+        "left": "75.70%",
+        "top": "46.28%"
       },
       "levels": [
         {
@@ -460,14 +460,14 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": -1.5252877890948895,
-          "pitch": 0.7133513427817988,
+          "yaw": -1.4306961513839305,
+          "pitch": 0.6157347864875824,
           "rotation": 0,
           "target": "7"
         },
         {
-          "yaw": 2.2407685442519902,
-          "pitch": 0.48514363791703374,
+          "yaw": 2.2888704696929363,
+          "pitch": 0.5127274317826966,
           "rotation": 0,
           "target": "11"
         }
@@ -478,8 +478,8 @@ var APP_DATA = {
       "id": "11",
       "name": "Kitchen_2",
       "mapCoords": {
-        "left": "89.05%",
-        "top": "60.76%"
+        "left": "89.20%",
+        "top": "60.15%"
       },
       "levels": [
         {
@@ -508,8 +508,8 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": -1.138248552175373,
-          "pitch": 0.45925928194190035,
+          "yaw": -1.0889654764080046,
+          "pitch": 0.4704586559311572,
           "rotation": 0,
           "target": "10"
         }
@@ -519,6 +519,7 @@ var APP_DATA = {
   ],
   "settings": {
     "mouseViewMode": "drag",
-    "autorotateEnabled": false
+    "autorotateEnabled": false,
+    "tileFormat": "jpg"
   }
 };
