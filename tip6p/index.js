@@ -1,15 +1,21 @@
+/**
+ * WolfTour Engine — Основная логика виртуального тура
+ * Разработка: Wolf Studio (https://wolf-studio.ru)
+ */
 'use strict';
 
 (function() {
-  var Marzipano = window.Marzipano;
-  var bowser = window.bowser;
+  var WolfTour = window.WolfTour;
   var data = window.APP_DATA;
 
   // =========================================================================
   // ГЛАВНЫЕ НАСТРОЙКИ ПРОЕКТА
   // =========================================================================
   var ENABLE_REPAIR_SWITCH = true; // true = тумблер отделки включен, false = полностью скрыт
-  var START_WITH_REPAIR = false;   // true = старт с ремонтом (_REPAIR), false = без ремонта
+  var START_WITH_REPAIR = false;    // true = старт с ремонтом (_REPAIR), false = без ремонта
+  var START_SCENE_INDEX = 3;        // Индекс стартовой сцены (нумерация с 0)
+  var APARTMENT_TITLE = "Тип-6П | 2-ЕВРО 50м²";
+  var TILES_URL = "tiles";          // Путь к тайлам: "tiles" или ссылка на Яндекс Облако (без слеша на конце)
   // =========================================================================
 
   var isWhiteStyle = ENABLE_REPAIR_SWITCH ? START_WITH_REPAIR : false;
@@ -33,24 +39,25 @@
     };
     var mql = matchMedia("(max-width: 500px), (max-height: 500px)");
     setMode();
-    mql.addListener(setMode);
+    if (mql.addEventListener) {
+      mql.addEventListener('change', setMode);
+    } else if (mql.addListener) {
+      mql.addListener(setMode);
+    }
   } else {
     document.body.classList.add('desktop');
   }
 
   // Определение сенсорного экрана
   document.body.classList.add('no-touch');
-  window.addEventListener('touchstart', function() {
+  window.addEventListener('touchstart', function onFirstTouch() {
     document.body.classList.remove('no-touch');
     document.body.classList.add('touch');
+    window.removeEventListener('touchstart', onFirstTouch);
   });
 
-  if (bowser.msie && parseFloat(bowser.version) < 11) {
-    document.body.classList.add('tooltip-fallback');
-  }
-
-  // Инициализация вьюера
-  var viewer = new Marzipano.Viewer(panoElement, {
+  // Инициализация вьюера WolfTour
+  var viewer = new WolfTour.Viewer(panoElement, {
     controls: {
       mouseViewMode: data.settings.mouseViewMode
     }
@@ -59,20 +66,22 @@
 
   // Создание сцен
   var scenes = data.scenes.map(function(sceneData) {
-    var urlPrefix = "tiles";
-    var source = Marzipano.ImageUrlSource.fromString(
-      urlPrefix + "/" + sceneData.id + "/{z}/{f}/{y}/{x}.jpg",
-      { cubeMapPreviewUrl: urlPrefix + "/" + sceneData.id + "/preview.jpg" }
+    var urlPrefix = TILES_URL.replace(/\/+$/, '');
+    var ext = (data.settings && data.settings.tileFormat) ? data.settings.tileFormat : "jpg";
+    var source = WolfTour.ImageUrlSource.fromString(
+      urlPrefix + "/" + sceneData.id + "/{z}/{f}/{y}/{x}." + ext,
+      { cubeMapPreviewUrl: urlPrefix + "/" + sceneData.id + "/preview." + ext }
     );
-    var geometry = new Marzipano.CubeGeometry(sceneData.levels);
 
-    var limiter = Marzipano.RectilinearView.limit.traditional(
+    var geometry = new WolfTour.CubeGeometry(sceneData.levels);
+
+    var limiter = WolfTour.RectilinearView.limit.traditional(
       sceneData.faceSize * 2,
       125 * Math.PI / 180,
       140 * Math.PI / 180
     );
 
-    var view = new Marzipano.RectilinearView(sceneData.initialViewParameters, limiter);
+    var view = new WolfTour.RectilinearView(sceneData.initialViewParameters, limiter);
 
     var scene = viewer.createScene({
       source: source,
@@ -82,10 +91,12 @@
     });
 
     // Создание стрелок перехода
-    sceneData.linkHotspots.forEach(function(hotspot) {
-      var element = createLinkHotspotElement(hotspot);
-      scene.hotspotContainer().createHotspot(element, { yaw: hotspot.yaw, pitch: hotspot.pitch });
-    });
+    if (sceneData.linkHotspots) {
+      sceneData.linkHotspots.forEach(function(hotspot) {
+        var element = createLinkHotspotElement(hotspot);
+        scene.hotspotContainer().createHotspot(element, { yaw: hotspot.yaw, pitch: hotspot.pitch });
+      });
+    }
 
     return {
       data: sceneData,
@@ -93,68 +104,63 @@
       view: view
     };
   });
-
   // Меню списка квартир
-  sceneListToggleElement.addEventListener('click', function() {
-    sceneListElement.classList.toggle('enabled');
-    sceneListToggleElement.classList.toggle('enabled');
-  });
-
-  function hideSceneList() {
-    sceneListElement.classList.remove('enabled');
-    sceneListToggleElement.classList.remove('enabled');
+  if (sceneListToggleElement && sceneListElement) {
+    sceneListToggleElement.addEventListener('click', function() {
+      sceneListElement.classList.toggle('enabled');
+      sceneListToggleElement.classList.toggle('enabled');
+    });
   }
 
-  // Переключение сцен с учетом режима отделки
-  function switchScene(scene) {
-    if (!scene) return;
+  function hideSceneList() {
+    if (sceneListElement) sceneListElement.classList.remove('enabled');
+    if (sceneListToggleElement) sceneListToggleElement.classList.remove('enabled');
+  }
+
+  // Поиск парной сцены (с ремонтом или без)
+  function resolveSceneVariant(scene) {
+    if (!scene || !ENABLE_REPAIR_SWITCH) return scene;
 
     var currentName = scene.data.name;
-    var finalScene = scene;
+    var targetName = null;
 
-    if (ENABLE_REPAIR_SWITCH) {
-      if (isWhiteStyle) {
-        if (!currentName.endsWith('_REPAIR')) {
-          var targetNameRepair = currentName + '_REPAIR';
-          for (var i = 0; i < scenes.length; i++) {
-            if (scenes[i].data.name === targetNameRepair) {
-              finalScene = scenes[i];
-              break;
-            }
-          }
-        }
-      } else {
-        if (currentName.endsWith('_REPAIR')) {
-          var targetNameNormal = currentName.replace('_REPAIR', '');
-          for (var i = 0; i < scenes.length; i++) {
-            if (scenes[i].data.name === targetNameNormal) {
-              finalScene = scenes[i];
-              break;
-            }
-          }
+    if (isWhiteStyle && !currentName.endsWith('_REPAIR')) {
+      targetName = currentName + '_REPAIR';
+    } else if (!isWhiteStyle && currentName.endsWith('_REPAIR')) {
+      targetName = currentName.replace('_REPAIR', '');
+    }
+
+    if (targetName) {
+      for (var i = 0; i < scenes.length; i++) {
+        if (scenes[i].data.name === targetName) {
+          return scenes[i];
         }
       }
     }
 
+    return scene;
+  }
+
+  // Переключение сцен с сохранением ракурса без рывков
+  function switchScene(scene, keepViewAngle) {
+    if (!scene) return;
+
+    var finalScene = resolveSceneVariant(scene);
     var currentView = viewer.view();
-    var savedYaw = currentView ? currentView.yaw() : null;
-    var savedPitch = currentView ? currentView.pitch() : null;
-    var savedFov = currentView ? currentView.fov() : null;
+
+    if (keepViewAngle && currentView && finalScene.view) {
+      finalScene.view.setParameters({
+        yaw: currentView.yaw(),
+        pitch: currentView.pitch(),
+        fov: currentView.fov()
+      });
+    }
 
     finalScene.scene.switchTo();
 
-    setTimeout(function() {
-      var newView = viewer.view();
-      if (newView && savedYaw !== null) {
-        newView.setParameters({
-          yaw: savedYaw,
-          pitch: savedPitch,
-          fov: savedFov
-        });
-      }
-    }, 50);
-
-    sceneNameElement.innerHTML = "Тип-6П | 2-КОМНАТНАЯ 50м²м²";
+    if (sceneNameElement) {
+      sceneNameElement.textContent = APARTMENT_TITLE;
+    }
 
     // Перенос красной точки на мини-карте
     var mapDot = document.getElementById('mini-map-dot');
@@ -170,10 +176,14 @@
     }
   }
 
-  // Генерация синих точек комнат на мини-карте
+  // Генерация синих точек комнат на мини-карте (исключая дубли _REPAIR)
   var pointsContainer = document.getElementById('mini-map-points');
   if (pointsContainer && data.scenes) {
     data.scenes.forEach(function(sceneData) {
+      if (sceneData.name && sceneData.name.endsWith('_REPAIR')) {
+        return;
+      }
+
       if (sceneData.mapCoords && sceneData.mapCoords.left && sceneData.mapCoords.top) {
         var pointEl = document.createElement('div');
         pointEl.classList.add('map-nav-point');
@@ -185,7 +195,7 @@
           event.stopPropagation();
           var targetScene = findSceneById(sceneData.id);
           if (targetScene) {
-            switchScene(targetScene);
+            switchScene(targetScene, true);
           }
         });
 
@@ -205,7 +215,7 @@
     icon.style.transform = 'rotate(' + hotspot.rotation + 'rad)';
 
     wrapper.addEventListener('click', function() {
-      switchScene(findSceneById(hotspot.target));
+      switchScene(findSceneById(hotspot.target), true);
     });
 
     stopTouchAndScrollEventPropagation(wrapper);
@@ -219,7 +229,7 @@
     for (var i = 0; i < eventList.length; i++) {
       element.addEventListener(eventList[i], function(event) {
         event.stopPropagation();
-      });
+      }, { passive: true });
     }
   }
 
@@ -231,26 +241,21 @@
     }
     return null;
   }
+  // Запуск стартовой сцены с проверкой границ массива
+  var baseStartScene = scenes[START_SCENE_INDEX] || scenes;
+  var startScene = resolveSceneVariant(baseStartScene);
 
-  // Запуск стартовой сцены (нужный  ндекс -1)
-  var startScene = scenes[3];
-  if (ENABLE_REPAIR_SWITCH && isWhiteStyle && startScene.data && startScene.data.name) {
-    var targetNameStart = startScene.data.name + '_REPAIR';
-    for (var i = 0; i < scenes.length; i++) {
-      if (scenes[i].data.name === targetNameStart) {
-        startScene = scenes[i];
-        break;
-      }
+  if (startScene) {
+    startScene.scene.switchTo();
+    if (sceneNameElement) {
+      sceneNameElement.textContent = APARTMENT_TITLE;
     }
-  }
 
-  startScene.scene.switchTo();
-  sceneNameElement.innerHTML = "Тип-6П | 2-КОМНАТНАЯ 50м²м²";
-
-  var initialMapDot = document.getElementById('mini-map-dot');
-  if (initialMapDot && startScene.data && startScene.data.mapCoords) {
-    initialMapDot.style.left = startScene.data.mapCoords.left;
-    initialMapDot.style.top = startScene.data.mapCoords.top;
+    var initialMapDot = document.getElementById('mini-map-dot');
+    if (initialMapDot && startScene.data && startScene.data.mapCoords) {
+      initialMapDot.style.left = startScene.data.mapCoords.left;
+      initialMapDot.style.top = startScene.data.mapCoords.top;
+    }
   }
   hideSceneList();
 
@@ -261,11 +266,9 @@
   var hintBox = document.getElementById('finish-variant-hint');
 
   if (!ENABLE_REPAIR_SWITCH) {
-    // Если тумблер отключен в настройках — скрываем его и ставим обычную карту
-    if (switchWrapper) switchWrapper.style.setProperty('display', 'none', 'important');
+    if (switchWrapper) switchWrapper.style.display = 'none';
     if (mapImageEl) mapImageEl.src = 'img/plan.jpg';
   } else {
-    // Если тумблер включен — запускаем штатную логику
     var syncInterfaceStyle = function() {
       if (!finishToggleInput) return;
       finishToggleInput.checked = isWhiteStyle;
@@ -290,20 +293,21 @@
       finishToggleInput.addEventListener('change', function(event) {
         event.stopPropagation();
 
-        if (this.checked && hintBox) {
+        isWhiteStyle = this.checked;
+
+        if (isWhiteStyle && hintBox) {
           clearTimeout(showTimer);
           hintBox.classList.remove('is-visible');
           hintBox.classList.add('is-dismissed');
         }
 
-        isWhiteStyle = !isWhiteStyle;
         syncInterfaceStyle();
 
         var currentScene = viewer.scene();
         if (currentScene) {
           for (var i = 0; i < scenes.length; i++) {
             if (scenes[i].scene === currentScene) {
-              switchScene(scenes[i]);
+              switchScene(scenes[i], true);
               break;
             }
           }

@@ -4,8 +4,8 @@ var APP_DATA = {
       "id": "1",
       "name": "BathRoom_1",
       "mapCoords": {
-        "left": "88.11%",
-        "top": "22.54%"
+        "left": "87.72%",
+        "top": "22.22%"
       },
       "levels": [
         {
@@ -20,13 +20,9 @@ var APP_DATA = {
         {
           "tileSize": 512,
           "size": 1024
-        },
-        {
-          "tileSize": 512,
-          "size": 2048
         }
       ],
-      "faceSize": 2048,
+      "faceSize": 1024,
       "initialViewParameters": {
         "yaw": 0,
         "pitch": 0,
@@ -34,8 +30,8 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": 1.52767212600941,
-          "pitch": 0.43290741312387127,
+          "yaw": 1.4995434926559117,
+          "pitch": 0.49302296165461357,
           "rotation": 0,
           "target": "6"
         }
@@ -46,8 +42,8 @@ var APP_DATA = {
       "id": "2",
       "name": "BathRoom_2",
       "mapCoords": {
-        "left": "75.93%",
-        "top": "23.95%"
+        "left": "74.52%",
+        "top": "23.47%"
       },
       "levels": [
         {
@@ -62,13 +58,9 @@ var APP_DATA = {
         {
           "tileSize": 512,
           "size": 1024
-        },
-        {
-          "tileSize": 512,
-          "size": 2048
         }
       ],
-      "faceSize": 2048,
+      "faceSize": 1024,
       "initialViewParameters": {
         "yaw": 0,
         "pitch": 0,
@@ -76,8 +68,8 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": 1.6049014994327102,
-          "pitch": 0.44331291258321137,
+          "yaw": 1.772581536938164,
+          "pitch": 0.5391707957586949,
           "rotation": 0,
           "target": "6"
         }
@@ -88,8 +80,8 @@ var APP_DATA = {
       "id": "3",
       "name": "BedRoom",
       "mapCoords": {
-        "left": "35.75%",
-        "top": "81.06%"
+        "left": "33.52%",
+        "top": "80.97%"
       },
       "levels": [
         {
@@ -104,13 +96,9 @@ var APP_DATA = {
         {
           "tileSize": 512,
           "size": 1024
-        },
-        {
-          "tileSize": 512,
-          "size": 2048
         }
       ],
-      "faceSize": 2048,
+      "faceSize": 1024,
       "initialViewParameters": {
         "yaw": 0,
         "pitch": 0,
@@ -118,8 +106,8 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": -0.4033280890074131,
-          "pitch": 0.30913584544936157,
+          "yaw": -0.4258790978229037,
+          "pitch": 0.21044275396927858,
           "rotation": 0,
           "target": "4"
         }
@@ -130,8 +118,8 @@ var APP_DATA = {
       "id": "4",
       "name": "HallWay_1",
       "mapCoords": {
-        "left": "80.11%",
-        "top": "79.53%"
+        "left": "81.52%",
+        "top": "82.52%"
       },
       "levels": [
         {
@@ -146,30 +134,26 @@ var APP_DATA = {
         {
           "tileSize": 512,
           "size": 1024
-        },
-        {
-          "tileSize": 512,
-          "size": 2048
         }
       ],
-      "faceSize": 2048,
+      "faceSize": 1024,
       "initialViewParameters": {
-        "yaw": -1.6458,
-        "pitch": 0.2089,
-        "fov": 1.7
+        "yaw": -1.3511,
+        "pitch": 0.1267,
+        "fov": 1.6
       },
       "linkHotspots": [
         {
-          "yaw": -2.503795864801466,
-          "pitch": 0.426077665140264,
-          "rotation": 0,
-          "target": "3"
-        },
-        {
-          "yaw": -1.6933403413188408,
-          "pitch": 0.5597254590727267,
+          "yaw": -1.686053784088159,
+          "pitch": 0.4689556698528605,
           "rotation": 0,
           "target": "5"
+        },
+        {
+          "yaw": -2.473497255202796,
+          "pitch": 0.3434918280441739,
+          "rotation": 0,
+          "target": "3"
         }
       ],
       "infoHotspots": []
@@ -178,8 +162,8 @@ var APP_DATA = {
       "id": "5",
       "name": "HallWay_2",
       "mapCoords": {
-        "left": "76.11%",
-        "top": "61.24%"
+        "left": "76.52%",
+        "top": "58.64%"
       },
       "levels": [
         {
@@ -194,13 +178,9 @@ var APP_DATA = {
         {
           "tileSize": 512,
           "size": 1024
-        },
-        {
-          "tileSize": 512,
-          "size": 2048
         }
       ],
-      "faceSize": 2048,
+      "faceSize": 1024,
       "initialViewParameters": {
         "yaw": 0,
         "pitch": 0,
@@ -208,26 +188,26 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": 1.4647540483880528,
-          "pitch": 0.5823004616211414,
+          "yaw": 1.44366843943504,
+          "pitch": 0.5385623000460473,
           "rotation": 0,
           "target": "4"
         },
         {
-          "yaw": -2.2191060556336204,
-          "pitch": 0.5292268665306494,
+          "yaw": -2.2533872783299067,
+          "pitch": 0.47073792388068725,
           "rotation": 0,
           "target": "7"
         },
         {
-          "yaw": -1.5127875600714589,
-          "pitch": 0.4540499824436388,
+          "yaw": -1.4912134191293092,
+          "pitch": 0.4385621408862761,
           "rotation": 0,
           "target": "6"
         },
         {
-          "yaw": 2.0969775488275184,
-          "pitch": 0.36999715108293785,
+          "yaw": 2.096020472481822,
+          "pitch": 0.29758030576626204,
           "rotation": 0,
           "target": "3"
         }
@@ -238,8 +218,8 @@ var APP_DATA = {
       "id": "6",
       "name": "HallWay_3",
       "mapCoords": {
-        "left": "80.84%",
-        "top": "37.40%"
+        "left": "80.92%",
+        "top": "36.84%"
       },
       "levels": [
         {
@@ -254,13 +234,9 @@ var APP_DATA = {
         {
           "tileSize": 512,
           "size": 1024
-        },
-        {
-          "tileSize": 512,
-          "size": 2048
         }
       ],
-      "faceSize": 2048,
+      "faceSize": 1024,
       "initialViewParameters": {
         "yaw": 0,
         "pitch": 0,
@@ -268,34 +244,34 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": 1.6773505712428571,
-          "pitch": 0.4696872446139686,
+          "yaw": 1.6721666214456032,
+          "pitch": 0.5521993826887037,
           "rotation": 0,
           "target": "5"
         },
         {
-          "yaw": 2.0214568035926312,
-          "pitch": 0.2491683846254098,
+          "yaw": 2.031722893751441,
+          "pitch": 0.23905336555388956,
           "rotation": 0,
           "target": "7"
         },
         {
-          "yaw": -2.7626882349606454,
-          "pitch": 0.30524296697514686,
+          "yaw": -2.7600533500750544,
+          "pitch": 0.24434349099881914,
           "rotation": 0,
           "target": "8"
         },
         {
-          "yaw": -1.991163964569317,
-          "pitch": 0.285863377823965,
-          "rotation": 0,
-          "target": "2"
-        },
-        {
-          "yaw": -1.0957465846995778,
-          "pitch": 0.2958869623688969,
+          "yaw": -1.0537168289543999,
+          "pitch": 0.2944214977875923,
           "rotation": 0,
           "target": "1"
+        },
+        {
+          "yaw": -2.0394364312385065,
+          "pitch": 0.24707021945154395,
+          "rotation": 0,
+          "target": "2"
         }
       ],
       "infoHotspots": []
@@ -304,8 +280,8 @@ var APP_DATA = {
       "id": "7",
       "name": "KidsRoom",
       "mapCoords": {
-        "left": "41.20%",
-        "top": "50.86%"
+        "left": "43.32%",
+        "top": "50.33%"
       },
       "levels": [
         {
@@ -320,13 +296,9 @@ var APP_DATA = {
         {
           "tileSize": 512,
           "size": 1024
-        },
-        {
-          "tileSize": 512,
-          "size": 2048
         }
       ],
-      "faceSize": 2048,
+      "faceSize": 1024,
       "initialViewParameters": {
         "yaw": 0,
         "pitch": 0,
@@ -334,8 +306,8 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": 0.0009245232109602597,
-          "pitch": 0.24643850655214194,
+          "yaw": 0.021060018114212653,
+          "pitch": 0.2467869311592441,
           "rotation": 0,
           "target": "5"
         }
@@ -346,8 +318,8 @@ var APP_DATA = {
       "id": "8",
       "name": "Kitchen",
       "mapCoords": {
-        "left": "28.11%",
-        "top": "20.65%"
+        "left": "28.12%",
+        "top": "20.35%"
       },
       "levels": [
         {
@@ -362,13 +334,9 @@ var APP_DATA = {
         {
           "tileSize": 512,
           "size": 1024
-        },
-        {
-          "tileSize": 512,
-          "size": 2048
         }
       ],
-      "faceSize": 2048,
+      "faceSize": 1024,
       "initialViewParameters": {
         "yaw": 0,
         "pitch": 0,
@@ -376,8 +344,8 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": 0.3871991980885241,
-          "pitch": 0.1641381962536954,
+          "yaw": 0.39052079099915815,
+          "pitch": 0.20458173734168383,
           "rotation": 0,
           "target": "6"
         }
@@ -388,8 +356,8 @@ var APP_DATA = {
       "id": "9",
       "name": "BathRoom_1_REPAIR",
       "mapCoords": {
-        "left": "88.11%",
-        "top": "22.54%"
+        "left": "87.72%",
+        "top": "22.22%"
       },
       "levels": [
         {
@@ -418,8 +386,8 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": 1.52767212600941,
-          "pitch": 0.43290741312387127,
+          "yaw": 1.4995434926559117,
+          "pitch": 0.49302296165461357,
           "rotation": 0,
           "target": "14"
         }
@@ -430,8 +398,8 @@ var APP_DATA = {
       "id": "10",
       "name": "BathRoom_2_REPAIR",
       "mapCoords": {
-        "left": "75.93%",
-        "top": "23.95%"
+        "left": "74.52%",
+        "top": "23.47%"
       },
       "levels": [
         {
@@ -460,8 +428,8 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": 1.6049014994327102,
-          "pitch": 0.44331291258321137,
+          "yaw": 1.772581536938164,
+          "pitch": 0.5391707957586949,
           "rotation": 0,
           "target": "14"
         }
@@ -472,8 +440,8 @@ var APP_DATA = {
       "id": "11",
       "name": "BedRoom_REPAIR",
       "mapCoords": {
-        "left": "35.75%",
-        "top": "81.06%"
+        "left": "33.52%",
+        "top": "80.97%"
       },
       "levels": [
         {
@@ -502,8 +470,8 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": -0.4033280890074131,
-          "pitch": 0.30913584544936157,
+          "yaw": -0.4258790978229037,
+          "pitch": 0.21044275396927858,
           "rotation": 0,
           "target": "12"
         }
@@ -514,8 +482,8 @@ var APP_DATA = {
       "id": "12",
       "name": "HallWay_1_REPAIR",
       "mapCoords": {
-        "left": "80.11%",
-        "top": "79.53%"
+        "left": "81.52%",
+        "top": "82.52%"
       },
       "levels": [
         {
@@ -544,16 +512,16 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": -2.503795864801466,
-          "pitch": 0.426077665140264,
-          "rotation": 0,
-          "target": "11"
-        },
-        {
-          "yaw": -1.6933403413188408,
-          "pitch": 0.5597254590727267,
+          "yaw": -1.686053784088159,
+          "pitch": 0.4689556698528605,
           "rotation": 0,
           "target": "13"
+        },
+        {
+          "yaw": -2.473497255202796,
+          "pitch": 0.3434918280441739,
+          "rotation": 0,
+          "target": "11"
         }
       ],
       "infoHotspots": []
@@ -562,8 +530,8 @@ var APP_DATA = {
       "id": "13",
       "name": "HallWay_2_REPAIR",
       "mapCoords": {
-        "left": "76.11%",
-        "top": "61.24%"
+        "left": "76.52%",
+        "top": "58.64%"
       },
       "levels": [
         {
@@ -592,26 +560,26 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": 1.4647540483880528,
-          "pitch": 0.5823004616211414,
+          "yaw": 1.44366843943504,
+          "pitch": 0.5385623000460473,
           "rotation": 0,
           "target": "12"
         },
         {
-          "yaw": -2.2191060556336204,
-          "pitch": 0.5292268665306494,
+          "yaw": -2.2533872783299067,
+          "pitch": 0.47073792388068725,
           "rotation": 0,
           "target": "15"
         },
         {
-          "yaw": -1.5127875600714589,
-          "pitch": 0.4540499824436388,
+          "yaw": -1.4912134191293092,
+          "pitch": 0.4385621408862761,
           "rotation": 0,
           "target": "14"
         },
         {
-          "yaw": 2.0969775488275184,
-          "pitch": 0.36999715108293785,
+          "yaw": 2.096020472481822,
+          "pitch": 0.29758030576626204,
           "rotation": 0,
           "target": "11"
         }
@@ -622,8 +590,8 @@ var APP_DATA = {
       "id": "14",
       "name": "HallWay_3_REPAIR",
       "mapCoords": {
-        "left": "80.84%",
-        "top": "37.40%"
+        "left": "80.92%",
+        "top": "36.84%"
       },
       "levels": [
         {
@@ -652,34 +620,34 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": 1.6773505712428571,
-          "pitch": 0.4696872446139686,
+          "yaw": 1.6721666214456032,
+          "pitch": 0.5521993826887037,
           "rotation": 0,
           "target": "13"
         },
         {
-          "yaw": 2.0214568035926312,
-          "pitch": 0.2491683846254098,
+          "yaw": 2.031722893751441,
+          "pitch": 0.23905336555388956,
           "rotation": 0,
           "target": "15"
         },
         {
-          "yaw": -2.7626882349606454,
-          "pitch": 0.30524296697514686,
+          "yaw": -2.7600533500750544,
+          "pitch": 0.24434349099881914,
           "rotation": 0,
           "target": "16"
         },
         {
-          "yaw": -1.991163964569317,
-          "pitch": 0.285863377823965,
-          "rotation": 0,
-          "target": "10"
-        },
-        {
-          "yaw": -1.0957465846995778,
-          "pitch": 0.2958869623688969,
+          "yaw": -1.0537168289543999,
+          "pitch": 0.2944214977875923,
           "rotation": 0,
           "target": "9"
+        },
+        {
+          "yaw": -2.0394364312385065,
+          "pitch": 0.24707021945154395,
+          "rotation": 0,
+          "target": "10"
         }
       ],
       "infoHotspots": []
@@ -688,8 +656,8 @@ var APP_DATA = {
       "id": "15",
       "name": "KidsRoom_REPAIR",
       "mapCoords": {
-        "left": "41.20%",
-        "top": "50.86%"
+        "left": "43.32%",
+        "top": "50.33%"
       },
       "levels": [
         {
@@ -718,8 +686,8 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": 0.0009245232109602597,
-          "pitch": 0.24643850655214194,
+          "yaw": 0.021060018114212653,
+          "pitch": 0.2467869311592441,
           "rotation": 0,
           "target": "13"
         }
@@ -730,8 +698,8 @@ var APP_DATA = {
       "id": "16",
       "name": "Kitchen_REPAIR",
       "mapCoords": {
-        "left": "28.11%",
-        "top": "20.65%"
+        "left": "28.12%",
+        "top": "20.35%"
       },
       "levels": [
         {
@@ -760,8 +728,8 @@ var APP_DATA = {
       },
       "linkHotspots": [
         {
-          "yaw": 0.3871991980885241,
-          "pitch": 0.1641381962536954,
+          "yaw": 0.39052079099915815,
+          "pitch": 0.20458173734168383,
           "rotation": 0,
           "target": "14"
         }
@@ -771,6 +739,7 @@ var APP_DATA = {
   ],
   "settings": {
     "mouseViewMode": "drag",
-    "autorotateEnabled": false
+    "autorotateEnabled": false,
+    "tileFormat": "jpg"
   }
 };
