@@ -779,6 +779,8 @@
       this._basePitch = 0;
       this._refYaw = 0;
       this._refPitch = 0;
+      this._targetYaw = 0;
+      this._targetPitch = 0;
       this._smoothYaw = 0;
       this._smoothPitch = 0;
       this._hasSmooth = false;
@@ -844,6 +846,8 @@
       this._baseYaw += dYaw;
       this._basePitch = clamp(this._basePitch + dPitch, -Math.PI / 2, Math.PI / 2);
       if (this._hasSmooth) {
+        this._targetYaw += dYaw;
+        this._targetPitch = clamp(this._targetPitch + dPitch, -Math.PI / 2, Math.PI / 2);
         this._smoothYaw += dYaw;
         this._smoothPitch = clamp(this._smoothPitch + dPitch, -Math.PI / 2, Math.PI / 2);
       }
@@ -921,24 +925,31 @@
 
       const relPitch = cur.pitch - this._refPitch;
 
-      const targetYaw = this._baseYaw + relYaw;
-      const targetPitch = clamp(this._basePitch + relPitch, -Math.PI * 0.48, Math.PI * 0.48);
+      this._targetYaw = this._baseYaw + relYaw;
+      this._targetPitch = clamp(this._basePitch + relPitch, -Math.PI * 0.48, Math.PI * 0.48);
 
       if (!this._hasSmooth) {
-        this._smoothYaw = targetYaw;
-        this._smoothPitch = targetPitch;
+        this._smoothYaw = this._targetYaw;
+        this._smoothPitch = this._targetPitch;
         this._hasSmooth = true;
-      } else {
-        let diffYaw = targetYaw - this._smoothYaw;
-        while (diffYaw > Math.PI) diffYaw -= 2 * Math.PI;
-        while (diffYaw < -Math.PI) diffYaw += 2 * Math.PI;
-        const diffPitch = targetPitch - this._smoothPitch;
-
-        // Подавление резких скачков магнитометра (авто-калибровка компаса на Android)
-        const factor = (Math.abs(diffYaw) > 0.22 || Math.abs(diffPitch) > 0.22) ? 0.05 : 0.18;
-        this._smoothYaw += diffYaw * factor;
-        this._smoothPitch += diffPitch * factor;
       }
+    }
+
+    update(dt) {
+      if (!this._enabled || !this._hasSmooth) return;
+      const v = this._viewer.view();
+      if (!v) return;
+
+      let diffYaw = this._targetYaw - this._smoothYaw;
+      while (diffYaw > Math.PI) diffYaw -= 2 * Math.PI;
+      while (diffYaw < -Math.PI) diffYaw += 2 * Math.PI;
+      const diffPitch = this._targetPitch - this._smoothPitch;
+
+      if (Math.abs(diffYaw) < 1e-5 && Math.abs(diffPitch) < 1e-5) return;
+
+      const alpha = 1 - Math.exp(-32 * dt);
+      this._smoothYaw += diffYaw * alpha;
+      this._smoothPitch += diffPitch * alpha;
 
       if (!isNaN(this._smoothYaw) && !isNaN(this._smoothPitch)) {
         v.setYaw(this._smoothYaw);
@@ -1161,6 +1172,10 @@
         this._lastDomW = curW;
         this._lastDomH = curH;
         this.updateSize();
+      }
+
+      if (this._gyro && this._gyro.isEnabled()) {
+        this._gyro.update(dt);
       }
 
       if (Math.abs(this._velYaw) > 1e-4 || Math.abs(this._velPitch) > 1e-4) {
