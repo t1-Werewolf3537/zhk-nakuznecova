@@ -17,7 +17,7 @@
   --switch-text-scale-mobile: 0.85;
 
   /* Точки и луч-радар мини-карты */
-  --map-point-size: 4cqw;
+  --map-point-size: 4.5cqw;
   --map-point-color: #007bff;
   --map-point-opacity: 0.8;
   --map-point-border: #ffffff;
@@ -27,13 +27,13 @@
   --map-dot-border: #ffffff;
 
   --map-radar-width: 16.5cqw;
-  --map-radar-height: 17cqw;
+  --map-radar-height: 22cqw;
   --map-radar-color: #df5d5d;
   --map-radar-opacity: 1;
 
   /* Размер текста верхней плашки */
   --title-font-desktop: 22px;
-  --title-font-mobile: 13px;
+  --title-font-mobile: 15px;
 }
 
 * {

@@ -23,6 +23,7 @@
   var TILES_URL = "tiles";          // Путь к тайлам: "tiles" или ссылка на Яндекс Облако (без слеша на конце)
   var CAMERA_DRAG_SPEED = 0.65;     // Скорость вращения камеры (0.3 - плавно, 1.0 - стандарт)
   var CAMERA_INERTIA = 4.5;         // Затухание инерции (2.0 - длинный докат, 8.0 - быстрая остановка)
+  var RADAR_ANGLE_OFFSET = 270;     // Базовый угол поворота луча радара (0 - 360 градусов)
   // =========================================================================
 
   var isWhiteStyle = ENABLE_REPAIR_SWITCH ? START_WITH_REPAIR : false;
@@ -446,7 +447,7 @@
     var mapDot = document.getElementById('mini-map-dot');
     if (!mapDot || !viewObj) return;
     var degrees = viewObj.yaw() * (180 / Math.PI);
-    mapDot.style.transform = 'translate(-50%, -50%) rotate(' + (degrees + 270) + 'deg)';
+    mapDot.style.transform = 'translate(-50%, -50%) rotate(' + (degrees + RADAR_ANGLE_OFFSET) + 'deg)';
   }
 
   viewer.addEventListener('viewChange', function() {
