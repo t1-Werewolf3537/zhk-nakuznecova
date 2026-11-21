@@ -494,18 +494,23 @@
       this.loading = new Set();
       this.queue = [];
       this.activeLoads = 0;
-      this.maxConcurrency = 6;
+      this.maxConcurrency = 12;
       this.previewCache = new Map();
     }
 
-    get(sceneId, source, tile) {
+    get(sceneId, source, tile, highPriority) {
       const cacheKey = `${sceneId}:${tile.key}`;
       if (this.textures.has(cacheKey)) return this.textures.get(cacheKey);
       if (this.loading.has(cacheKey)) return null;
 
       const desc = source.getTileDescriptor(tile);
       this.loading.add(cacheKey);
-      this.queue.push({ cacheKey, desc });
+      const job = { cacheKey, desc };
+      if (highPriority) {
+        this.queue.unshift(job);
+      } else {
+        this.queue.push(job);
+      }
       this._pump();
       return null;
     }
@@ -674,13 +679,13 @@
 
       for (let i = 0; i < visible.length; i++) {
         const tile = visible[i];
-        const tex = texMgr.get(scene._uid, scene._source, tile);
+        const tex = texMgr.get(scene._uid, scene._source, tile, true);
         if (tex) {
           drawMap.set(tile.key, { tile, tex });
         } else {
           let par = tile.parent();
           while (par) {
-            const pTex = texMgr.get(scene._uid, scene._source, par);
+            const pTex = texMgr.get(scene._uid, scene._source, par, true);
             if (pTex) { drawMap.set(par.key, { tile: par, tex: pTex }); break; }
             par = par.parent();
           }
