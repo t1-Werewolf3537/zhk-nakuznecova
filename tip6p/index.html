@@ -4,17 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
   
-  <title>ЖК &quot;Дом на Кузнецова&quot; 3D-тур по 2-комнатной квартире 50м² | Кирилл Бахарев</title>  
+  <title>ЖК &quot;Дом на Кузнецова&quot; 3D-тур по 2-комнатной квартире | Кирилл Бахарев</title>  
   <meta name="description" content="3D-тур по квартире в ЖК «Дом на Кузнецова» 2-комнатная квартира (50 кв.м). Профессиональная 3D-визуализация интерьера | Кирилл Бахарев">
 
   <!-- Open Graph для мессенджеров и соцсетей -->
   <meta property="og:type" content="website"> 
   <meta property="og:title" content="3D-тур ЖК Дом на Кузнецова | 2-комнатная квартира 50м²"> 
   <meta property="og:description" content="Виртуальный тур по интерьеру квартиры | Кирилл Бахарев."> 
-  <meta property="og:url" content="https://zhk-nakuznecova.wolf-studio.ru/tip6p"> 
-  <meta property="og:image" content="https://zhk-nakuznecova.wolf-studio.ru/tip6p/img/preview.jpg">
+  <meta property="og:url" content="https://zhk-nakuznecova.wolf-studio.ru/tip6p/"> 
+  <meta property="og:image" content="https://wolf-studio.ru/img/preview.jpg">
 
-  <link rel="stylesheet" href="vendor/reset.min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="icon" type="image/png" href="../favicon.png">
 </head>
@@ -24,14 +23,22 @@
   <!-- Контейнер панорамы -->
   <div id="pano"></div>
 
+  <!-- Подсказка при прокрутке внутри iframe -->
+  <div id="iframe-scroll-hint" aria-hidden="true">
+    Кликните по 3D-туру или зажмите Ctrl для масштабирования
+  </div>
+
   <!-- Выезжающее меню выбора других квартир -->
   <div id="sceneList">
     <ul class="scenes">
       <li class="scene">
-        <a href="https://zhk-nakuznecova.wolf-studio.ru/tip8p/" class="text">Тип-8П | 3-ЕВРО 69м²</a>
+        <a href="https://wolf-studio.ru" class="text">1</a>
       </li>
       <li class="scene">
-        <a href="https://zhk-nakuznecova.wolf-studio.ru/tip10l/" class="text">Тип-10Л | 2-ЕВРО 47м²</a>
+        <a href="https://wolf-studio.ru" class="text">2</a>
+      </li>
+      <li class="scene">
+        <a href="https://wolf-studio.ru" class="text">3</a>
       </li>
     </ul>
   </div>
@@ -54,6 +61,31 @@
   <div class="custom-dynamic-image-container">
     <img src="img/text_zhk.png" class="dynamic-responsive-img" alt="ЖК Дом на Кузнецова">
   </div>
+
+  <!-- Кнопка гироскопа (управляется через ENABLE_GYROSCOPE на мобильных) -->
+  <button type="button" id="gyroscope-toggle-btn" class="gyroscope-btn is-hidden" title="Управление гироскопом" aria-label="Управление гироскопом">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="9"></circle>
+      <ellipse cx="12" cy="12" rx="9" ry="3.8"></ellipse>
+      <ellipse cx="12" cy="12" rx="3.8" ry="9"></ellipse>
+    </svg>
+  </button>
+
+  <!-- Кнопка полноэкранного режима (управляется через ENABLE_FULLSCREEN) -->
+  <button type="button" id="fullscreen-toggle-btn" class="fullscreen-btn" title="На полный экран" aria-label="На полный экран">
+    <svg class="fs-icon-enter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="15 3 21 3 21 9"></polyline>
+      <polyline points="9 21 3 21 3 15"></polyline>
+      <line x1="21" y1="3" x2="14" y2="10"></line>
+      <line x1="3" y1="21" x2="10" y2="14"></line>
+    </svg>
+    <svg class="fs-icon-exit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="4 14 10 14 10 20"></polyline>
+      <polyline points="20 10 14 10 14 4"></polyline>
+      <line x1="14" y1="10" x2="21" y2="3"></line>
+      <line x1="3" y1="21" x2="10" y2="14"></line>
+    </svg>
+  </button>
 
   <!-- Водяной знак Wolf Studio -->
   <a href="https://wolf-studio.ru" target="_blank" rel="noopener noreferrer" class="custom-wolf-watermark-bottom">

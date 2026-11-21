@@ -12,10 +12,17 @@
   // ГЛАВНЫЕ НАСТРОЙКИ ПРОЕКТА
   // =========================================================================
   var ENABLE_REPAIR_SWITCH = true; // true = тумблер отделки включен, false = полностью скрыт
+  var ENABLE_MINIMAP = true;        // true = планировка включена, false = полностью скрыта
+  var ENABLE_FULLSCREEN = true;    // true = кнопка полноэкранного режима включена, false = скрыта
+  var ENABLE_GYROSCOPE = true;     // true = кнопка гироскопа включена на мобильных, false = скрыта
+  var SMART_SCROLL = true;          // true = умный скролл в iframe (зум после клика или с Ctrl)
   var START_WITH_REPAIR = false;    // true = старт с ремонтом (_REPAIR), false = без ремонта
   var START_SCENE_INDEX = 3;        // Индекс стартовой сцены (нумерация с 0)
+  var KEEP_VIEW_ANGLE = true;       // true = смотреть по ходу движения, false = стартовый ракурс сцены (initialViewParameters)
   var APARTMENT_TITLE = "Тип-6П | 2-ЕВРО 50м²";
   var TILES_URL = "tiles";          // Путь к тайлам: "tiles" или ссылка на Яндекс Облако (без слеша на конце)
+  var CAMERA_DRAG_SPEED = 0.65;     // Скорость вращения камеры (0.3 - плавно, 1.0 - стандарт)
+  var CAMERA_INERTIA = 4.5;         // Затухание инерции (2.0 - длинный докат, 8.0 - быстрая остановка)
   // =========================================================================
 
   var isWhiteStyle = ENABLE_REPAIR_SWITCH ? START_WITH_REPAIR : false;
@@ -56,13 +63,46 @@
     window.removeEventListener('touchstart', onFirstTouch);
   });
 
-  // Инициализация вьюера WolfTour
+  // Определение запуска внутри iframe и инициализация вьюера WolfTour
+  var isInIframe = false;
+  try { isInIframe = window.self !== window.top; } catch (e) { isInIframe = true; }
+  var useSmartScroll = SMART_SCROLL && isInIframe;
+
   var viewer = new WolfTour.Viewer(panoElement, {
     controls: {
-      mouseViewMode: data.settings.mouseViewMode
+      mouseViewMode: data.settings.mouseViewMode,
+      dragSpeed: CAMERA_DRAG_SPEED,
+      inertiaDamping: CAMERA_INERTIA,
+      scrollLocked: useSmartScroll
     }
   });
   window.viewer = viewer;
+
+  // Умный скролл в iframe и защита от прокрутки страницы при тач-жестах
+  if (useSmartScroll) {
+    var scrollHintEl = document.getElementById('iframe-scroll-hint');
+    var scrollHintTimer = null;
+    viewer.addEventListener('scrollBlocked', function() {
+      if (!scrollHintEl) return;
+      scrollHintEl.classList.add('is-visible');
+      clearTimeout(scrollHintTimer);
+      scrollHintTimer = setTimeout(function() {
+        scrollHintEl.classList.remove('is-visible');
+      }, 1800);
+    });
+    var unlockScroll = function() {
+      viewer.setScrollLocked(false);
+      if (scrollHintEl) scrollHintEl.classList.remove('is-visible');
+    };
+    panoElement.addEventListener('pointerdown', unlockScroll);
+    window.addEventListener('blur', function() {
+      viewer.setScrollLocked(true);
+    });
+  }
+  panoElement.addEventListener('touchmove', function(e) {
+    if (e.cancelable) e.preventDefault();
+  }, { passive: false });
+
 
   // Создание сцен
   var scenes = data.scenes.map(function(sceneData) {
@@ -95,6 +135,14 @@
       sceneData.linkHotspots.forEach(function(hotspot) {
         var element = createLinkHotspotElement(hotspot);
         scene.hotspotContainer().createHotspot(element, { yaw: hotspot.yaw, pitch: hotspot.pitch });
+      });
+    }
+
+    // Создание информационных значков
+    if (sceneData.infoHotspots) {
+      sceneData.infoHotspots.forEach(function(infoSpot) {
+        var infoEl = createInfoHotspotElement(infoSpot);
+        scene.hotspotContainer().createHotspot(infoEl, { yaw: infoSpot.yaw, pitch: infoSpot.pitch });
       });
     }
 
@@ -141,7 +189,7 @@
     return scene;
   }
 
-  // Переключение сцен с сохранением ракурса без рывков
+  // Переключение сцен
   function switchScene(scene, keepViewAngle) {
     if (!scene) return;
 
@@ -154,9 +202,12 @@
         pitch: currentView.pitch(),
         fov: currentView.fov()
       });
+    } else if (!keepViewAngle && finalScene.data && finalScene.data.initialViewParameters && finalScene.view) {
+      finalScene.view.setParameters(finalScene.data.initialViewParameters);
     }
 
     finalScene.scene.switchTo();
+    syncRadarAngle(finalScene.view);
 
     if (sceneNameElement) {
       sceneNameElement.textContent = APARTMENT_TITLE;
@@ -195,7 +246,7 @@
           event.stopPropagation();
           var targetScene = findSceneById(sceneData.id);
           if (targetScene) {
-            switchScene(targetScene, true);
+            switchScene(targetScene, KEEP_VIEW_ANGLE);
           }
         });
 
@@ -215,12 +266,86 @@
     icon.style.transform = 'rotate(' + hotspot.rotation + 'rad)';
 
     wrapper.addEventListener('click', function() {
-      switchScene(findSceneById(hotspot.target), true);
+      switchScene(findSceneById(hotspot.target), KEEP_VIEW_ANGLE);
     });
 
     stopTouchAndScrollEventPropagation(wrapper);
     wrapper.appendChild(icon);
 
+    return wrapper;
+  }
+
+  // Создание элемента информационного значка
+  function createInfoHotspotElement(spot) {
+    var wrapper = document.createElement('div');
+    wrapper.classList.add('hotspot', 'info-hotspot');
+
+    var icon = document.createElement('img');
+    icon.src = spot.icon || 'img/info.png';
+    icon.alt = spot.title || 'Информация';
+    icon.classList.add('info-hotspot-icon');
+    wrapper.appendChild(icon);
+
+    if (spot.openMode === 'link') {
+      if (spot.title) {
+        var tag = document.createElement('div');
+        tag.classList.add('info-hotspot-tag');
+        tag.textContent = spot.title;
+        wrapper.appendChild(tag);
+      }
+      wrapper.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (spot.url) window.open(spot.url, '_blank', 'noopener,noreferrer');
+      });
+    } else {
+      var card = document.createElement('div');
+      card.classList.add('info-hotspot-card');
+
+      var closeBtn = document.createElement('button');
+      closeBtn.type = 'button';
+      closeBtn.classList.add('info-hotspot-close');
+      closeBtn.innerHTML = '&times;';
+      closeBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        wrapper.classList.remove('is-open');
+      });
+      card.appendChild(closeBtn);
+
+      if (spot.title) {
+        var titleEl = document.createElement('div');
+        titleEl.classList.add('info-hotspot-title');
+        titleEl.textContent = spot.title;
+        card.appendChild(titleEl);
+      }
+      if (spot.text) {
+        var textEl = document.createElement('div');
+        textEl.classList.add('info-hotspot-text');
+        textEl.textContent = spot.text;
+        card.appendChild(textEl);
+      }
+      if (spot.url) {
+        var linkEl = document.createElement('a');
+        linkEl.href = spot.url;
+        linkEl.target = '_blank';
+        linkEl.rel = 'noopener noreferrer';
+        linkEl.classList.add('info-hotspot-btn');
+        linkEl.textContent = spot.linkText || 'Подробнее';
+        card.appendChild(linkEl);
+      }
+
+      wrapper.appendChild(card);
+
+      icon.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var wasOpen = wrapper.classList.contains('is-open');
+        document.querySelectorAll('.info-hotspot.is-open').forEach(function(el) {
+          el.classList.remove('is-open');
+        });
+        if (!wasOpen) wrapper.classList.add('is-open');
+      });
+    }
+
+    stopTouchAndScrollEventPropagation(wrapper);
     return wrapper;
   }
 
@@ -242,7 +367,7 @@
     return null;
   }
   // Запуск стартовой сцены с проверкой границ массива
-  var baseStartScene = scenes[START_SCENE_INDEX] || scenes;
+  var baseStartScene = scenes[START_SCENE_INDEX] || scenes[0];
   var startScene = resolveSceneVariant(baseStartScene);
 
   if (startScene) {
@@ -317,18 +442,28 @@
   }
 
   // Вращение луча радара на мини-карте
+  function syncRadarAngle(viewObj) {
+    var mapDot = document.getElementById('mini-map-dot');
+    if (!mapDot || !viewObj) return;
+    var degrees = viewObj.yaw() * (180 / Math.PI);
+    mapDot.style.transform = 'translate(-50%, -50%) rotate(' + (degrees + 270) + 'deg)';
+  }
+
   viewer.addEventListener('viewChange', function() {
     var currentScene = viewer.scene();
-    var mapDot = document.getElementById('mini-map-dot');
-
-    if (currentScene && mapDot) {
-      var liveView = currentScene.view();
-      if (!liveView) return;
-
-      var degrees = liveView.yaw() * (180 / Math.PI);
-      mapDot.style.transform = 'translate(-50%, -50%) rotate(' + (degrees + 270) + 'deg)';
-    }
+    if (currentScene) syncRadarAngle(currentScene.view());
   });
+
+  if (startScene && startScene.view) {
+    syncRadarAngle(startScene.view);
+  }
+
+  if (!ENABLE_MINIMAP) {
+    var btnMap = document.getElementById('mini-map-toggle-btn');
+    var wrapMap = document.getElementById('mini-map-wrapper');
+    if (btnMap) btnMap.style.display = 'none';
+    if (wrapMap) wrapMap.style.display = 'none';
+  }
 
   // Сворачивание и разворачивание мини-карты
   var mapOpenBtn = document.getElementById('mini-map-toggle-btn');
@@ -347,6 +482,73 @@
       mapWrapper.classList.remove('active-state');
       mapOpenBtn.classList.remove('hidden-state');
     });
+  }
+
+  // Полноэкранный режим (включается через ENABLE_FULLSCREEN в редакторе)
+  var fsBtn = document.getElementById('fullscreen-toggle-btn');
+  if (fsBtn) {
+    if (!ENABLE_FULLSCREEN) {
+      fsBtn.classList.add('is-hidden');
+    } else {
+      fsBtn.classList.remove('is-hidden');
+      var isPseudoFs = false;
+      var syncFsState = function() {
+        var active = Boolean(document.fullscreenElement || document.webkitFullscreenElement || isPseudoFs);
+        fsBtn.classList.toggle('is-fullscreen', active);
+        fsBtn.title = active ? 'Свернуть из полного экрана' : 'На полный экран';
+      };
+      var togglePseudoFs = function(forceState) {
+        isPseudoFs = typeof forceState === 'boolean' ? forceState : !isPseudoFs;
+        syncFsState();
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({ type: 'wolftour:fullscreen', active: isPseudoFs }, '*');
+        }
+      };
+      fsBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var docEl = document.documentElement;
+        var fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+        if (fsEl) {
+          var exit = document.exitFullscreen || document.webkitExitFullscreen;
+          if (exit) exit.call(document).catch(function() { togglePseudoFs(false); });
+        } else if (isPseudoFs) {
+          togglePseudoFs(false);
+        } else {
+          var req = docEl.requestFullscreen || docEl.webkitRequestFullscreen;
+          if (req) {
+            req.call(docEl).catch(function() { togglePseudoFs(true); });
+          } else {
+            togglePseudoFs(true);
+          }
+        }
+      });
+      document.addEventListener('fullscreenchange', syncFsState);
+      document.addEventListener('webkitfullscreenchange', syncFsState);
+    }
+  }
+
+  // Гироскоп с привязкой к точке старта (управляется через ENABLE_GYROSCOPE)
+  var gyroBtn = document.getElementById('gyroscope-toggle-btn');
+  if (gyroBtn) {
+    var gyroSupported = WolfTour.GyroscopeController && WolfTour.GyroscopeController.isSupported();
+    if (!ENABLE_GYROSCOPE || !gyroSupported) {
+      gyroBtn.classList.add('is-hidden');
+    } else {
+      gyroBtn.classList.remove('is-hidden');
+      var gyroCtrl = viewer.gyroscope();
+      gyroCtrl.addEventListener('change', function(active) {
+        gyroBtn.classList.toggle('is-active', active);
+        gyroBtn.title = active ? 'Выключить гироскоп' : 'Управление гироскопом';
+      });
+      gyroBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        gyroCtrl.toggle().then(function(ok) {
+          if (!ok) {
+            alert('Разрешите доступ к датчикам движения в настройках браузера (работает только по HTTPS).');
+          }
+        });
+      });
+    }
   }
 
 })();

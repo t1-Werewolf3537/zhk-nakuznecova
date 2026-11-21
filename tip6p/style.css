@@ -5,7 +5,7 @@
 :root {
   /* Мини-карта: ширина от экрана */
   --map-width-desktop: 20vw;
-  --map-width-mobile: 50vw;
+  --map-width-mobile: 75vw;
 
   /* Картинка с текстом под логотипом ЖК */
   --dynamic-image-scale-pc: 1.0;
@@ -15,6 +15,16 @@
   /* Текст-подсказка под iOS-тумблером переключения отделки */
   --switch-text-scale-pc: 1.5;
   --switch-text-scale-mobile: 0.85;
+
+  /* Точки и луч-радар мини-карты */
+  --map-point-size: 3.6cqw;
+  --map-dot-size: 4.2cqw;
+  --map-radar-width: 15.5cqw;
+  --map-radar-height: 17cqw;
+
+  /* Размер текста верхней плашки */
+  --title-font-desktop: 22px;
+  --title-font-mobile: 13px;
 }
 
 * {
@@ -36,6 +46,8 @@ html, body {
   padding: 0;
   margin: 0;
   overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: none;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 16px;
   background-color: #000;
@@ -47,6 +59,12 @@ a, a:hover, a:active, a:visited {
   color: inherit;
 }
 
+h1, ul, li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
 /* --- КОНТЕЙНЕР ПАНОРАМЫ --------------------------------------------------- */
 #pano {
   position: absolute;
@@ -55,7 +73,38 @@ a, a:hover, a:active, a:visited {
   width: 100%;
   height: 100%;
   overflow: hidden;
+  touch-action: none;
   z-index: 1;
+}
+
+/* --- ПОДСКАЗКА УМНОГО СКРОЛЛА В IFRAME ------------------------------------ */
+#iframe-scroll-hint {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 150;
+  background: rgba(20, 25, 35, 0.78);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  max-width: 85vw;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
+}
+
+#iframe-scroll-hint.is-visible {
+  opacity: 1;
+  visibility: visible;
 }
 
 /* --- ВЕРХНЯЯ ПАНЕЛЬ С НАЗВАНИЕМ СЦЕНЫ ------------------------------------- */
@@ -80,6 +129,7 @@ body.multiple-scenes.mobile #titleBar { left: 50px; }
 #titleBar .sceneName {
   width: 100%;
   height: 100%;
+  font-size: var(--title-font-desktop);
   line-height: 30px;
   padding: 5px;
   background-color: rgba(20, 25, 35, 0.6);
@@ -92,6 +142,7 @@ body.multiple-scenes.mobile #titleBar { left: 50px; }
 }
 
 .mobile #titleBar .sceneName {
+  font-size: var(--title-font-mobile);
   line-height: 40px;
 }
 
@@ -329,12 +380,8 @@ body.multiple-scenes.mobile #titleBar { left: 50px; }
 
 #mini-map-dot {
   position: absolute;
-  width: 4cqw;
-  height: 4cqw;
-  background-color: #ff3333;
-  border: 0.5cqw solid #ffffff;
-  border-radius: 50%;
-  box-shadow: 0 0 8px rgba(255, 51, 51, 0.8);
+  width: var(--map-dot-size);
+  height: var(--map-dot-size);
   z-index: 20;
   pointer-events: auto;
   cursor: default;
@@ -342,22 +389,34 @@ body.multiple-scenes.mobile #titleBar { left: 50px; }
   transform: translate(-50%, -50%);
 }
 
+#mini-map-dot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-color: #ff3333;
+  border: 0.4cqw solid #ffffff;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(255, 51, 51, 0.8);
+  z-index: 2;
+}
+
 #mini-map-dot::before {
   content: '';
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 20cqw;
-  height: 25cqw;
+  width: var(--map-radar-width);
+  height: var(--map-radar-height);
   transform-origin: top center;
   transform: translate(-50%, 0);
+  z-index: 1;
   background: linear-gradient(
     to bottom,
     rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.8) 20%,
+    rgba(255, 255, 255, 0.6) 20%,
     rgba(255, 255, 255, 0) 100%
   );
-  clip-path: polygon(44% 7%, 56% 7%, 100% 100%, 0% 100%);
+  clip-path: polygon(46% 0%, 54% 0%, 100% 100%, 0% 100%);
   pointer-events: none;
 }
 
@@ -378,10 +437,10 @@ body.multiple-scenes.mobile #titleBar { left: 50px; }
 
 .map-nav-point {
   position: absolute;
-  width: 3.6cqw;
-  height: 3.6cqw;
+  width: var(--map-point-size);
+  height: var(--map-point-size);
   background-color: rgba(0, 123, 255, 0.7);
-  border: 0.4cqw solid #ffffff;
+  border: 0.3cqw solid #ffffff;
   border-radius: 50%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
   cursor: pointer;
@@ -692,5 +751,218 @@ body.multiple-scenes.mobile #titleBar { left: 50px; }
 }
 
 .ios-switch-wrapper.is-hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   ЧАСТЬ 5: ИНФОРМАЦИОННЫЕ ЗНАЧКИ (INFO HOTSPOTS) И КАРТОЧКИ
+   ========================================================================== */
+.info-hotspot {
+  width: 44px;
+  height: 44px;
+  margin-left: -22px;
+  margin-top: -22px;
+  z-index: 15;
+  cursor: pointer;
+}
+
+.info-hotspot.is-open {
+  z-index: 90;
+}
+
+.info-hotspot-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.55));
+  transition: transform 0.2s ease-in-out;
+}
+
+.no-touch .info-hotspot:hover .info-hotspot-icon {
+  transform: scale(1.15);
+}
+
+/* Режим ярлыка (openMode: "link") */
+.info-hotspot-tag {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 8px);
+  transform: translateX(-50%);
+  background: rgba(20, 25, 35, 0.88);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 6px;
+  padding: 5px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+  pointer-events: none;
+}
+
+/* Режим карточки (openMode: "card") */
+.info-hotspot-card {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 12px);
+  transform: translateX(-50%) translateY(6px);
+  width: 260px;
+  max-width: 80vw;
+  background: rgba(20, 25, 35, 0.92);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 10px;
+  padding: 14px 16px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  cursor: default;
+}
+
+.info-hotspot.is-open .info-hotspot-card {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.info-hotspot-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 2px 5px;
+}
+
+.info-hotspot-close:hover {
+  color: #ff5252;
+}
+
+.info-hotspot-title {
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  padding-right: 18px;
+  line-height: 1.3;
+  user-select: text;
+}
+
+.info-hotspot-text {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 10px;
+  white-space: pre-line;
+  user-select: text;
+}
+
+.info-hotspot-btn {
+  display: inline-block;
+  background: #007bff;
+  color: #ffffff !important;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 5px;
+  transition: background-color 0.2s;
+}
+
+.info-hotspot-btn:hover {
+  background: #0062cc;
+}
+
+/* --- КНОПКА ПОЛНОЭКРАННОГО РЕЖИМА ----------------------------------------- */
+.fullscreen-btn {
+  position: absolute;
+  bottom: 102px;
+  right: 35px;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(20, 25, 35, 0.65);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.no-touch .fullscreen-btn:hover {
+  background-color: rgba(45, 55, 72, 0.9);
+  transform: scale(1.06);
+}
+
+.fullscreen-btn svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+.fullscreen-btn .fs-icon-exit { display: none; }
+.fullscreen-btn.is-fullscreen .fs-icon-enter { display: none; }
+.fullscreen-btn.is-fullscreen .fs-icon-exit { display: block; }
+
+.mobile .fullscreen-btn {
+  bottom: 85px;
+  right: 25px;
+  width: 40px;
+  height: 40px;
+}
+
+/* --- КНОПКА ГИРОСКОПА (МОБИЛЬНЫЕ УСТРОЙСТВА) ---------------------------- */
+.gyroscope-btn {
+  position: absolute;
+  bottom: 152px;
+  right: 35px;
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(20, 25, 35, 0.65);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.gyroscope-btn svg {
+  width: 21px;
+  height: 21px;
+  display: block;
+}
+
+.gyroscope-btn.is-active {
+  background-color: rgba(0, 123, 255, 0.88);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 0 14px rgba(0, 123, 255, 0.65);
+}
+
+.mobile .gyroscope-btn {
+  bottom: 135px;
+  right: 25px;
+}
+
+/* Вспомогательный класс скрытия блоков интерфейса */
+.is-hidden {
   display: none !important;
 }
