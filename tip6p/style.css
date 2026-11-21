@@ -17,10 +17,19 @@
   --switch-text-scale-mobile: 0.85;
 
   /* Точки и луч-радар мини-карты */
-  --map-point-size: 3.6cqw;
-  --map-dot-size: 4.2cqw;
-  --map-radar-width: 15.5cqw;
+  --map-point-size: 4cqw;
+  --map-point-color: #007bff;
+  --map-point-opacity: 0.8;
+  --map-point-border: #ffffff;
+
+  --map-dot-size: 5cqw;
+  --map-dot-color: #ff3333;
+  --map-dot-border: #ffffff;
+
+  --map-radar-width: 16.5cqw;
   --map-radar-height: 17cqw;
+  --map-radar-color: #df5d5d;
+  --map-radar-opacity: 1;
 
   /* Размер текста верхней плашки */
   --title-font-desktop: 22px;
@@ -393,10 +402,10 @@ body.multiple-scenes.mobile #titleBar { left: 50px; }
   content: '';
   position: absolute;
   inset: 0;
-  background-color: #ff3333;
-  border: 0.4cqw solid #ffffff;
+  background-color: var(--map-dot-color);
+  border: 0.4cqw solid var(--map-dot-border);
   border-radius: 50%;
-  box-shadow: 0 0 8px rgba(255, 51, 51, 0.8);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.55);
   z-index: 2;
 }
 
@@ -410,11 +419,11 @@ body.multiple-scenes.mobile #titleBar { left: 50px; }
   transform-origin: top center;
   transform: translate(-50%, 0);
   z-index: 1;
+  opacity: var(--map-radar-opacity);
   background: linear-gradient(
     to bottom,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0.6) 20%,
-    rgba(255, 255, 255, 0) 100%
+    var(--map-radar-color) 0%,
+    transparent 100%
   );
   clip-path: polygon(46% 0%, 54% 0%, 100% 100%, 0% 100%);
   pointer-events: none;
@@ -439,19 +448,20 @@ body.multiple-scenes.mobile #titleBar { left: 50px; }
   position: absolute;
   width: var(--map-point-size);
   height: var(--map-point-size);
-  background-color: rgba(0, 123, 255, 0.7);
-  border: 0.3cqw solid #ffffff;
+  background-color: var(--map-point-color);
+  opacity: var(--map-point-opacity);
+  border: 0.3cqw solid var(--map-point-border);
   border-radius: 50%;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
   cursor: pointer;
   pointer-events: auto;
   transform: translate(-50%, -50%);
-  transition: transform 0.2s ease-in-out, background-color 0.2s;
+  transition: transform 0.2s ease-in-out, opacity 0.2s;
 }
 
 .no-touch .map-nav-point:hover {
   transform: translate(-50%, -50%) scale(1.25);
-  background-color: rgb(0, 123, 255);
+  opacity: 1;
 }
 
 /* ==========================================================================
