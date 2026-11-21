@@ -932,8 +932,12 @@
         let diffYaw = targetYaw - this._smoothYaw;
         while (diffYaw > Math.PI) diffYaw -= 2 * Math.PI;
         while (diffYaw < -Math.PI) diffYaw += 2 * Math.PI;
-        this._smoothYaw += diffYaw * 0.25;
-        this._smoothPitch += (targetPitch - this._smoothPitch) * 0.25;
+        const diffPitch = targetPitch - this._smoothPitch;
+
+        // Подавление резких скачков магнитометра (авто-калибровка компаса на Android)
+        const factor = (Math.abs(diffYaw) > 0.22 || Math.abs(diffPitch) > 0.22) ? 0.05 : 0.18;
+        this._smoothYaw += diffYaw * factor;
+        this._smoothPitch += diffPitch * factor;
       }
 
       if (!isNaN(this._smoothYaw) && !isNaN(this._smoothPitch)) {
