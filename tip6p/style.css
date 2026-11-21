@@ -937,7 +937,7 @@ body.multiple-scenes.mobile #titleBar { left: 50px; }
 /* --- КНОПКА ГИРОСКОПА (МОБИЛЬНЫЕ УСТРОЙСТВА) ---------------------------- */
 .gyroscope-btn {
   position: absolute;
-  bottom: 152px;
+  bottom: 102px;
   right: 35px;
   width: 40px;
   height: 40px;
@@ -968,7 +968,7 @@ body.multiple-scenes.mobile #titleBar { left: 50px; }
 }
 
 .mobile .gyroscope-btn {
-  bottom: 135px;
+  bottom: 85px;
   right: 25px;
 }
 
