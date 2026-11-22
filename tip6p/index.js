@@ -14,7 +14,8 @@
   var ENABLE_REPAIR_SWITCH = true; // true = тумблер отделки включен, false = полностью скрыт
   var ENABLE_MINIMAP = true;        // true = планировка включена, false = полностью скрыта
   var ENABLE_FULLSCREEN = false;    // true = кнопка полноэкранного режима включена, false = скрыта
-  var ENABLE_GYROSCOPE = true;     // true = кнопка гироскопа включена на мобильных, false = скрыта
+  var ENABLE_GYROSCOPE = false;     // true = кнопка гироскопа включена на мобильных, false = скрыта
+  var ENABLE_DEMO_WATERMARK = true; // true = тестовая сетка поверх панорамы (для демо заказчику)
   var SMART_SCROLL = true;          // true = умный скролл в iframe (зум после клика или с Ctrl)
   var START_WITH_REPAIR = false;    // true = старт с ремонтом (_REPAIR), false = без ремонта
   var START_SCENE_INDEX = 3;        // Индекс стартовой сцены (нумерация с 0)
@@ -549,6 +550,33 @@
           }
         });
       });
+    }
+  }
+
+  // Тестовый водяной знак поверх панорамы (управляется через ENABLE_DEMO_WATERMARK)
+  var demoLayer = document.getElementById('demo-watermark-overlay');
+  if (!demoLayer && ENABLE_DEMO_WATERMARK) {
+    demoLayer = document.createElement('div');
+    demoLayer.id = 'demo-watermark-overlay';
+    document.body.appendChild(demoLayer);
+  }
+  if (demoLayer) {
+    if (!ENABLE_DEMO_WATERMARK) {
+      demoLayer.style.display = 'none';
+    } else {
+      demoLayer.className = '';
+      var cols = Math.max(2, Math.floor((window.innerWidth - 60) / 360));
+      var rows = Math.max(3, Math.round((window.innerHeight - 60) / 190));
+      var totalTiles = cols * rows;
+      demoLayer.style.cssText = 'position:fixed;inset:0;z-index:30;pointer-events:none;overflow:hidden;display:grid;grid-template-columns:repeat(' + cols + ',1fr);align-content:space-around;justify-items:center;padding:30px;';
+      var tilesHtml = '';
+      for (var w = 0; w < totalTiles; w++) {
+        tilesHtml += '<div style="transform:rotate(-26deg);text-align:center;user-select:none;white-space:nowrap;">' +
+          '<div style="font-family:Arial,sans-serif;font-weight:800;font-size:20px;letter-spacing:2px;color:rgba(255,255,255,0.5);text-shadow:0 1px 3px rgba(0,0,0,0.45);">WOLF STUDIO</div>' +
+          '<div style="font-family:Arial,sans-serif;font-weight:600;font-size:12px;letter-spacing:3px;color:rgba(255,255,255,0.35);text-shadow:0 1px 2px rgba(0,0,0,0.45);">ТЕСТОВЫЙ ПРОСМОТР</div>' +
+          '</div>';
+      }
+      demoLayer.innerHTML = tilesHtml;
     }
   }
 
