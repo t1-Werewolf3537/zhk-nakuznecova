@@ -506,6 +506,11 @@
       const desc = source.getTileDescriptor(tile);
       this.loading.add(cacheKey);
       const job = { cacheKey, desc };
+      if (tile.z === 0) {
+        this.activeLoads++;
+        this._loadJob(job);
+        return null;
+      }
       if (highPriority) {
         this.queue.unshift(job);
       } else {

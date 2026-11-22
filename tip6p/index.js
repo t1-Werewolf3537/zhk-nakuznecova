@@ -27,7 +27,7 @@
   var RADAR_ANGLE_OFFSET = 270;     // Базовый угол поворота луча радара (0 - 360 градусов)
   // =========================================================================
 
-  var isWhiteStyle = ENABLE_REPAIR_SWITCH ? START_WITH_REPAIR : false;
+  var isWhiteStyle = Boolean(START_WITH_REPAIR);
 
   // Элементы DOM
   var panoElement = document.querySelector('#pano');
@@ -106,8 +106,8 @@
   }, { passive: false });
 
 
-  // Создание сцен
-  var scenes = data.scenes.map(function(sceneData) {
+  // Создание сцен (preview.jpg грузится сразу только для стартовой сцены, остальные — в фоне)
+  var scenes = data.scenes.map(function(sceneData, idx) {
     var urlPrefix = TILES_URL.replace(/\/+$/, '');
     var ext = (data.settings && data.settings.tileFormat) ? data.settings.tileFormat : "jpg";
     var source = WolfTour.ImageUrlSource.fromString(
@@ -125,12 +125,20 @@
 
     var view = new WolfTour.RectilinearView(sceneData.initialViewParameters, limiter);
 
+    var isInitial = (idx === START_SCENE_INDEX) || (idx === 0 && !data.scenes[START_SCENE_INDEX]);
     var scene = viewer.createScene({
       source: source,
       geometry: geometry,
       view: view,
-      pinFirstLevel: true
+      pinFirstLevel: isInitial
     });
+
+    if (!isInitial) {
+      setTimeout(function() {
+        var z0 = geometry.levelTiles(0);
+        for (var k = 0; k < z0.length; k++) viewer._texMgr.get(scene._uid, source, z0[k]);
+      }, 1200 + idx * 120);
+    }
 
     // Создание стрелок перехода
     if (sceneData.linkHotspots) {
@@ -169,7 +177,7 @@
 
   // Поиск парной сцены (с ремонтом или без)
   function resolveSceneVariant(scene) {
-    if (!scene || !ENABLE_REPAIR_SWITCH) return scene;
+    if (!scene) return scene;
 
     var currentName = scene.data.name;
     var targetName = null;
